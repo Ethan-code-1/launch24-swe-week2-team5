@@ -27,6 +27,7 @@ export const Forum = () => {
           <span className="separator">|</span>
           <a
             href="#"
+            style = {{marginLeft: '10px'}}
             onClick={(e) => {
               e.preventDefault();
               handleToggle('viewAll');
@@ -38,6 +39,7 @@ export const Forum = () => {
           <span className="separator">|</span>
           <a
             href="#"
+            style = {{marginLeft: '10px'}}
             onClick={(e) => {
               e.preventDefault();
               handleToggle('draftNew');
