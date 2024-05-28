@@ -7,3 +7,5 @@ export const TopSongs = () => {
     </div>
   )
 }
+
+export default TopSongs;

@@ -3,6 +3,9 @@ import ReactDOM from 'react-dom/client'
 import App from './App.jsx'
 import './index.css'
 
+import { createRoot } from 'react-dom/client';
+import 'rsuite/dist/rsuite.min.css';
+
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 
 import { Discover } from './roots/Discover.jsx'
@@ -12,12 +15,13 @@ import { Login } from './roots/Login.jsx'
 import { Profile } from './roots/Profile.jsx'
 import { TopArtists } from './roots/TopArtists.jsx'
 import { TopSongs } from './roots/TopSongs.jsx'
+import MyNavbar from './components/Navbar.jsx'
 import { LikedSongs } from './roots/LikedSongs.jsx'
 
 const router = createBrowserRouter([
   {
     path: '/',
-    element: <Home />,
+    element: <MyNavbar></MyNavbar>,
   },
   {
     path: '/login',
@@ -25,23 +29,23 @@ const router = createBrowserRouter([
   },
   {
     path: '/forum',
-    element: <Forum  />,
+    element: <MyNavbar></MyNavbar>,
   },
   {
     path: '/discover',
-    element: <Discover  />,
+    element: <MyNavbar></MyNavbar>,
   },
   {
     path: '/profile',
-    element: <Profile />,
+    element: <MyNavbar></MyNavbar>,
   },
   {
     path: '/top-artists',
-    element: <TopArtists />,
+    element: <MyNavbar></MyNavbar>,
   },
   {
     path: '/top-songs',
-    element: <TopSongs />,
+    element: <MyNavbar></MyNavbar>,
   },
   {
     path: '/liked-songs',
@@ -49,6 +53,9 @@ const router = createBrowserRouter([
   },
   
 ]);
+
+const container = document.getElementById('root');
+const root = createRoot(container);
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
