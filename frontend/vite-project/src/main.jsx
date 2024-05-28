@@ -14,9 +14,10 @@ import { TopArtists } from './roots/TopArtists.jsx'
 import { TopSongs } from './roots/TopSongs.jsx'
 
 
+
 const router = createBrowserRouter([
   {
-    path: '/',
+    path: '/*',
     element: <Home />,
   },
   {
