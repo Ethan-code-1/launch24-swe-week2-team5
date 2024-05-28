@@ -1,0 +1,144 @@
+.liked-songs-container {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    background-color: #121212;
+    color: white;
+  }
+  
+  .banner {
+    background: linear-gradient(90deg, #8A2BE2, #FF00FF);
+    padding: 50px 20px;
+    display: flex;
+    align-items: center;
+  }
+  
+  .banner-content {
+    display: flex;
+    align-items: center;
+  }
+  
+  .banner-image {
+    margin-right: 20px;
+  }
+  
+  .banner-text h1 {
+    margin: 0;
+    font-size: 3em;
+    color: white;
+  }
+  
+  .banner-text p {
+    margin: 5px 0 0;
+    font-size: 1.5em;
+    color: white;
+  }
+  
+  .songs-list {
+    flex: 1;
+    padding: 20px;
+    overflow-y: auto;
+  }
+  
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    background-color: #333;
+    padding: 10px;
+  }
+  
+  .search-input {
+    width: 100%;
+    max-width: 300px;
+    background-color: #282828;
+    color: white;
+  }
+  
+  .songs-list table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  .songs-table .rs-table-cell {
+    background-color: #121212;
+    border-bottom: 1px solid #333;
+    color: white;
+  }
+  
+  .songs-table .rs-table-row .rs-table-cell {
+    background: linear-gradient( #8A2BE2, #FF00FF);
+  }
+  
+  .songs-table .rs-table-header-cell {
+    background: linear-gradient( #8A2BE2, #FF00FF);
+    color: white;
+  }
+  
+  .artist-name {
+    cursor: pointer;
+    color: #033314;
+  }
+  
+  .artist-name:hover {
+    color: #8A2BE2;
+    text-decoration: underline;
+  }
+  
+  .artist-panel {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+    background-color: #282828;
+    height: 100%;
+  }
+  
+  .close-btn {
+    align-self: flex-end;
+    background: none;
+    border: none;
+    color: white;
+    font-size: 20px;
+    cursor: pointer;
+  }
+  
+  .artist-panel-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .panel-cover-img {
+    width: 200px;
+    height: 200px;
+    margin-bottom: 20px;
+  }
+  
+  .artist-panel-content h2,
+  .artist-panel-content h3 {
+    margin: 10px 0;
+  }
+  
+  .album-name {
+    background-color: #333;
+    padding: 10px;
+    width: 100%;
+    text-align: center;
+    margin-bottom: 10px;
+  }
+  
+  .artist-img {
+    width: 200px;
+    height: 200px;
+    margin-bottom: 10px;
+  }
+  
+  .artist-about {
+    background-color: #444;
+    padding: 10px;
+    width: 100%;
+    text-align: center;
+  }
+  
