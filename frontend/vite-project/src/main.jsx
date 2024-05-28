@@ -12,7 +12,7 @@ import { Login } from './roots/Login.jsx'
 import { Profile } from './roots/Profile.jsx'
 import { TopArtists } from './roots/TopArtists.jsx'
 import { TopSongs } from './roots/TopSongs.jsx'
-
+import { LikedSongs } from './roots/LikedSongs.jsx'
 
 const router = createBrowserRouter([
   {
@@ -43,6 +43,11 @@ const router = createBrowserRouter([
     path: '/top-songs',
     element: <TopSongs />,
   },
+  {
+    path: '/liked-songs',
+    element: <LikedSongs />,
+  },
+  
 ]);
 
 ReactDOM.createRoot(document.getElementById('root')).render(
