@@ -8,3 +8,4 @@ export const Discover = () => {
   )
 }
 
+export default Discover;
