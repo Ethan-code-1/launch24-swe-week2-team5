@@ -111,6 +111,8 @@ router.get("/callback", function (req, res) {
   }
 });
 
+
+
 router.get("/refresh_token", function (req, res) {
   var refresh_token = req.query.refresh_token;
   var authOptions = {
@@ -138,6 +140,27 @@ router.get("/refresh_token", function (req, res) {
       });
     }
   });
+});
+
+router.get('/user-info', (req, res) => {
+    const accessToken = req.query.access_token;
+  
+    if (!accessToken) {
+      return res.status(400).json({ error: 'Access token is required' });
+    }
+  
+    const options = {
+        url: "https://api.spotify.com/v1/me",
+        headers: { Authorization: "Bearer " + access_token },
+        json: true,
+    };
+  
+    request.get(options, (error, response, body) => {
+      if (error) {
+        return res.status(500).json({ error: 'Failed to fetch user data' });
+      }
+      res.status(200).json(body);
+    });
 });
 
 /* 
