@@ -49,7 +49,7 @@ const router = createBrowserRouter([
   },
   {
     path: '/liked-songs',
-    element: <LikedSongs />,
+    element: <MyNavbar></MyNavbar>,
   },
   
 ]);
