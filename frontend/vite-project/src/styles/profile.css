@@ -1,0 +1,50 @@
+.content-container {
+    background-color: #1E1E1E;
+    height: 100vh;
+}
+
+.header-container {
+    background-color: #B64FC8;
+    height: 30vh;
+    box-shadow: 0px 10px 5px black;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+img {
+    width: 150px;
+    height: 150px;
+    border-radius: 75px;
+    display: block;
+    box-shadow: 0px 0px 5px 2px grey;
+    margin-left: 5%;
+  }
+
+  .info-container {
+    margin-left: 2%;
+  }
+
+  .username-container {
+    display: flex;
+    align-items: center;
+  }
+
+  .edit {
+    margin-left: 20px;
+    color: white;
+  }
+
+  .edit:hover {
+    cursor: pointer;
+    opacity: 50%;
+  }
+
+  h1 {
+    color: white;
+  }
+
+  .sub-text {
+    margin-top: -10px;
+    color: white;
+  }
