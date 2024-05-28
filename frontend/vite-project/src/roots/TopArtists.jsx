@@ -8,3 +8,4 @@ export const TopArtists = () => {
   )
 }
 
+export default TopArtists;
