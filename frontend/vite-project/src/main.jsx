@@ -18,6 +18,8 @@ import { TopSongs } from "./roots/TopSongs.jsx";
 import MyNavbar from "./components/Navbar.jsx";
 import { LikedSongs } from "./roots/LikedSongs.jsx";
 
+import { AuthProvider } from "./components/AuthContext.jsx";
+
 const router = createBrowserRouter([
   {
     path: "/*",
@@ -58,6 +60,8 @@ const root = createRoot(container);
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
-    <RouterProvider router={router} />
+    <AuthProvider>
+      <RouterProvider router={router} />
+    </AuthProvider>
   </React.StrictMode>
 );

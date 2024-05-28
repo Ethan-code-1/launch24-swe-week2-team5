@@ -1,8 +1,31 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
+import { AuthContext } from '../components/AuthContext';
+
+
 
 const Home = () => {
     const [messages, setMessages] = useState([]);
+    
+    /* After redirecting to Home set useContext variables */
+    const { login } = useContext(AuthContext);
+    useEffect(() => {
+        const urlParams = new URLSearchParams(window.location.search);
+        const access_token = urlParams.get('access_token');
+        const refresh_token = urlParams.get('refresh_token');
+        const id = urlParams.get('id');
+        const error = urlParams.get('error');
 
+        if (error) {
+          alert('There was an error during the authentication');
+        } else {
+          if (access_token) {
+            login({ access_token, refresh_token, id });
+          }
+        }
+      }, []);
+    
+
+    
     const fetchMessages = async () => {
         try {
             const response = await fetch('http://localhost:5001/test');
