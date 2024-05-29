@@ -3,7 +3,7 @@ import axios from 'axios';
 import '../styles/Inbox.css';
 
 export const Inbox = () => {
-  const [mode, setMode] = useState('viewAll'); 
+  const [mode, setMode] = useState('yourPosts'); 
   const [selectedMessage, setSelectedMessage] = useState(null);
   const [messages, setMessages] = useState([]); 
 
@@ -67,9 +67,9 @@ export const Inbox = () => {
               {selectedMessage ? (
                 <>
                   <h3>{selectedMessage.Title}</h3>
-                  <p>{selectedMessage.Content}</p>
+                  <h5>{selectedMessage.Content}</h5>
                 </>
-              ) : <p>No message selected</p>}
+              ) : <p>Your message inbox is empty!</p>}
               
             </div>
           </div>
