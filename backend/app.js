@@ -1,6 +1,7 @@
 // app.js
 const express = require("express");
 const spotifyRouter = require('./spotify');
+const forumsRouter = require('./forums')
 const app = express();
 const port = 5001;
 app.use(express.json());
@@ -30,6 +31,8 @@ app.use("/spotify", spotifyRouter);
 // app.use("/users", usersRouter);
 // app.use("/fourms", fourmsRouter);
 // app.use("/messages", messagesRouter);
+
+app.use("/forum", forumsRouter);
 
 
 app.listen(port, () => {
