@@ -1,10 +1,10 @@
 import React, { useState, useEffect, useContext } from 'react';
 import axios from 'axios';
-import { Table, Input, IconButton, Drawer, Avatar } from 'rsuite';
+import { Table, Input, IconButton, Drawer } from 'rsuite';
 import CloseOutlineIcon from '@rsuite/icons/CloseOutline';
 import ShieldIcon from '@rsuite/icons/Shield';
 import SearchIcon from '@rsuite/icons/Search';
-import { AuthContext } from '../components/AuthContext'; // Assuming you have AuthContext for managing user authentication
+import { AuthContext } from '../components/AuthContext';
 import '../styles/LikedSongs.css';
 
 const { Column, HeaderCell, Cell } = Table;
@@ -14,7 +14,7 @@ export const LikedSongs = () => {
   const [selectedSong, setSelectedSong] = useState(null);
   const [isPanelOpen, setIsPanelOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
-  const [likedSongs, setLikedSongs] = useState([]);
+  const [likedSongs, setLikedSongs] = useState([]); // Initialize as an empty array
   const [artistInfo, setArtistInfo] = useState(null);
   const accessToken = localStorage.getItem('access_token');
 
@@ -59,7 +59,7 @@ export const LikedSongs = () => {
     setSearchQuery(value);
   };
 
-  const filteredSongs = likedSongs.filter(song =>
+  const filteredSongs = likedSongs?.filter(song =>
     song.track.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
     song.track.album.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
     song.track.artists.some(artist => artist.name.toLowerCase().includes(searchQuery.toLowerCase()))
@@ -95,7 +95,7 @@ export const LikedSongs = () => {
           </Column>
           <Column width={60} align="center" fixed>
             <HeaderCell>Cover</HeaderCell>
-            <Cell>{rowData => <Avatar size="lg" src={rowData.track.album.images[0].url} alt={rowData.track.name} />}</Cell>
+            <Cell>{rowData => <img src={rowData.track.album.images[0].url} alt={rowData.track.name} className="table-cover-img" />}</Cell>
           </Column>
           <Column flexGrow={1} fixed>
             <HeaderCell>Title</HeaderCell>
@@ -126,15 +126,16 @@ export const LikedSongs = () => {
           <div className="artist-panel">
             <IconButton icon={<CloseOutlineIcon />} className="close-btn" onClick={closePanel} />
             <div className="artist-panel-content">
-              <Avatar size="lg" src={selectedSong.album.images[0].url} alt={selectedSong.name} className="panel-cover-img"/>
-              <h2>{selectedSong.name}</h2>
-              <h3>{selectedSong.artists.map(artist => artist.name).join(', ')}</h3>
-              <div className="album-name">{selectedSong.album.name}</div>
+              <div className="panel-card">
+                <img src={selectedSong.album.images[0].url} alt={selectedSong.name} className="panel-cover-img"/>
+                <h2>{selectedSong.album.name}</h2>
+                <h3>{selectedSong.name}</h3>
+              </div>
               {artistInfo && (
-                <>
-                  <Avatar size="lg" src={artistInfo.images[0].url} alt={artistInfo.name} className="artist-img" />
-                  <div className="artist-about">{artistInfo.biography}</div>
-                </>
+                <div className="panel-card">
+                  <img src={artistInfo.images[0].url} alt={artistInfo.name} className="artist-img" />
+                  <h3>{artistInfo.name}</h3>
+                </div>
               )}
             </div>
           </div>
