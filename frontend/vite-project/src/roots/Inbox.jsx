@@ -43,6 +43,7 @@ export const Inbox = () => {
           <span className="separator">|</span>
           <a
             href="#"
+            style = {{marginLeft: '.75vw'}}
             onClick={(e) => {
               e.preventDefault();
               handleToggle('viewAll');
