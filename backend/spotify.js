@@ -295,7 +295,7 @@ router.get('/top-artists', (req, res) => {
       }
       res.status(200).json(body);
     });
-});
+}});
 
 async function storeTopArtists(accessToken, id) {
   if (!accessToken) {
