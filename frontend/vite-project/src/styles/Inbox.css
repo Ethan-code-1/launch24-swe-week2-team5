@@ -164,12 +164,16 @@
   .messageSeparator {
     width: 5px; 
     background: linear-gradient(90deg, #8A2BE2, #FF00FF);
+    margin-left: 2vh;
+    margin-right: 2vh;
   }
 
   .messagesLayout {
   display: flex;
   height: 80vh; 
   border: 2px solid rgba(255, 255, 255, 0.229);
+  background-color: #212121;
+
 margin-top: 3vh;
 }
 
@@ -211,4 +215,8 @@ margin-top: 3vh;
   .iconAndText {
     display: flex;
     align-items: center;
+  }
+
+  .emptyInboxMessage{
+    font-size: 2rem;
   }

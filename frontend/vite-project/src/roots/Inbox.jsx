@@ -12,6 +12,7 @@ export const Inbox = () => {
   async function fetchAllPosts() {
     const res = (await axios.get("http://localhost:5001/inbox")).data;
     setMessages(res);
+    if (res.length > 0) setSelectedMessage(res[0]); 
   }
 
   useEffect(() => {
@@ -75,10 +76,13 @@ export const Inbox = () => {
             <div className="messageContent">
               {selectedMessage ? (
                 <>
-                  <h3>{selectedMessage.Title}</h3>
+                  <h3>Topic: {selectedMessage.Title}</h3>
+                  <hr className = 'forumPageHr'></hr>
+                  <h5>From: {selectedMessage.From}</h5>
+                  <br></br>
                   <h5>{selectedMessage.Content}</h5>
                 </>
-              ) : <p>Your message inbox is empty!</p>}
+              ) : <p className = "emptyInboxMessage">Your message inbox is empty!</p>}
               
             </div>
           </div>
