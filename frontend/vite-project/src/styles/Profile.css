@@ -1,0 +1,17 @@
+.profile-container {
+    width: 100%;
+    padding: 20px;
+    box-sizing: border-box;
+    overflow-x: hidden;
+  }
+  
+  .banner {
+    display: flex;
+    align-items: center;
+    justify-content: start;
+    background: linear-gradient(90deg, #8A2BE2, #FF00FF);
+    color: white;
+    padding: 20px;
+    width: 100%;
+  }
+  

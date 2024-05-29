@@ -14,6 +14,8 @@ import Profile from '../roots/Profile.jsx';
 import TopArtists from '../roots/TopArtists';
 import TopSongs from '../roots/TopSongs';
 import LikedSongs from '../roots/LikedSongs';
+import Inbox from '../roots/Inbox';
+
 
 
 import '../styles/Navbar.css';
@@ -99,6 +101,8 @@ const MyNavbar = () => {
         return <TopSongs />;
       case '/liked-songs':
         return <LikedSongs></LikedSongs>
+      case '/inbox':
+        return <Inbox></Inbox>
       default:
         return <Home />;
     }
@@ -149,6 +153,9 @@ const MyNavbar = () => {
                 </Nav.Item>
                 <Nav.Item eventKey="7" icon={<GearCircleIcon style={{ color: '#FFFFFF' }} />} style={navItemStyles} as={Link} to="/liked-songs">
                   <strong>Liked Songs</strong>
+                </Nav.Item>
+                <Nav.Item eventKey="8" icon={<GearCircleIcon style={{ color: '#FFFFFF' }} />} style={navItemStyles} as={Link} to="/inbox">
+                  <strong>Inbox</strong>
                 </Nav.Item>
               </Nav>
             </Sidenav.Body>
