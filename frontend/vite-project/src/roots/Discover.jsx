@@ -1,12 +1,26 @@
-import React from 'react'
-import {Link} from "react-router-dom"
-import {useState} from 'react'
+import React, { useEffect, useState } from 'react';
+import { Link } from "react-router-dom";
+import mockphoto from '../images/mockprofilephoto.png';
+import '../styles/Discover.css';
+import axios from "axios";
 
-
-import '../styles/Discover.css'
-import mockphoto from '../images/mockprofilephoto.png'
 export const Discover = () => {
+  const [profiles, setProfiles] = useState([]);
   const [menuOpen, setMenuOpen] = useState(false);
+
+  async function fetchPublicProfiles() {
+    try {
+      const res = await axios.get("http://localhost:5001/users");
+      setProfiles(res.data);
+    } catch (error) {
+      console.error("Error fetching profiles:", error);
+    }
+  }
+
+  useEffect(() => {
+    fetchPublicProfiles();
+  }, []);
+
   return (
     <div>
       {/* HEADER SECTION WITH DISCOVER AND FOLLOWING TABS */}
@@ -19,36 +33,20 @@ export const Discover = () => {
 
       <h1>Discover Page</h1>
       <div className="Discography">
-        <div className="IndividualProfile">
-          <Link to="/profile/sara" className="profile-link">
-            <img className="profile-image" src={mockphoto} alt='mockPhoto'/>
-            <div className="profile-name">Sara's Profile</div>
-          </Link>
-          <Link to="/chat/sara" className="profile-chat-icon">
-            <div className="chat-bubble"></div>
-          </Link>
-        </div>
-        <div className="IndividualProfile">
-          <Link to="/profile/sara" className="profile-link">
-            <img className="profile-image" src={mockphoto} alt='mockPhoto'/>
-            <div className="profile-name">Sara's Profile</div>
-          </Link>
-          <Link to="/chat/sara" className="profile-chat-icon">
-            <div className="chat-bubble"></div>
-          </Link>
-        </div>
-        <div className="IndividualProfile">
-          <Link to="/profile/sara" className="profile-link">
-            <img className="profile-image" src={mockphoto} alt='mockPhoto'/>
-            <div className="profile-name">Sara's Profile</div>
-          </Link>
-          <Link to="/chat/sara" className="profile-chat-icon">
-            <div className="chat-bubble"></div>
-          </Link>
-        </div>
+        {profiles.map((profile) => (
+          <div key={profile.id} className="IndividualProfile">
+            <Link to={`/profile/${profile.id}`} className="profile-link">
+              <img className="profile-image" src={profile.image || mockphoto} alt='Profile' />
+              <div className="profile-name">{profile.display_name}'s Profile</div>
+            </Link>
+            <Link to={`/chat/${profile.id}`} className="profile-chat-icon">
+              <div className="chat-bubble"></div>
+            </Link>
+          </div>
+        ))}
       </div>
     </div>
   );
-}
+};
 
 export default Discover;

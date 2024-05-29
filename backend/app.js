@@ -35,6 +35,7 @@ app.use("/spotify", spotifyRouter);
 
 app.use("/forum", forumsRouter);
 
+app.use("/users", userRouter);
 
 app.listen(port, () => {
     console.log(`Server is running on http://localhost:${port}`);
