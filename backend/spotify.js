@@ -32,7 +32,7 @@ router.get("/login", function (req, res) {
   res.cookie(stateKey, state);
 
   // your application requests authorization
-  var scope = "user-read-private user-read-email user-top-read";
+  var scope = "user-read-private user-read-email user-top-read user-library-read";
   res.redirect(
     "https://accounts.spotify.com/authorize?" +
       querystring.stringify({
@@ -168,6 +168,27 @@ router.get('/user-info', (req, res) => {
     });
 });
 
+router.get('/liked-tracks', (req, res) => {
+  const accessToken = req.query.access_token;
+
+  if (!accessToken) {
+    return res.status(400).json({ error: 'Access token is required' });
+  }
+
+  const options = {
+      url: "https://api.spotify.com/v1/me/tracks",
+      headers: { Authorization: "Bearer " + accessToken },
+      json: true,
+  };
+
+  request.get(options, (error, response, body) => {
+    if (error) {
+      return res.status(500).json({ error: 'Failed to fetch users liked songs' });
+    }
+    res.status(200).json(body);
+  });
+});
+
 /* 
   Getting a user's top tracks
 */
@@ -212,6 +233,7 @@ router.get('/top-artists', (req, res) => {
       res.status(200).json(body);
     });
 });
+
 
 router.get('/artist', (req, res) => {
     const accessToken = req.query.access_token;
