@@ -9,6 +9,7 @@ export const Forum = () => {
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
   const [id, setId] = useState('');
+  const [mode, setMode] = useState('viewAll');
   
   async function fetchAllPosts() {
     const res = (await axios.get("http://localhost:5001/forum")).data;
@@ -36,9 +37,7 @@ export const Forum = () => {
     setId(localStorage.getItem('id'));
     fetchAllPosts();
     fetchMyPosts(); // Fetch user-specific posts on component mount
-  }, []);
-
-  const [mode, setMode] = useState('viewAll');
+  }, [mode]);
 
   const handleToggle = (newMode) => {
     setMode(newMode);
