@@ -151,7 +151,7 @@ router.get('/user-info', (req, res) => {
   
     const options = {
         url: "https://api.spotify.com/v1/me",
-        headers: { Authorization: "Bearer " + access_token },
+        headers: { Authorization: "Bearer " + accessToken },
         json: true,
     };
   

@@ -6,6 +6,7 @@ const Home = () => {
 
   /* After redirecting to Home set useContext variables */
   const { userData, login } = useContext(AuthContext);
+  
   useEffect(() => {
     if (userData === null) {
       const urlParams = new URLSearchParams(window.location.search);

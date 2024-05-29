@@ -15,8 +15,8 @@ export const TopSongs = () => {
         const response = await axios.get('http://localhost:5001/spotify/top-tracks', {
           params: { access_token: accessToken }
         })
-        setTopTracks(response.data.items);
-        console.log(response.data.items);
+        setTopTracks(response.data);
+        console.log(response.data);
       } catch (e) {
         console.error('Error fetching top tracks', e);
       }
