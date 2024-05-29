@@ -10,6 +10,9 @@ const querystring = require("querystring");
 const cookieParser = require("cookie-parser");
 const crypto = require("crypto");
 
+const db = require("./firebase");
+const { collection, getDocs, updateDoc, doc, setDoc, deleteDoc } = require("firebase/firestore");
+
 const port = 5001;
 
 const client_id = process.env.CLIENT_ID; // Your clientId
@@ -90,13 +93,15 @@ router.get("/callback", function (req, res) {
         const userInfoResponse = await requestGet(options);
         const userInfo = userInfoResponse.body;
 
+        const userDocRef = await setDoc(doc(db, "users", userInfo.id), {"spotify-data": userInfo})
+
         // we can also pass the token to the browser to make requests from there
         res.redirect(
           "http://localhost:5173/?" +
             querystring.stringify({
               access_token: access_token,
               refresh_token: refresh_token,
-              id: userInfo.id,
+              id: userInfo.id
             })
         );
       } else {
@@ -252,5 +257,14 @@ router.get('/artist', (req, res) => {
     });
 });
 
-
+router.delete("/logout/:id", async (req, res) => {
+  try {
+    console.log(req.params);
+    const id = req.params.id
+    await deleteDoc(doc(db, "users", id))
+    res.status(200).json({message: `Successfully deleted user`})
+} catch (e) {
+    res.status(400).json({ error: e.message });
+}
+})
 module.exports = router;
