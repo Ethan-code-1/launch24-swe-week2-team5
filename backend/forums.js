@@ -18,6 +18,7 @@ router.get("/", async (req, res) => {
                 posts.push(postData);
             })
         }));
+        console.log("all posts");
         res.status(200).json(posts);
     } catch (e) {
         res.status(400).json({ error: e.message });
@@ -35,6 +36,7 @@ router.get("/:id", async (req, res) => {
             postData.Date = postData.Date.toString();
             posts.push(postData);
         })
+        console.log(posts);
         res.status(200).json(posts);
     } catch (e) {
         res.status(400).json({ error: e.message });
