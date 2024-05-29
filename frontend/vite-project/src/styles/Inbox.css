@@ -170,7 +170,7 @@
 
   .messagesLayout {
   display: flex;
-  height: 80vh; 
+  height: 70vh; 
   border: 2px solid rgba(255, 255, 255, 0.229);
   background-color: #212121;
 
@@ -220,3 +220,17 @@ margin-top: 3vh;
   .emptyInboxMessage{
     font-size: 2rem;
   }
+
+  .messageHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .deleteIcon {
+    cursor: pointer;
+    color: white;
+    background: red;
+    border: 2px solid rgba(255, 255, 255, 0.522); 
+  }
+  

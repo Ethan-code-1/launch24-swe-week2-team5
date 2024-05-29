@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import '../styles/Inbox.css';
 import PersonIcon from '@mui/icons-material/Person'; 
-
+import DeleteIcon from '@mui/icons-material/Delete'; // Import the Delete icon
 
 export const Inbox = () => {
   const [mode, setMode] = useState('yourPosts'); 
@@ -24,6 +24,10 @@ export const Inbox = () => {
     if (newMode === 'yourPosts' && messages.length > 0) {
       setSelectedMessage(messages[0]);
     }
+  };
+
+  const handleDelete = () => {
+    console.log('delete message');
   };
 
   return (
@@ -59,14 +63,12 @@ export const Inbox = () => {
         {mode === 'yourPosts' ? (
           <div className="messagesLayout">
             <div className="messageList">
-                
               {messages.map(msg => (
                 <div key={msg.id} onClick={() => setSelectedMessage(msg)} className="messagePreview">
                     <div className="iconAndText">
                         <PersonIcon className="personIcon"></PersonIcon>
                         <span>
                         <strong>{msg.From}</strong>: {msg.Title.length > 20 ? msg.Title.substring(0, 17) + '...' : msg.Title}
-
                         </span>
                     </div>
                 </div>
@@ -76,17 +78,18 @@ export const Inbox = () => {
             <div className="messageContent">
               {selectedMessage ? (
                 <>
-                  <h3>Topic: {selectedMessage.Title}</h3>
-                  <hr className = 'forumPageHr'></hr>
+                  <div className="messageHeader">
+                    <h3>Topic: {selectedMessage.Title}</h3>
+                    <DeleteIcon className="deleteIcon" onClick={handleDelete} /> {/* Add the trash icon here */}
+                  </div>
+                  <hr className='forumPageHr'></hr>
                   <h5>From: {selectedMessage.From}</h5>
                   <br></br>
                   <h5>{selectedMessage.Content}</h5>
                 </>
-              ) : <p className = "emptyInboxMessage">Your message inbox is empty!</p>}
-              
+              ) : <p className="emptyInboxMessage">Your message inbox is empty!</p>}
             </div>
           </div>
-              
         ) : (
           <div className="postsOutsideContainer">
             <h3>Draft Message</h3>
