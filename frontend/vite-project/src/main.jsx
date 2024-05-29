@@ -18,6 +18,7 @@ import { TopSongs } from "./roots/TopSongs.jsx";
 import MyNavbar from "./components/Navbar.jsx";
 import { LikedSongs } from "./roots/LikedSongs.jsx";
 
+
 import { AuthProvider } from "./components/AuthContext.jsx";
 
 const router = createBrowserRouter([
@@ -51,6 +52,10 @@ const router = createBrowserRouter([
   },
   {
     path: "/liked-songs",
+    element: <MyNavbar></MyNavbar>,
+  },
+  {
+    path: "/Inbox",
     element: <MyNavbar></MyNavbar>,
   },
 ]);

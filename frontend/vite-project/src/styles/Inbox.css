@@ -1,0 +1,236 @@
+.toggle-link {
+    display: inline-block;
+    padding: 10px 20px;
+    margin-right: 10px;
+    text-decoration: none;
+    border-radius: 20px; 
+    color: white;
+    background: transparent;
+    border: 2px solid white; 
+    transition: 0.3s, color 0.3s;
+  }
+  
+  .toggle-link.active {
+    background: linear-gradient(90deg, #8A2BE2, #FF00FF);
+    color: white;
+    text-decoration: none; 
+  }
+  
+  .toggle-link:hover {
+    background: linear-gradient(90deg, #8A2BE2, #FF00FF);
+    color: white;
+    text-decoration: none; 
+  }
+  
+  .separator {
+    margin: 0 10px;
+    color: white; 
+  }
+  
+  .postsOutsideContainer {
+    margin-top: 4vh;
+    color: white;
+    padding: 20px;
+  }
+  
+  .postWrapper {
+    display: flex;
+    align-items: center; 
+    justify-content: start;
+  }
+  
+  .postBar {
+    width: 10px;
+    height: 22vh;
+    background: linear-gradient(180deg, #8A2BE2, #FF00FF);
+    margin-right: 20px;
+  }
+  
+  .postContainer {
+    background-color: #212121;
+    border-radius: 25px;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    flex-grow: 1;
+    border: 2px solid rgba(255, 255, 255, 0.229);
+    margin-top: 2vh;
+    margin-bottom: 2vh;
+    position: relative; 
+  }
+  
+  .postHeader {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+  }
+  
+  .postAuthor {
+    font-weight: bold;
+    font-size: 1.3rem;
+  }
+  
+  .postTitle {
+    font-size: 1.6rem;
+    font-weight: bold;
+  }
+  
+  .postBody {
+    margin-bottom: 10px;
+    font-size: 1rem;
+  }
+  
+  .postDate,
+  .postUpvotes {
+    text-align: right;
+    color: rgb(180, 179, 179);
+    font-size: 0.9rem;
+  }
+  
+  .forumPageHr {
+    border: 0;
+    height: 1px;
+    background: rgba(255, 255, 255, 0.229);
+    margin: 20px 0;
+  }
+  
+  .voteButtons {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-left: 20px;
+  }
+  
+  .voteButton {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 1.5rem;
+    cursor: pointer;
+    margin: 5px 0;
+  }
+  
+  #vote1:hover {
+    color: green;
+  }
+  
+  #vote2:hover {
+    color: red;
+  }
+  
+
+  .inputField {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 20px;
+    background: #333;
+    border: 2px solid transparent;
+    color: white;
+    border-radius: 4px;
+  }
+  
+  .inputField:focus, .inputField:active {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(138, 43, 226, 0.5), 
+                 0 0 0 4px #8A2BE2, 
+                 0 0 0 5px rgba(255, 0, 255, 0.5); 
+    background: #333; 
+  }
+  
+  .submitButton {
+    padding: 10px 20px;
+    background: linear-gradient(90deg, #8A2BE2, #FF00FF);
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  #titleField{
+    height: 5vh;
+    font-size: 2.25rem;
+  }
+
+  #contentField {
+    height: 40vh;
+    font-size: 1.25rem;
+  }
+
+  #submitForum{
+    font-size: 1.25rem;
+  }
+
+
+  .messageSeparator {
+    width: 5px; 
+    background: linear-gradient(90deg, #8A2BE2, #FF00FF);
+    margin-left: 2vh;
+    margin-right: 2vh;
+  }
+
+  .messagesLayout {
+  display: flex;
+  height: 70vh; 
+  border: 2px solid rgba(255, 255, 255, 0.229);
+  background-color: #212121;
+
+margin-top: 3vh;
+}
+
+.messageList {
+    color: white; 
+  flex: 1;
+  background-color: #212121;
+  overflow-y: auto;
+  padding: 10px;
+  
+}
+
+.messageContent {
+  flex: 2;
+  background-color: #212121;
+  padding: 20px;
+  overflow-y: auto;
+  color: white; 
+  
+
+}
+
+.messagePreview {
+  padding: 10px;
+  cursor: pointer;
+  border-bottom: 1px solid #ccc;
+  font-size: 1.25rem;
+}
+
+.messagePreview:hover {
+  background-color: #6b6b6b;
+}
+
+.personIcon {
+    margin-right: 10px; 
+    background: linear-gradient(90deg, #8A2BE2, #FF00FF); 
+  }
+  
+  .iconAndText {
+    display: flex;
+    align-items: center;
+  }
+
+  .emptyInboxMessage{
+    font-size: 2rem;
+  }
+
+  .messageHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .deleteIcon {
+    cursor: pointer;
+    color: white;
+    background: red;
+    border: 2px solid rgba(255, 255, 255, 0.522); 
+  }
+  
