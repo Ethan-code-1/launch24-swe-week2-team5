@@ -3,9 +3,10 @@ import { AuthContext } from "../components/AuthContext";
 
 const Home = () => {
   const [messages, setMessages] = useState([]);
-
+    const [id, setId] = useState('');
   /* After redirecting to Home set useContext variables */
-  const { userData, login } = useContext(AuthContext);
+  const { userData, login, logout } = useContext(AuthContext);
+  
   
   useEffect(() => {
     if (userData === null) {
@@ -14,6 +15,8 @@ const Home = () => {
       const refresh_token = urlParams.get("refresh_token");
       const id = urlParams.get("id");
       const error = urlParams.get("error");
+
+      setId(id);
 
       if (error) {
         alert("There was an error during the authentication");
@@ -43,6 +46,7 @@ const Home = () => {
           <li key={message.id}>{message.name}</li>
         ))}
       </ul>
+      {userData ? <button onClick={() => logout({id})}>logout</button>: null}
     </div>
   );
 };
