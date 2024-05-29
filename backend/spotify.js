@@ -282,7 +282,7 @@ router.get('/top-artists', (req, res) => {
   
     if (!accessToken) {
       return res.status(400).json({ error: 'Access token is required' });
-
+    }
     const options = {
       url: `https://api.spotify.com/v1/me/top/artists?time_range=${timeRange}`,
       headers: { 'Authorization': 'Bearer ' + accessToken },
@@ -295,7 +295,7 @@ router.get('/top-artists', (req, res) => {
       }
       res.status(200).json(body);
     });
-}});
+});
 
 async function storeTopArtists(accessToken, id) {
   if (!accessToken) {
