@@ -202,3 +202,13 @@ margin-top: 3vh;
 .messagePreview:hover {
   background-color: #6b6b6b;
 }
+
+.personIcon {
+    margin-right: 10px; 
+    background: linear-gradient(90deg, #8A2BE2, #FF00FF); 
+  }
+  
+  .iconAndText {
+    display: flex;
+    align-items: center;
+  }

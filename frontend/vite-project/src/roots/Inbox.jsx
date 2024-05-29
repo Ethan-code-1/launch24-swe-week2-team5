@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import '../styles/Inbox.css';
+import PersonIcon from '@mui/icons-material/Person'; 
+
 
 export const Inbox = () => {
   const [mode, setMode] = useState('yourPosts'); 
@@ -58,7 +60,13 @@ export const Inbox = () => {
                 
               {messages.map(msg => (
                 <div key={msg.id} onClick={() => setSelectedMessage(msg)} className="messagePreview">
-                  <strong>{msg.From}</strong>: {msg.Title.length > 20 ? msg.Title.substring(0, 17) + '...' : msg.Title}
+                    <div className="iconAndText">
+                        <PersonIcon className="personIcon"></PersonIcon>
+                        <span>
+                        <strong>{msg.From}</strong>: {msg.Title.length > 20 ? msg.Title.substring(0, 17) + '...' : msg.Title}
+
+                        </span>
+                    </div>
                 </div>
               ))}
             </div>
