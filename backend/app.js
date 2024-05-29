@@ -2,6 +2,7 @@
 const express = require("express");
 const spotifyRouter = require('./spotify');
 const forumsRouter = require('./forums')
+const userRouter = require('./users');
 const app = express();
 const port = 5001;
 app.use(express.json());
