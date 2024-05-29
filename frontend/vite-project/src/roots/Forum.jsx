@@ -1,9 +1,10 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useContext } from 'react'
 import React from 'react'
 import axios from "axios";
 
 export const Forum = () => {
   const [posts, setPosts] = useState([])
+  const [id, setId] = useState('');
 
   async function fetchData() {
     const res = (await axios.get("http://localhost:5001/forum")).data;
@@ -13,6 +14,7 @@ export const Forum = () => {
 
   useEffect(() => {
     fetchData();
+    setId(localStorage.getItem("id"));
   }, [])
 
   return (
@@ -20,17 +22,9 @@ export const Forum = () => {
       <h1>Forum Page</h1>
       {
         posts.map((post) => {
-          return <h3>{post["title"]}</h3>
+          return <h3>{post["Title"]}</h3>
         })
       }
-       {/* <label>Post title</label>
-          <input type="text"></input>
-          <br></br>
-          <br></br>
-          <label>Post content</label>
-          <input type="text"></input>
-          <br></br>
-          <br></br> */}
     </div>
   )
 }
