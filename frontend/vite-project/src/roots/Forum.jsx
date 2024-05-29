@@ -1,7 +1,22 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import '../styles/Forum.css';
+import axios from "axios";
 
 export const Forum = () => {
+
+  const [posts, setPosts] = useState([])
+
+  async function fetchData() {
+    const res = (await axios.get("http://localhost:5001/forum")).data;
+    console.log(res);
+    setPosts(res);
+  }
+
+  useEffect(() => {
+    fetchData();
+  }, [])
+
+
   const [mode, setMode] = useState('viewAll');
 
   const handleToggle = (newMode) => {
