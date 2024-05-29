@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useContext } from "react";
 import { AuthContext } from "../components/AuthContext";
+import Auth from '../components/Auth'
 
 const Home = () => {
   const [messages, setMessages] = useState([]);
@@ -41,6 +42,7 @@ const Home = () => {
     <div>
       <h1>Home</h1>
       <button onClick={fetchMessages}>Fetch Messages</button>
+      <Auth/>
       <ul>
         {messages.map((message) => (
           <li key={message.id}>{message.name}</li>

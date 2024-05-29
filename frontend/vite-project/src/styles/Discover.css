@@ -1,90 +1,149 @@
 .discover-link {
-    text-decoration: none;
-    color: white;
-    font-size: 18px;
-    margin-right: 20px;
-  }
+  text-decoration: none;
+  color: white;
+  font-size: 30px;
+  margin-right: 20px;
+}
+
+.discover-link:hover {
+  color: gray;
+  text-decoration: none;
+}
+
+.discover-link:active {
+  color: purple;
+  text-decoration: none;
+}
+
+.following-link {
+  text-decoration: none;
+  color: white;
+  font-size: 30px;
+  margin-right: 20px;
+}
+
+.following-link:hover {
+  color: gray;
+  text-decoration: none;
+}
+
+.following-link:active {
+  color: purple;
+  text-decoration: none;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f0f0f0;
+  margin: 0;
+  padding: 0;
+}
+
+.links-container {
+  display: flex;
+  justify-content: left;
   
-  .discover-link:hover {
-    color: gray;
-    text-decoration: none;
-  }
-  
-  .discover-link:active {
-    color: purple;
-    text-decoration: none;
-  }
-  
-  .following-link {
-    text-decoration: none;
-    color: white;
-    font-size: 18px;
-    margin-right: 20px;
-  }
-  
-  .following-link:hover {
-    color: gray;
-    text-decoration: none;
-  }
-  
-  .following-link:active {
-    color: purple;
-    text-decoration: none;
-  }
-  
-  body {
-    font-family: Arial, sans-serif;
-    background-color: #f0f0f0;
-    margin: 0;
-    padding: 0;
-  }
-  
-  .links-container {
-    display: flex;
-    justify-content: center;
-  }
-  
-  .Discography {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: flex-start;
-    gap: 20px; /* Space between items */
-    padding: 20px;
-  }
-  
-  .IndividualProfile {
-    width: 200px;
-    background-color: #3a3a3a;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 20px;
-    margin: 20px;
-    color: white;
-    font-family: Arial, sans-serif;
-    position: relative;
-  }
-  
-  .profile-image {
-    width: 100%;
-    height: auto;
-    background-color: #d3d3d3;
-    border-radius: 10px;
-    margin-bottom: 20px;
-  }
-  
-  .profile-name {
-    font-size: 18px;
-    margin-bottom: auto;
-  }
-  
-  .profile-chat-icon {
-    font-size: 20px;
-    position: absolute;
-    bottom: 10px;
-    right: 10px;
-    cursor: pointer;
-  }
-  
+}
+
+.Discography {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  gap: 20px; /* Space between items */
+  padding: 20px;
+}
+
+.IndividualProfile {
+  width: 200px;
+  background-color: #3a3a3a;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+  margin: 20px;
+  color: white;
+  font-family: Arial, sans-serif;
+  position: relative;
+  text-decoration: none; /* No underline for links */
+  transition: transform 0.2s;
+}
+
+.IndividualProfile:hover {
+  transform: scale(1.05);
+}
+
+.profile-link {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-decoration: none;
+  color: white;
+  width: 100%;
+}
+.profile-link:hover{
+  color:gray;
+  text-decoration:underline;
+}
+
+.profile-image {
+  width: 100%;
+  height: auto;
+  background-color: #d3d3d3;
+  border-radius: 10px;
+  margin-bottom: 20px;
+}
+
+.profile-name {
+  font-size: 18px;
+  margin-bottom: auto;
+}
+
+.profile-name:hover {
+  text-decoration: underline;
+}
+
+.profile-chat-icon {
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+  cursor: pointer;
+  text-decoration: none;
+  color: white;
+}
+
+.profile-chat-icon:hover {
+  text-decoration: underline;
+}
+
+.chat-bubble {
+  width: 24px;
+  height: 17px;
+  background: white;
+  border-radius: 10px;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+	border-radius: .4em;
+  font-size:10px;
+  bottom: 15px;
+  right: 5px;
+}
+
+.chat-bubble:after {
+	content: '';
+	position: absolute;
+	bottom: 0;
+	left: 50%;
+	width: 0;
+	height: 0;
+	border: 0.813em solid transparent;
+	border-top-color: white;
+	border-bottom: 0;
+	border-left: 0;
+	margin-left: -0.3em;
+	margin-bottom: -0.5em;
+}
