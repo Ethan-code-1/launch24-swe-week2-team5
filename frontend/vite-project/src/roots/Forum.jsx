@@ -6,6 +6,8 @@ import axios from "axios";
 export const Forum = () => {
   const [posts, setPosts] = useState([]);
   const [myPosts, setMyPosts] = useState([]);
+  const [title, setTitle] = useState('');
+  const [content, setContent] = useState('');
   const [id, setId] = useState('');
   
   async function fetchAllPosts() {
@@ -20,7 +22,8 @@ export const Forum = () => {
 
   function handleSubmit(e) {
     e.preventDefault();
-    console.log(e);
+    console.log(title);
+    console.log(content)
   }
 
   useEffect(() => {
@@ -130,8 +133,17 @@ export const Forum = () => {
             <hr className="forumPageHr" />
 
             <form onSubmit={handleSubmit}>
-              <input id="titleField" type="text" placeholder="Title" className="inputField"/>
-              <textarea id="contentField" placeholder="Content" className="inputField"/>
+              <input id="titleField" 
+                type="text" 
+                placeholder="Title" 
+                className="inputField" 
+                onChange={(e) => setTitle(e.target.value)}
+              />
+              <textarea id="contentField" 
+                placeholder="Content" 
+                className="inputField" 
+                onChange={(e) => setContent(e.target.value)}
+              />
               <button id="submitForum" type="submit" className="submitButton">Submit Post</button>
             </form>
           </div>

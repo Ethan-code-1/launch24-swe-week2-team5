@@ -35,4 +35,16 @@ router.get("/:id", async (req, res) => {
     }
 })
 
+app.post("/message", async (req, res) => {
+    try {
+        const docRef = await addDoc(collection(db, "messages"), {
+            title: req.body.title,
+            content: req.body.content,
+        });
+        res.status(200).json({message: `Successfully created message with id ${docRef.id}`})
+    } catch (e) {
+        res.status(400).json({ error: e.message });
+    }
+})
+
 module.exports = router;
