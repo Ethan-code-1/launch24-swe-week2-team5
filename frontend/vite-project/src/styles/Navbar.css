@@ -1,5 +1,5 @@
 body {
-    background-color: #fbfbfb;
+    background-color: black;
   }
   
   @media (min-width: 992px) {
@@ -48,8 +48,9 @@ body {
 
   .centerContentContainer{
     background-color: #000000;
+    height: 100%;
   }
 
-  body{
+  /* body{
     color: white; 
-  }
+  } */

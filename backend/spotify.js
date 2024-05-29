@@ -173,27 +173,27 @@ router.get('/user-info', (req, res) => {
     });
 });
 
-// router.get('/liked-tracks', (req, res) => {
-//   const accessToken = req.query.access_token;
+router.get('/liked-tracks', (req, res) => {
+  const accessToken = req.query.access_token;
 
-//   if (!accessToken) {
-//     return res.status(400).json({ error: 'Access token is required' });
-//   }
+  if (!accessToken) {
+    return res.status(400).json({ error: 'Access token is required' });
+  }
 
-//   const options = {
-//       url: "https://api.spotify.com/v1/me/tracks",
-//       headers: { Authorization: "Bearer " + accessToken },
-//       json: true,
-//   };
+  const options = {
+      url: "https://api.spotify.com/v1/me/tracks",
+      headers: { Authorization: "Bearer " + accessToken },
+      json: true,
+  };
 
-//   request.get(options, (error, response, body) => {
-//     if (error) {
-//       return res.status(500).json({ error: 'Failed to fetch users liked songs' });
-//     }
-//     console.log("liked-tracks", body);
-//     res.status(200).json(body);
-//   });
-// });
+  request.get(options, (error, response, body) => {
+    if (error) {
+      return res.status(500).json({ error: 'Failed to fetch users liked songs' });
+    }
+    console.log("liked-tracks", body);
+    res.status(200).json(body);
+  });
+});
 
 function pruneSongs(song) {
   let newSong = {"id": song['id'], "href": song['href'], "name": song['name'], "uri": song['uri']}
@@ -229,26 +229,29 @@ async function storeLikedTracks(accessToken, id) {
 /* 
   Getting a user's top tracks
 */
-// router.get('/top-tracks', (req, res) => {
-//     const accessToken = req.query.access_token;
+router.get('/top-tracks', (req, res) => {
+    const accessToken = req.query.access_token;
+    const timeRange = req.query.time_range || 'medium_term';
+
   
-//     if (!accessToken) {
-//       return res.status(400).json({ error: 'Access token is required' });
-//     }
+    if (!accessToken) {
+      return res.status(400).json({ error: 'Access token is required' });
+    }
   
-//     const options = {
-//       url: 'https://api.spotify.com/v1/me/top/tracks',
-//       headers: { 'Authorization': 'Bearer ' + accessToken },
-//       json: true
-//     };
+    const options = {
+      url: `https://api.spotify.com/v1/me/top/tracks?time_range=${timeRange}`,
+      headers: { 'Authorization': 'Bearer ' + accessToken },
+      json: true
+    };
+
   
-//     request.get(options, (error, response, body) => {
-//       if (error) {
-//         return res.status(500).json({ error: 'Failed to fetch top tracks' });
-//       }
-//       res.status(200).json(body);
-//     });
-// });
+    request.get(options, (error, response, body) => {
+      if (error) {
+        return res.status(500).json({ error: 'Failed to fetch top tracks' });
+      }
+      res.status(200).json(body);
+    });
+});
 
 async function storeTopTracks(accessToken, id) {
   if (!accessToken) {
@@ -273,26 +276,26 @@ async function storeTopTracks(accessToken, id) {
   });
 }
 
-// router.get('/top-artists', (req, res) => {
-//     const accessToken = req.query.access_token;
+router.get('/top-artists', (req, res) => {
+    const accessToken = req.query.access_token;
+    const timeRange = req.query.time_range || 'medium_term';
   
-//     if (!accessToken) {
-//       return res.status(400).json({ error: 'Access token is required' });
-//     }
+    if (!accessToken) {
+      return res.status(400).json({ error: 'Access token is required' });
+
+    const options = {
+      url: `https://api.spotify.com/v1/me/top/artists?time_range=${timeRange}`,
+      headers: { 'Authorization': 'Bearer ' + accessToken },
+      json: true
+    };
   
-//     const options = {
-//       url: 'https://api.spotify.com/v1/me/top/artists',
-//       headers: { 'Authorization': 'Bearer ' + accessToken },
-//       json: true
-//     };
-  
-//     request.get(options, (error, response, body) => {
-//       if (error) {
-//         return res.status(500).json({ error: 'Failed to fetch top artists' });
-//       }
-//       res.status(200).json(body);
-//     });
-// });
+    request.get(options, (error, response, body) => {
+      if (error) {
+        return res.status(500).json({ error: 'Failed to fetch top artists' });
+      }
+      res.status(200).json(body);
+    });
+});
 
 async function storeTopArtists(accessToken, id) {
   if (!accessToken) {
