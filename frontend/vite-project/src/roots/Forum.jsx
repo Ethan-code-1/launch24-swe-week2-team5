@@ -4,12 +4,12 @@ import axios from "axios";
 
 export const Forum = () => {
 
-  const [posts, setPosts] = useState([])
+  const [myPosts, setMyPosts] = useState([])
 
   async function fetchData() {
     const res = (await axios.get("http://localhost:5001/forum")).data;
     console.log(res);
-    setPosts(res);
+    setMyPosts(res);
   }
 
   useEffect(() => {
@@ -68,29 +68,27 @@ export const Forum = () => {
       <div>
         {mode === 'yourPosts' ? (
           <div className="postsOutsideContainer">
-            <h3>Your Posts</h3>
-
-            <hr className="forumPageHr" />
-
-            <div className="postWrapper">
+          <h3>Your Posts</h3>
+          <hr className="forumPageHr" />
+          {myPosts.map(post => (
+            <div key={post.id} className="postWrapper">
               <div className="postBar"></div>
               <div className="postContainer">
                 <div className="postHeader">
-                  <span className="postTitle">This is your post</span>
-                  <span className="postAuthor">Your Username</span>
+                  <span className="postTitle">{post.Title}</span>
+                  <span className="postAuthor">{post.Author}</span>
                 </div>
-                <div className="postBody">
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                </div>
-                <div className="postDate">Posted on May 28, 2024</div>
-                <div className="postUpvotes">Upvotes: 123</div>
+                <div className="postBody">{post.Content}</div>
+                <div className="postDate">Posted on {post.Date}</div>
+                <div className="postUpvotes">Upvotes: {post.Votes}</div>
               </div>
               <div className="voteButtons">
                 <button id="vote1" className="voteButton">⬆</button>
                 <button id="vote2" className="voteButton">⬇</button>
               </div>
             </div>
-          </div>
+          ))}
+        </div>
         ) : mode === 'viewAll' ? (
           <div className="postsOutsideContainer">
             <h3>All Posts</h3>
