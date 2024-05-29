@@ -1,0 +1,66 @@
+/* styles/Topartists.css */
+
+#top-artist-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+    justify-content: center;
+    padding: 20px;
+    background-color: black; 
+}
+
+.artist-button {
+    background-color: black;
+    border: none;
+    padding: 20px;
+    cursor: pointer;
+    width: 100%;
+    text-align: center;
+    border-radius: 10px;
+    transition: transform 0.1s, background-color 0.1s;
+}
+
+.artist-button:hover {
+    transform: scale(1.05);
+    background-color: #333;
+}
+
+.top-artist {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.artist {
+    object-fit: cover;
+    object-position: top center;
+    border-radius: 50%;
+    width: 150px;
+    height: 150px;
+}
+
+.top-artist p {
+    color: white;
+    margin-top: 10px;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+#title {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+
+#timeselector {
+    background-color: rgb(43, 43, 43);
+    max-height: 50%;
+}
+
+.custom-select {
+    background-color: rgb(34, 34, 34);
+    height: 2.75em;
+    width: 9em;
+    border-radius: 10px;
+    color: white;
+}
