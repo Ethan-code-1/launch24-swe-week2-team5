@@ -14,11 +14,17 @@ export const Forum = () => {
   }
 
   async function fetchMyPosts() {
-    const res = (await axios.get("http://localhost:5001/myforum")).data; // Assuming 'myforum' is the route for user-specific posts
+    const res = (await axios.get(`http://localhost:5001/forum/${id}`)).data; // Assuming 'myforum' is the route for user-specific posts
     setMyPosts(res);
   }
 
+  function handleSubmit(e) {
+    e.preventDefault();
+    console.log(e);
+  }
+
   useEffect(() => {
+    setId(localStorage.getItem('id'));
     fetchAllPosts();
     fetchMyPosts(); // Fetch user-specific posts on component mount
   }, []);
@@ -123,7 +129,7 @@ export const Forum = () => {
             <h3>Draft New Post</h3>
             <hr className="forumPageHr" />
 
-            <form>
+            <form onSubmit={handleSubmit}>
               <input id="titleField" type="text" placeholder="Title" className="inputField"/>
               <textarea id="contentField" placeholder="Content" className="inputField"/>
               <button id="submitForum" type="submit" className="submitButton">Submit Post</button>

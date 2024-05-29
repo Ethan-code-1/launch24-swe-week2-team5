@@ -21,4 +21,18 @@ router.get("/", async (req, res) => {
     }
 })
 
+router.get("/:id", async (req, res) => {
+    try {
+        const id = req.params.id;
+        let posts = []
+        const userPosts = await getDocs(collection(db, "users", id, "posts"));
+        userPosts.forEach((post) => {
+            posts.push(post.data());
+        })
+        res.status(200).json(posts);
+    } catch (e) {
+        res.status(400).json({ error: e.message });
+    }
+})
+
 module.exports = router;
