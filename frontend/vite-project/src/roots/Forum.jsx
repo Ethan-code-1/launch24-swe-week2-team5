@@ -20,10 +20,16 @@ export const Forum = () => {
     setMyPosts(res);
   }
 
-  function handleSubmit(e) {
+  async function handleSubmit(e) {
     e.preventDefault();
-    console.log(title);
-    console.log(content)
+    const body = {
+          title: title,
+          content: content,
+          date: Date.now()
+    };
+      const response = await axios.post(`http://localhost:5001/forum/${id}`, body);
+      console.log(response)
+      location.reload();
   }
 
   useEffect(() => {
