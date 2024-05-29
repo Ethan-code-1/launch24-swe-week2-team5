@@ -194,13 +194,14 @@ router.get('/liked-tracks', (req, res) => {
 */
 router.get('/top-tracks', (req, res) => {
     const accessToken = req.query.access_token;
+    const timeRange = req.query.time_range || 'medium_term';
   
     if (!accessToken) {
       return res.status(400).json({ error: 'Access token is required' });
     }
   
     const options = {
-      url: 'https://api.spotify.com/v1/me/top/tracks',
+      url: `https://api.spotify.com/v1/me/top/tracks?time_range=${timeRange}`,
       headers: { 'Authorization': 'Bearer ' + accessToken },
       json: true
     };
@@ -215,13 +216,14 @@ router.get('/top-tracks', (req, res) => {
 
 router.get('/top-artists', (req, res) => {
     const accessToken = req.query.access_token;
+    const timeRange = req.query.time_range || 'medium_term';
   
     if (!accessToken) {
       return res.status(400).json({ error: 'Access token is required' });
     }
   
     const options = {
-      url: 'https://api.spotify.com/v1/me/top/artists',
+      url: `https://api.spotify.com/v1/me/top/artists?time_range=${timeRange}`,
       headers: { 'Authorization': 'Bearer ' + accessToken },
       json: true
     };
