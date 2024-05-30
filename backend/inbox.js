@@ -11,9 +11,9 @@ router.get("/:id", async (req, res) => {
         const usermsgs = await getDocs(collection(db, "users", id, "Inbox"));
         await Promise.all(usermsgs.docs.map(async (msg) => {
             const msgData = msg.data();
-            const fromDoc = await getDocs(query(collection(db, "users"), where("username", "==", msgData.From)))
-            const fromId = fromDoc.docs[0].id;
-            const senderName = (await getDoc(doc(db, "users", fromId))).data()["username"];
+            // const fromDoc = await getDocs(query(collection(db, "users"), where("username", "==", msgData.From)))
+            // const fromId = fromDoc.docs[0].id;
+            const senderName = (await getDoc(doc(db, "users", msgData.From))).data()["username"];
             msgData["From"] = senderName;
             msgData['id'] = msg.id;
             msgs.push(msgData);
@@ -40,9 +40,10 @@ router.post("/:id", async (req, res) => {
     try {
         const id = req.params.id;
         const newMsg = req.body;
+        console.log(newMsg.to);
         const toDoc = await getDocs(query(collection(db, "users"), where("username", "==", newMsg.to)))
         const toId = toDoc.docs[0].id;
-        const senderId = (await getDoc(doc(db, "users", id))).data()["username"];
+        const senderId = (await getDoc(doc(db, "users", id))).id;
         const msg = {
             "Title": newMsg.title,
             "Content": newMsg.content,
