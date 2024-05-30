@@ -1,21 +1,19 @@
 import React, { useState, useEffect, useContext } from 'react';
 import axios from 'axios';
-import { Table, Input, IconButton, Drawer } from 'rsuite';
-import CloseOutlineIcon from '@rsuite/icons/CloseOutline';
-import ShieldIcon from '@rsuite/icons/Shield';
+import { Input, Drawer, IconButton } from 'rsuite';
 import SearchIcon from '@rsuite/icons/Search';
+import CloseOutlineIcon from '@rsuite/icons/CloseOutline';
 import { AuthContext } from '../components/AuthContext';
 import '../styles/LikedSongs.css';
 
-const { Column, HeaderCell, Cell } = Table;
-
 export const LikedSongs = () => {
   const { userData } = useContext(AuthContext);
+  const [likedSongs, setLikedSongs] = useState([]);
+  const [searchQuery, setSearchQuery] = useState('');
   const [selectedSong, setSelectedSong] = useState(null);
   const [isPanelOpen, setIsPanelOpen] = useState(false);
-  const [searchQuery, setSearchQuery] = useState('');
-  const [likedSongs, setLikedSongs] = useState([]); // Initialize as an empty array
   const [artistInfo, setArtistInfo] = useState(null);
+  const [loading, setLoading] = useState(true);
   const accessToken = localStorage.getItem('access_token');
 
   useEffect(() => {
@@ -27,6 +25,8 @@ export const LikedSongs = () => {
         setLikedSongs(response.data.items);
       } catch (error) {
         console.error('Error fetching liked songs', error);
+      } finally {
+        setLoading(false);
       }
     };
 
@@ -34,6 +34,10 @@ export const LikedSongs = () => {
       fetchLikedSongs();
     }
   }, [accessToken]);
+
+  const handleSearchChange = (value) => {
+    setSearchQuery(value);
+  };
 
   const handleSongClick = async (song) => {
     setSelectedSong(song.track);
@@ -55,10 +59,6 @@ export const LikedSongs = () => {
     setIsPanelOpen(false);
   };
 
-  const handleSearchChange = (value) => {
-    setSearchQuery(value);
-  };
-
   const filteredSongs = likedSongs?.filter(song =>
     song.track.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
     song.track.album.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -69,12 +69,9 @@ export const LikedSongs = () => {
     <div className="liked-songs-container">
       <div className="banner">
         <div className="banner-content">
-          <div className="banner-image">
-            <ShieldIcon style={{ fontSize: 100, color: 'white' }} />
-          </div>
           <div className="banner-text">
             <h1>Liked Songs</h1>
-            <p>{likedSongs.length} songs</p>
+            <p>{filteredSongs.length} songs</p>
           </div>
         </div>
       </div>
@@ -88,51 +85,53 @@ export const LikedSongs = () => {
             className="search-input"
           />
         </div>
-        <Table data={filteredSongs} height={600} className="songs-table">
-          <Column width={50} align="center" fixed>
-            <HeaderCell>#</HeaderCell>
-            <Cell>{rowData => likedSongs.indexOf(rowData) + 1}</Cell>
-          </Column>
-          <Column width={60} align="center" fixed>
-            <HeaderCell>Cover</HeaderCell>
-            <Cell>{rowData => <img src={rowData.track.album.images[0].url} alt={rowData.track.name} className="table-cover-img" />}</Cell>
-          </Column>
-          <Column flexGrow={1} fixed>
-            <HeaderCell>Title</HeaderCell>
-            <Cell>{rowData => rowData.track.name}</Cell>
-          </Column>
-          <Column flexGrow={1}>
-            <HeaderCell>Album</HeaderCell>
-            <Cell>{rowData => rowData.track.album.name}</Cell>
-          </Column>
-          <Column flexGrow={1}>
-            <HeaderCell>Artist</HeaderCell>
-            <Cell>
-              {rowData => (
-                <span className="artist-name" onClick={() => handleSongClick(rowData)}>
-                  {rowData.track.artists.map(artist => artist.name).join(', ')}
-                </span>
-              )}
-            </Cell>
-          </Column>
-          <Column width={100} align="center">
-            <HeaderCell>Action</HeaderCell>
-            <Cell>{rowData => <IconButton icon={<ShieldIcon />} color="blue" appearance="subtle" />}</Cell>
-          </Column>
-        </Table>
+        {loading ? (
+          <div className="loader"></div>
+        ) : (
+          <>
+            <div className="table-header">
+              <div className="column-number">#</div>
+              <div className="column-cover">Cover</div>
+              <div className="column-title">Title</div>
+              <div className="column-album">Album</div>
+              <div className="column-artist">Artist</div>
+            </div>
+            {filteredSongs?.map((song, index) => (
+              <div
+                key={song.track.id}
+                className="song-row"
+                onClick={() => handleSongClick(song)}
+              >
+                <div className="column-number">{index + 1}</div>
+                <div className="column-cover">
+                  <img
+                    src={song.track.album.images[0].url}
+                    alt={song.track.name}
+                    className="song-cover"
+                  />
+                </div>
+                <div className="column-title">{song.track.name}</div>
+                <div className="column-album">{song.track.album.name}</div>
+                <div className="column-artist">
+                  {song.track.artists.map(artist => artist.name).join(', ')}
+                </div>
+              </div>
+            ))}
+          </>
+        )}
       </div>
       <Drawer placement="right" size="sm" open={isPanelOpen} onClose={closePanel}>
         {selectedSong && (
           <div className="artist-panel">
             <IconButton icon={<CloseOutlineIcon />} className="close-btn" onClick={closePanel} />
             <div className="artist-panel-content">
-              <div className="panel-card">
-                <img src={selectedSong.album.images[0].url} alt={selectedSong.name} className="panel-cover-img"/>
-                <h2>{selectedSong.album.name}</h2>
-                <h3>{selectedSong.name}</h3>
+              <div className="panel-card" onClick={() => window.open(selectedSong.external_urls.spotify, "_blank")}>
+                <img src={selectedSong.album.images[0].url} alt={selectedSong.name} className="panel-cover-img" />
+                <h2>{selectedSong.name}</h2>
+                <div className="album-name">{selectedSong.album.name}</div>
               </div>
               {artistInfo && (
-                <div className="panel-card">
+                <div className="panel-card" onClick={() => window.open(artistInfo.external_urls.spotify, "_blank")}>
                   <img src={artistInfo.images[0].url} alt={artistInfo.name} className="artist-img" />
                   <h3>{artistInfo.name}</h3>
                 </div>
