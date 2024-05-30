@@ -40,14 +40,8 @@ const Home = () => {
 
   return (
     <div>
-      <h1>Home</h1>
-      <button onClick={fetchMessages}>Fetch Messages</button>
       <Auth/>
-      <ul>
-        {messages.map((message) => (
-          <li key={message.id}>{message.name}</li>
-        ))}
-      </ul>
+      
       {userData ? <button onClick={() => logout({id})}>logout</button>: null}
     </div>
   );
