@@ -1,17 +1,44 @@
 .profile-container {
-    width: 100%;
-    padding: 20px;
-    box-sizing: border-box;
-    overflow-x: hidden;
-  }
-  
-  .banner {
-    display: flex;
-    align-items: center;
-    justify-content: start;
-    background: linear-gradient(90deg, #8A2BE2, #FF00FF);
-    color: white;
-    padding: 20px;
-    width: 100%;
-  }
-  
+  width: 100%;
+  padding: 20px;
+  box-sizing: border-box;
+  overflow-x: hidden;
+}
+
+.banner {
+  display: flex;
+  align-items: center;
+  justify-content: start;
+  background: linear-gradient(90deg, #8A2BE2, #FF00FF);
+  color: white;
+  padding: 20px;
+  width: 100%;
+}
+
+.song {
+
+  object-fit: cover;
+  object-position: top center;
+  border-radius: 5px;
+  width: 200px;
+  height: 200px;
+}
+
+.profile {
+display: flex;
+align-items: center;
+justify-content: start;
+color: white;
+padding: 20px;
+width: 100%;
+gap: 20px;
+/* margin-bottom: 30px; */
+}
+
+hr.solid {
+border-top: 3px solid #555555;
+}
+
+#edit-button {
+background-color: none;
+}

@@ -11,7 +11,7 @@ const cookieParser = require("cookie-parser");
 const crypto = require("crypto");
 
 const db = require("./firebase");
-const { collection, getDocs, updateDoc, doc, setDoc, deleteDoc } = require("firebase/firestore");
+const { collection, getDocs, updateDoc, doc, setDoc, deleteDoc, getDoc } = require("firebase/firestore");
 
 const port = 5001;
 
@@ -93,10 +93,14 @@ router.get("/callback", function (req, res) {
         const userInfoResponse = await requestGet(options);
         const userInfo = userInfoResponse.body;
 
-        // update firebase with user info
-        console.log(userInfo);
-        await setDoc(doc(db, "users", userInfo.id), {"spotify-data": userInfo, "username": userInfo["display_name"]})
-
+        // update firebase user info
+        const userDoc = (await getDoc(doc(db, "users", userInfo.id))).data();
+        if (userDoc && userDoc["username"]) {
+          await updateDoc(doc(db, "users", userInfo.id), {"spotify-data": userInfo});
+        } else {
+          await setDoc(doc(db, "users", userInfo.id), {"spotify-data": userInfo, "username": userInfo["display_name"]});
+        }
+        
         await storeLikedTracks(access_token, userInfo.id);
         await storeTopTracks(access_token, userInfo.id);
         await storeTopArtists(access_token, userInfo.id);
@@ -191,7 +195,8 @@ router.get('/liked-tracks', (req, res) => {
     if (error) {
       return res.status(500).json({ error: 'Failed to fetch users liked songs' });
     }
-    console.log("liked-tracks", body);
+    // console.log("liked-tracks", body);
+    // console.log("liked-tracks", body);
     res.status(200).json(body);
   });
 });
@@ -344,9 +349,14 @@ router.get('/artist', (req, res) => {
 router.delete("/logout/:id", async (req, res) => {
   try {
     console.log(req.params);
-    const id = req.params.id
-    await deleteDoc(doc(db, "users", id))
-    res.status(200).json({message: `Successfully deleted user`})
+    const id = req.params.id;
+    const userDoc = (await getDoc(doc(db, "users", id))).data();
+    delete userDoc["liked-tracks"];
+    delete userDoc["spotify-data"];
+    delete userDoc["top-artists"];
+    delete userDoc["top-tracks"];
+    await setDoc(doc(db, "users", id), userDoc);
+    res.status(200).json({message: `Successfully logged out`})
 } catch (e) {
     res.status(400).json({ error: e.message });
 }
