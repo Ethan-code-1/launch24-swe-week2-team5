@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Sidenav, Nav, IconButton } from 'rsuite';
+import { Sidenav, Nav, IconButton, Button, Modal } from 'rsuite';
 import { useLocation, Link } from 'react-router-dom';
 import DashboardIcon from '@rsuite/icons/legacy/Dashboard';
 import GroupIcon from '@rsuite/icons/legacy/Group';
@@ -15,8 +15,6 @@ import TopArtists from '../roots/TopArtists';
 import TopSongs from '../roots/TopSongs';
 import LikedSongs from '../roots/LikedSongs';
 import Inbox from '../roots/Inbox';
-
-
 
 import '../styles/Navbar.css';
 
@@ -37,9 +35,14 @@ const headerStyles = {
   zIndex: 2,
   display: 'flex',
   alignItems: 'center',
+  justifyContent: 'space-between',
   boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1)',
   fontFamily: '"Poppins", sans-serif',
   borderBottom: '3px solid #6A1B9A'
+};
+
+const buttonContainerStyles = {
+  marginRight: '20px'
 };
 
 const sidenavContainerStyles = {
@@ -74,10 +77,21 @@ const navItemStyles = {
 
 const MyNavbar = () => {
   const [isSidenavOpen, setIsSidenavOpen] = useState(true);
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const location = useLocation();
 
   const toggleSidenav = () => {
     setIsSidenavOpen(!isSidenavOpen);
+  };
+
+  const toggleModal = () => {
+    setIsModalOpen(!isModalOpen);
+  };
+
+  const handleLogout = () => {
+    // Add your logout logic here
+    console.log("Logged out");
+    setIsModalOpen(false);
   };
 
   const dynamicContentStyles = {
@@ -100,9 +114,9 @@ const MyNavbar = () => {
       case '/top-songs':
         return <TopSongs />;
       case '/liked-songs':
-        return <LikedSongs></LikedSongs>
+        return <LikedSongs />;
       case '/inbox':
-        return <Inbox></Inbox>
+        return <Inbox />;
       default:
         return <Home />;
     }
@@ -111,21 +125,39 @@ const MyNavbar = () => {
   return (
     <>
       <div style={headerStyles}>
-        <IconButton
-          icon={<AngleRightIcon style={{ fontWeight: 'bold', color: '#FFFFFF' }} />}
-          onClick={toggleSidenav}
-          style={{
-            zIndex: 3,
-            marginRight: '20px',
-            border: '2px solid #FFFFFF',
-            borderRadius: '4px',
-            backgroundColor: 'transparent',
-            color: '#FFFFFF'
-          }}
-        />
-        <div className="fade-in" style={{ paddingLeft: '2vw', fontSize: '2rem' }}>
-          <strong>Spotimy</strong>
-          <img src="/spotifyIcon.png" alt="spotifyIcon" style={{ maxWidth: '50px', height: 'auto', marginLeft: '10px' }} />
+        <div style={{ display: 'flex', alignItems: 'center' }}>
+          <IconButton
+            icon={<AngleRightIcon style={{ fontWeight: 'bold', color: '#FFFFFF' }} />}
+            onClick={toggleSidenav}
+            style={{
+              zIndex: 3,
+              marginRight: '20px',
+              border: '2px solid #FFFFFF',
+              borderRadius: '4px',
+              backgroundColor: 'transparent',
+              color: '#FFFFFF'
+            }}
+          />
+          <div className="fade-in" style={{ paddingLeft: '2vw', fontSize: '2rem' }}>
+            <strong>Spotimy</strong>
+            <img src="/spotifyIcon.png" alt="spotifyIcon" style={{ maxWidth: '50px', height: 'auto', marginLeft: '10px' }} />
+          </div>
+        </div>
+        <div style={buttonContainerStyles}>
+          <Button
+            appearance="ghost"
+            onClick={toggleModal}
+            style={{
+              background: 'rgba(0, 0, 0, 0.2)',
+              color: '#FFFFFF',
+              fontWeight: 'bold',
+              border: '2px solid #FFFFFF',
+              fontSize: '1.1rem',
+              marginRight: '20px'
+            }}
+          >
+            <strong>Log Out</strong>
+          </Button>
         </div>
       </div>
       <div style={sidenavContainerStyles}>
@@ -167,6 +199,24 @@ const MyNavbar = () => {
           </div>
         </div>
       </div>
+
+      <Modal open={isModalOpen} onClose={toggleModal}>
+        <Modal.Header>
+          <Modal.Title>Confirmation</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <p>Are you sure you want to log out?</p>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button onClick={handleLogout} appearance="primary">
+            Yes
+          </Button>
+          <Button onClick={toggleModal} appearance="subtle">
+            No
+          </Button>
+        </Modal.Footer>
+      </Modal>
+
       <style jsx>{`
         @media (max-width: 768px) {
           .rs-sidenav {
