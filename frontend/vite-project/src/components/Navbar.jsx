@@ -7,7 +7,6 @@ import MagicIcon from '@rsuite/icons/legacy/Magic';
 import GearCircleIcon from '@rsuite/icons/legacy/GearCircle';
 import AngleRightIcon from '@rsuite/icons/legacy/AngleRight';
 import { AuthContext } from "../components/AuthContext";
-import Auth from '../components/Auth'
 import Discover from '../roots/Discover.jsx';
 import Home from '../roots/Home.jsx';
 import Forum from '../roots/Forum.jsx';
@@ -18,6 +17,7 @@ import LikedSongs from '../roots/LikedSongs';
 import Inbox from '../roots/Inbox';
 import axios from 'axios'
 import PublicProfile from "./../roots/publicProfile.jsx";
+
 import '../styles/Navbar.css';
 
 const panelStyles = {
@@ -78,12 +78,9 @@ const navItemStyles = {
 };
 
 const MyNavbar = () => {
-  
-  /* Check if user is logged in */
   const { userData, login, logout } = useContext(AuthContext);
   const navigate = useNavigate();
-  const isLoggedIn = localStorage.getItem('isLoggedIn');
-  
+
   useEffect(() => {
     if (userData === null) {
       const urlParams = new URLSearchParams(window.location.search);
@@ -92,7 +89,6 @@ const MyNavbar = () => {
       const id = urlParams.get("id");
       const error = urlParams.get("error");
 
-
       if (error) {
         alert("There was an error during the authentication");
       } else if (access_token) {
@@ -100,8 +96,8 @@ const MyNavbar = () => {
         console.log({ access_token, refresh_token, id });
       }
     }
-  }, []);
-  
+  }, [userData, login]);
+
   const [isSidenavOpen, setIsSidenavOpen] = useState(true);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const location = useLocation();
@@ -114,10 +110,14 @@ const MyNavbar = () => {
     setIsModalOpen(!isModalOpen);
   };
 
-  const handleLogout = () => {
-    // Add your logout logic here
-    console.log("Logged out");
-    setIsModalOpen(false);
+  const handleLogout = async () => {
+    try {
+      await logout({ id: userData.id });
+      setIsModalOpen(false);
+      navigate('/login');
+    } catch (error) {
+      console.error("Error during logout", error);
+    }
   };
 
   const dynamicContentStyles = {
@@ -222,15 +222,14 @@ const MyNavbar = () => {
           <div style={{ paddingLeft: '10px', paddingTop: '10px', paddingRight: '10px', paddingBottom: '10px' }}>
             {userData === null ? (
               <>
-              <h1>Please Login</h1>
-              <button onClick={() => navigate('/login')}>Go to Login</button>
+                <h1>Please Login</h1>
+                <button onClick={() => navigate('/login')}>Go to Login</button>
               </>
             ) : renderContent()}
           </div>
         </div>
       </div>
 
-      {/* Pop up window added that acts as confirmation when uses try to log out*/}
       <Modal open={isModalOpen} onClose={toggleModal}>
         <Modal.Header>
           <Modal.Title>Confirmation</Modal.Title>
