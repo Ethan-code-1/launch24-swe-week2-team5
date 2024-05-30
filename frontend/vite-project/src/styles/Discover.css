@@ -79,6 +79,8 @@
   align-items: center;
   width: 100%; /* Ensure each profile takes full width of the grid cell */
   position: relative; /* Ensure positioning context for chat icon */
+  transition: transform 0.1s; /* Add transition for smooth scaling */
+
 }
 
 .IndividualProfile p {
@@ -144,7 +146,8 @@
 .profile-chat-icon:hover {
   text-decoration: underline;
 }
-.IndividualProfile:hover .profile-chat-icon {
+.IndividualProfile:hover .profile-chat-icon,
+.profile-chat-icon:hover {
   display: block; /* Show the chat icon when the profile is hovered */
 }
 .chat-bubble {
