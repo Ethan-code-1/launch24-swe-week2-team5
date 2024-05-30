@@ -3,7 +3,11 @@ SpotiMy
 
 Project Description
 
-	Welcome to SpotiMy! This is a spotify web application created by Forge Launch 2024 students in order to extend the knowledge of API requests and firebase while incorporating skills such as Express backend and authentication. In order to use this application, the user should make sure their account is within the spotify for developers list of users of our project. This web application was created in order to keep users engaged with Spotify by allowing multiple features within the app. The features of the web application include: liked songs playlist, top artists, and top songs of all time, last year, or last months,a profile page, discover page, forums page and an inbox to send messages between users.
+	Welcome to SpotiMy! 
+    This is a spotify web application created by Forge Launch 2024 students in order to extend the knowledge of API requests and firebase while incorporating skills such as Express backend and authentication. 
+    In order to use this application, the user should make sure their account is within the spotify for developers list of users of our project. 
+    This web application was created in order to keep users engaged with Spotify by allowing multiple features within the app. 
+    The features of the web application include: liked songs playlist, top artists, and top songs of all time, last year, or last months,a profile page, discover page, forums page and an inbox to send messages between users.
 
 Table of Contents
 
@@ -17,7 +21,8 @@ Table of Contents
 Installation
     Initial setup: 
 
-        Begin by cloning the github repo with the following command (you may need to first either fork the repo or request permissions to do so if not already allowed): 
+        Begin by cloning the github repo with the following command 
+        (you may need to first either fork the repo or request permissions to do so if not already allowed): 
         git clone https://github.com/Ethan-code-1/launch24-swe-week2-team5.git 
 
         Next change directories into the front end folder and within the vite-project folder run the following command: 
@@ -28,9 +33,11 @@ Installation
 
         *To view specific installations taking place when using npm install, refer to the description section of the package,json file. 
 
-        In addition, go to the firebase portal and generate a new private key, which will be downloaded locally to your computer. Rename this file permissions.json and add it to the backend folder. This serves as your credentials to access the firebase database. 
+        In addition, go to the firebase portal and generate a new private key, which will be downloaded locally to your computer. 
+        Rename this file permissions.json and add it to the backend folder. This serves as your credentials to access the firebase database. 
 
-        *Both the back and front end files contain a .gitignore, which is set up to already include all the anticipated private files within the project (node_modules, permissions.json, and .env)
+        *Both the back and front end files contain a .gitignore, 
+        which is set up to already include all the anticipated private files within the project (node_modules, permissions.json, and .env)
 
 Spotify Setup:
 
@@ -40,22 +47,27 @@ Spotify Setup:
     http://localhost:5001/spotify/callback
     Then for the section that asks “Which API/SDKs are you planning to use?” select Web API then click save.
 
-    You now need to add users to your app by clicking on the newly created app, go to settings in the top right, click on the tab named User Management, and give a name and email that you will login with. 
+    You now need to add users to your app by clicking on the newly created app, go to settings in the top right, 
+    click on the tab named User Management, and give a name and email that you will login with. 
 
-    Then click on the tab on the left called Basic Information and you will see Client ID and Client Secret. Create a new .env file in the ‘backend’ root directory and paste in the codes with variable name in parentheses
+    Then click on the tab on the left called Basic Information and you will see Client ID and Client Secret. 
+    Create a new .env file in the ‘backend’ root directory and paste in the codes with variable name in parentheses
     CLIENT_ID= “”
     CLIENT_SECRET=”” 
 
 
 Running the App:
 
-    To run the app locally you first need to open two terminals. In one terminal change directories into the vite-project folder. Within this folder start the front end by running the command:
+    To run the app locally you first need to open two terminals. 
+    In one terminal change directories into the vite-project folder. 
+    Within this folder start the front end by running the command:
     Npm run dev
 
     Next, to start the back end change directories in into the backend folder and run the command:
     Npm start
 
-    Running both commands should ensure the front and back end are properly running. If you return to the command where you ran npm run dev, you should see a local host link which you can copy into the browser to run the file. 
+    Running both commands should ensure the front and back end are properly running. 
+    If you return to the command where you ran npm run dev, you should see a local host link which you can copy into the browser to run the file. 
 	
 
 
