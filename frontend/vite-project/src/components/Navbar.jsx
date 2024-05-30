@@ -200,6 +200,7 @@ const MyNavbar = () => {
         </div>
       </div>
 
+      {/* Pop up window added that acts as confirmation when uses try to log out*/}
       <Modal open={isModalOpen} onClose={toggleModal}>
         <Modal.Header>
           <Modal.Title>Confirmation</Modal.Title>
