@@ -27,12 +27,12 @@ export const Profile = () => {
           }
         );
         setTopArtists(response.data.items.slice(0, items));
-        console.log("asdfasdf", response.data.items.slice(0, items));
+
         response = await axios.get("http://localhost:5001/spotify/top-tracks", {
           params: { access_token: accessToken, time_range: "medium_term" },
         });
         setTopSongs(response.data.items.slice(0, items));
-        console.log("asdfasdf", response.data.items.slice(0, items));
+
         response = await axios.get(
           "http://localhost:5001/spotify/liked-tracks",
           {
@@ -40,16 +40,14 @@ export const Profile = () => {
           }
         );
         setLikedSongs(response.data.items.slice(0, items));
-        console.log("asdfasdf", response.data.items.slice(0, items));
 
         response = await axios.get("http://localhost:5001/spotify/user-info", {
           params: { access_token: accessToken },
         });
         setUser(response.data);
-        console.log("asdfasdf", response.data);
         setLoading(false);
       } catch (e) {
-        console.error("Error fetching top artists", e);
+        console.error("Error fetching data", e);
         setLoading(false);
       }
     };
@@ -57,105 +55,110 @@ export const Profile = () => {
       fetchData();
     }
   }, [accessToken]);
+
   return (
     <>
-    {loading ? (<div className="loader"/>) : (
-    <>
-      <div className="content-container"></div>
+      {loading ? (
+        <div className="loader" />
+      ) : (
+        <>
+          <div className="content-container"></div>
 
-      {user && (
-        <div className="profile">
-          <img
-            src={
-              user.images[1] && user.images
-                ? user.images[1].url
-                : "../../public/spotify-default.jpg"
-            }
-            alt="user-image"
-            className="artist"
-          />
-          <div>
-            <p style={{ color: "white", fontSize: "1.5em" }}>Profile</p>
-            <a
-              style={{ textDecoration: "none" }}
-              target="_blank"
-              rel="noopener noreferrer"
-              href={user.external_urls.spotify}
-            >
-              <h1>{user.display_name}</h1>
-            </a>
+          {user && (
+            <div className="profile">
+              <img
+                src={
+                  user.images && user.images[1]
+                    ? user.images[1].url
+                    : "../../public/spotify-default.jpg"
+                }
+                alt="user-image"
+                className="artist"
+              />
+              <div>
+                <p style={{ color: "white", fontSize: "1.5em" }}>Profile</p>
+                <a
+                  style={{ textDecoration: "none" }}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  href={user.external_urls.spotify}
+                >
+                  <h1>{user.display_name}</h1>
+                </a>
+              </div>
+            </div>
+          )}
+          <hr className="solid" />
+          <div className="content-container">
+            <h1 style={{ color: "white" }}>Top Songs</h1>
           </div>
-        </div>
+
+          <div id="top-artist-grid">
+            {topSongs.length > 0 ? (
+              topSongs.map((song) => (
+                <div className="card-button-wrapper" key={song.id}>
+                  <a
+                    href={song.external_urls.spotify}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <button className="artist-button">
+                      <div className="top-artist">
+                        <img
+                          src={song.album.images[0].url}
+                          className="song"
+                          alt={song.name}
+                        />
+                        <p>{song.name}</p>
+                      </div>
+                    </button>
+                  </a>
+                </div>
+              ))
+            ) : (
+              <h3>No top songs avaliable</h3>
+            )}
+          </div>
+
+          <div className="content-container">
+            <h1 style={{ color: "white" }}>Top Artists</h1>
+          </div>
+
+          <div id="top-artist-grid">
+            {topArtists.length > 0 ? (
+              topArtists.map((artist) => {
+                const artistImage =
+                  artist.images && artist.images[0]
+                    ? artist.images[0].url
+                    : "../../public/spotify-default.jpg";
+                return (
+                  <div className="card-button-wrapper" key={artist.id}>
+                    <a
+                      href={artist.external_urls.spotify}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      <button className="artist-button">
+                        <div className="top-artist">
+                          <img
+                            src={artistImage}
+                            className="artist"
+                            alt={artist.name}
+                          />
+                          <p>{artist.name}</p>
+                        </div>
+                      </button>
+                    </a>
+                  </div>
+                );
+              })
+            ) : (
+              <h3>No top artists avaliable</h3>
+            )}
+          </div>
+        </>
       )}
-      <hr class="solid"></hr>
-      <div className="content-container">
-        <h1 style={{ color: "white" }}>Top Songs</h1>
-      </div>
-
-      <div id="top-artist-grid">
-        {topSongs &&
-          topSongs.map((song) => {
-            return (
-              <div className="card-button-wrapper">
-                <a
-                  key={song.id}
-                  href={song.external_urls.spotify}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  <button className="artist-button">
-                    <div className="top-artist">
-                      <img
-                        src={song.album.images[0].url}
-                        className="song"
-                        alt={song.name}
-                      />
-                      <p>{song.name}</p>
-                    </div>
-                  </button>
-                </a>
-              </div>
-            );
-          })}
-      </div>
-
-      <div className="content-container">
-        <h1 style={{ color: "white" }}>Top Artists</h1>
-      </div>
-
-      <div id="top-artist-grid">
-        {topArtists &&
-          topArtists.map((artist) => {
-            const artistImage =
-              artist.images && artist.images[0]
-                ? artist.images[0].url
-                : "../../public/spotify-default.jpg";
-            return (
-              <div className="card-button-wrapper">
-                <a
-                  key={artist.id}
-                  href={artist.external_urls.spotify}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  <button className="artist-button">
-                    <div className="top-artist">
-                      <img
-                        src={artistImage}
-                        className="artist"
-                        alt={artist.name}
-                      />
-                      <p>{artist.name}</p>
-                    </div>
-                  </button>
-                </a>
-              </div>
-            );
-          })}
-      </div>
     </>
-  )}
-  </>
   );
 };
 
