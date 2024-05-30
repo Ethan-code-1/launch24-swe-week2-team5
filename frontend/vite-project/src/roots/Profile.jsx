@@ -61,8 +61,8 @@ export const Profile = () => {
         <div className="profile">
           <img
             src={
-              user.images[0] && user.images
-                ? artist.images[0].url
+              user.images[1] && user.images
+                ? user.images[1].url
                 : "../../public/spotify-default.jpg"
             }
             alt="user-image"

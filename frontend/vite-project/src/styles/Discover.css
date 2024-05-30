@@ -1,163 +1,15 @@
-.discover-link {
-  text-decoration: none;
-  color: white;
-  font-size: 30px;
-  margin-right: 20px;
-}
-
-.discover-link:hover {
-  color: gray;
-  text-decoration: none;
-}
-
-.discover-link:active {
-  color: purple;
-  text-decoration: none;
-}
-
-.following-link {
-  text-decoration: none;
-  color: white;
-  font-size: 30px;
-  margin-right: 20px;
-}
-
-.following-link:hover {
-  color: gray;
-  text-decoration: none;
-}
-
-.following-link:active {
-  color: purple;
-  text-decoration: none;
-}
-
-body {
-  font-family: Arial, sans-serif;
-  background-color: #f0f0f0;
-  margin: 0;
-  padding: 0;
-}
-
-.links-container {
-  display: flex;
-  justify-content: left;
-  
-}
-
-.Discography {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: flex-start;
-  gap: 20px; /* Space between items */
-  padding: 20px;
-}
-
-.IndividualProfile {
-  width: 200px;
-  background-color: #3a3a3a;
-  border-radius: 10px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 20px;
-  margin: 20px;
-  color: white;
-  font-family: Arial, sans-serif;
-  position: relative;
-  text-decoration: none; /* No underline for links */
-  transition: transform 0.2s;
-}
-
-.IndividualProfile:hover {
-  transform: scale(1.05);
-}
-
-.profile-link {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  text-decoration: none;
-  color: white;
-  width: 100%;
-}
-.profile-link:hover{
-  color:gray;
-  text-decoration:underline;
-}
-
-.profile-image {
-  width: 100%;
-  height: auto;
-  background-color: #d3d3d3;
-  border-radius: 10px;
-  margin-bottom: 20px;
-}
-
-.profile-name {
-  font-size: 18px;
-  margin-bottom: auto;
-}
-
-.profile-name:hover {
-  text-decoration: underline;
-}
-
-.profile-chat-icon {
-  position: absolute;
-  bottom: 10px;
-  right: 10px;
-  cursor: pointer;
-  text-decoration: none;
-  color: white;
-}
-
-.profile-chat-icon:hover {
-  text-decoration: underline;
-}
-
-.chat-bubble {
-  width: 24px;
-  height: 17px;
-  background: white;
-  border-radius: 10px;
-  position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: white;
-	border-radius: .4em;
-  font-size:10px;
-  bottom: 15px;
-  right: 5px;
-}
-
-.chat-bubble:after {
-	content: '';
-	position: absolute;
-	bottom: 0;
-	left: 50%;
-	width: 0;
-	height: 0;
-	border: 0.813em solid transparent;
-	border-top-color: white;
-	border-bottom: 0;
-	border-left: 0;
-	margin-left: -0.3em;
-	margin-bottom: -0.5em;
-}
-
-/* Align the search container to the right */
-header {
+/* Align the header content */
+.header-content {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  width: 100%;
 }
 
+/* Search box styling */
 .search-box {
-  width: fit-content;
-  height: fit-content;
+  display: flex;
+  align-items: center;
   position: relative;
 }
 
@@ -182,7 +34,6 @@ header {
   color: rgba(255, 255, 255, .5);
   font-size: 18px;
   letter-spacing: 2px;
-  font-weight: 100;
 }
 
 .btn-search {
@@ -211,18 +62,139 @@ header {
   visibility: visible;
   opacity: 1;
 }
-.loading {
-  font-size: 24px;
-  color: #fff;
+
+/* Container for the profiles */
+.Discography {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 20px;
+  justify-items: center;
+  padding: 20px;
+  background-color: black;
+}
+
+.IndividualProfile {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%; /* Ensure each profile takes full width of the grid cell */
+  position: relative; /* Ensure positioning context for chat icon */
+}
+
+.IndividualProfile p {
+  color: white;
+  margin-top: 10px;
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.IndividualProfile:hover {
+  transform: scale(1.05);
+}
+
+.profile-link {
+  background-color: black;
+  border: none;
+  padding: 20px;
+  cursor: pointer;
+  width: 100%;
   text-align: center;
-  margin-top: 50px;
+  border-radius: 10px;
+  transition: transform 0.1s, background-color 0.1s;
+  box-sizing: border-box;
+  text-decoration: none;
+  color: white;
 }
+
+.profile-link:hover {
+  transform: scale(1.05);
+  background-color: #333;
+  text-decoration: none;
+  color: white;
+}
+
+.profile-image {
+  object-fit: cover;
+  object-position: top center;
+  border-radius: 50%;
+  width: 200px;
+  height: 200px;
+}
+
+.profile-name {
+  font-size: 18px;
+  margin-bottom: auto;
+}
+
+.profile-name:hover {
+  text-decoration: underline;
+}
+
+.profile-chat-icon {
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+  cursor: pointer;
+  text-decoration: none;
+  color: white;
+  z-index: 1; /* Ensure the chat icon is above other elements within the profile */
+  display: none;
+}
+
+.profile-chat-icon:hover {
+  text-decoration: underline;
+}
+.IndividualProfile:hover .profile-chat-icon {
+  display: block; /* Show the chat icon when the profile is hovered */
+}
+.chat-bubble {
+  width: 24px;
+  height: 17px;
+  background: white;
+  border-radius: 10px;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: black; /* Ensure the text inside the chat bubble is visible */
+  font-size: 10px;
+  bottom: 15px;
+  right: 5px;
+}
+
+.chat-bubble:after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  width: 0;
+  height: 0;
+  border: 0.813em solid transparent;
+  border-top-color: white;
+  border-bottom: 0;
+  border-left: 0;
+  margin-left: -0.3em;
+  margin-bottom: -0.5em;
+}
+
+/* Loading indicator */
 /* HTML: <div class="loader"></div> */
-.dotdotdot {
-  width: 60px;
-  aspect-ratio: 4;
-  background: radial-gradient(circle closest-side,#000 90%,#0000) 0/calc(100%/3) 100% space;
-  clip-path: inset(0 100% 0 0);
-  animation: l1 1s steps(4) infinite;
+.loader {
+  font-weight: bold;
+  font-family: monospace;
+  font-size: 30px;
+  display: inline-grid;
 }
-@keyframes l1 {to{clip-path: inset(0 -34% 0 0)}}
+.loader:before,
+.loader:after {
+  content:"Loading...";
+  grid-area: 1/1;
+  -webkit-mask:linear-gradient(90deg,#000 50%,#0000 0) 0 50%/2ch 100%;
+  animation: l11 1s infinite cubic-bezier(0.5,220,0.5,-220);
+}
+.loader:after {
+  -webkit-mask-position:1ch 50%;
+  --s:-1;
+}
+@keyframes l11 {100%{transform: translateY(calc(var(--s,1)*0.1%));}}
+

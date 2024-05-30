@@ -25,50 +25,54 @@ export const Discover = () => {
     fetchPublicProfiles();
   }, []);
 
+  const handleSearchButtonClick = () => {
+    if (searchInputRef.current) {
+      searchInputRef.current.focus();
+    }
+  };
+
   const filteredProfiles = profiles.filter(profile =>
     profile.display_name.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
   return (
     <div>
-      {/* HEADER SECTION WITH DISCOVER AND FOLLOWING TABS */}
-      <header>
-        <div className={`links-container ${menuOpen ? 'show' : ''}`}>
-          <Link className="discover-link" to="/discover">Discover</Link>
-          <Link className="following-link" to="/discover/following">Following</Link>
-        </div>
-        <div className="search-box">
-          <button className="btn-search"><i className="fas fa-search"></i></button>
-          <input
-            type="text"
-            className="input-search"
-            placeholder="Type to Search..."
-            value={searchQuery}
-            onChange={e => setSearchQuery(e.target.value)}
-          />
+    {/* HEADER SECTION WITH DISCOVER AND FOLLOWING TABS */}
+    <header>
+        <div className="header-content">
+          <h1 className="header-title" style={{color: 'white'}}>Discover</h1>
+          <div className="search-box">
+            <button className="btn-search" onClick={handleSearchButtonClick}><i className="fas fa-search"></i></button>
+            <input
+              type="text"
+              className="input-search"
+              placeholder="Type to Search..."
+              value={searchQuery}
+              onChange={e => setSearchQuery(e.target.value)}
+            />
+          </div>
         </div>
       </header>
 
-
-      {loading ? (
-        <div className="loading">Loading...</div> // Show loading indicator
-      ) : (
-        <div className="Discography">
-          {filteredProfiles.map((profile) => (
-            <div key={profile.id} className="IndividualProfile">
-              <Link to={`/profile/${profile.id}`} className="profile-link">
-                <img className="profile-image" src={profile.image || mockphoto} alt='Profile' />
-                <div className="profile-name">{profile.display_name}'s Profile</div>
-              </Link>
-              <Link to={`/chat/${profile.id}`} className="profile-chat-icon">
-                <div className="chat-bubble"></div>
-              </Link>
-            </div>
-          ))}
-        </div>
-      )}
-    </div>
-  );
+    {loading ? (
+      <div className="loader"/> // Show loading indicator
+    ) : (
+      <div className="Discography">
+        {filteredProfiles.map((profile) => (
+          <div key={profile.id} className="IndividualProfile">
+            <a href={`/profile/${profile.id}`} className="profile-link">
+              <img className="profile-image" src={profile.image || mockphoto} alt='Profile' />
+              <p >{profile.display_name}</p>
+            </a>
+            <a href={`/chat/${profile.id}`} className="profile-chat-icon">
+              <div className="chat-bubble"></div>
+            </a>
+          </div>
+        ))}
+      </div>
+    )}
+  </div>
+);
 };
 
 export default Discover;
