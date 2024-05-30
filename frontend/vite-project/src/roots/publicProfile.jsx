@@ -63,10 +63,11 @@ export const PublicProfile = () => {
         <h1 style={{ color: "white" }}>Top Songs</h1>
       </div>
 
-      <div id="top-artist-grid">
-        {userInfo["top-tracks"].slice(0, items).map((song) => {
+      
+        {userInfo["top-tracks"].length > 0 ? (userInfo["top-tracks"].slice(0, items).map((song) => {
             console.log(song);
             return (
+              <div id="top-artist-grid">
               <div className="card-button-wrapper">
                 <a
                   key={song.id}
@@ -86,13 +87,18 @@ export const PublicProfile = () => {
                   </button>
                 </a>
               </div>
+              </div>
             );
-          })}
-      </div>
+          })) : (
+            <h3>No top songs avaliable</h3>
+          )}
+
 
       <div className="content-container">
         <h1 style={{ color: "white" }}>Top Artists</h1>
       </div>
+
+      {userInfo["top-artists"].length > 0 ? (
 
       <div id="top-artist-grid">
         {userInfo["top-artists"].slice(0, items).map((artist) => {
@@ -123,6 +129,7 @@ export const PublicProfile = () => {
             );
           })}
       </div>
+      ) :(<h3>No top artists avaliable</h3>)}
       </>
       )}
     </>
