@@ -24,6 +24,22 @@ router.get("/:id", async (req, res) => {
     }
 })
 
+router.get("/draft/:id", async (req, res) => {
+    try {
+        console.log("hello");
+        const users = await getDocs(collection(db, "users"));
+        let usernames = [];
+        users.forEach((user) => {
+            userData = user.data();
+            console.log(userData);
+            usernames.push(userData["username"]);
+        })
+        res.status(200).json(usernames);
+    } catch (e) {
+        res.status(400).json({error: e.message});
+    }
+})
+
 router.delete("/:id/:msgId", async (req, res) => {
     try {
         console.log(req.params);
