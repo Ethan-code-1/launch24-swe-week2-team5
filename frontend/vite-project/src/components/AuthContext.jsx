@@ -41,9 +41,6 @@ const AuthProvider = ({ children }) => {
         setUserData(null);
         localStorage.clear();
         console.log(id);
-        const response = await axios.delete(`http://localhost:5001/spotify/logout/${id}`);
-        console.log(response);
-
         clearInterval(localStorage.getItem("refreshInterval"));
         localStorage.removeItem("refreshInterval");
         localStorage.setItem("isLoggedIn", false);

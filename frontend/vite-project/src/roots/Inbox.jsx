@@ -6,12 +6,13 @@ import DeleteIcon from '@mui/icons-material/Delete'; // Import the Delete icon
 import TextField from "@mui/material/TextField";
 import { Autocomplete } from "@mui/material";
 
-export const Inbox = () => {
+export const Inbox = ({toId='x'}) => {
   const [mode, setMode] = useState('yourPosts'); 
   const [selectedMessage, setSelectedMessage] = useState(null);
   const [messages, setMessages] = useState([]); 
   const [newMsg, setNewMsg] = useState({});
   const [users, setUsers] = useState([]);
+  const [to, setTo] = useState('');
 
   const id = localStorage.getItem("id");
 
@@ -23,19 +24,25 @@ export const Inbox = () => {
   }
 
   async function fetchAllUsers() {
-    console.log("hellooo");
-    const res = (await axios.get(`http://localhost:5001/inbox/draft/${id}`)).data;
+    const res = (await axios.get(`http://localhost:5001/inbox/draft/${toId}`)).data;
     console.log(res);
-    setUsers(res);
+    setUsers(res["usernames"]);
+    setTo(res["username"]);
+    setNewMsg({...newMsg, "to": res["username"]})
   }
 
   useEffect(() => {
+    fetchAllUsers();
     fetchAllPosts();
+    if (toId != 'x') {
+      setMode("viewAll")
+    }
   }, []);
 
   const handleToggle = (newMode) => {
     setMode(newMode);
     if (newMode === 'yourPosts' && messages.length > 0) {
+      setTo('x');
       setSelectedMessage(messages[0]);
     } else {
       fetchAllUsers();
@@ -53,13 +60,14 @@ export const Inbox = () => {
     e.preventDefault();
     const res = await axios.post(`http://localhost:5001/inbox/${id}`, newMsg);
     console.log(res);
-    location.reload();
+    handleToggle("yourPosts");
+    // location.reload();
   }
 
   return (
     <div style={{ padding: '20px' }}>
       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', color: 'white' }}>
-        <h1>Inbox</h1>
+        <h1>{mode === 'yourPosts' ? 'Inbox' : "Draft"}</h1>
         <div>
           <a
             href="#"
@@ -125,6 +133,7 @@ export const Inbox = () => {
               disablePortal
               id="combo-box-demo"
               options={users}
+              value={to}
               sx={{
                 "& .MuiInputBase-root": {
                   background: '#333',
@@ -184,6 +193,7 @@ export const Inbox = () => {
                 placeholder="Content" 
                 className="inputField"
                 onChange={(e) => {
+                  console.log(newMsg);
                   setNewMsg({...newMsg, "content": e.target.value})
                 }}/>
               <button id="submitForum" type="submit" className="submitButton">Send Message</button>

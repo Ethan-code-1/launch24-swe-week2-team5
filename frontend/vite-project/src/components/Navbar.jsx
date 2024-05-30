@@ -126,8 +126,13 @@ const MyNavbar = () => {
   };
 
   const renderContent = () => {
-    if (location.pathname.split('/')[1] == 'public-profile') {
-      return <PublicProfile />;
+    if (location.pathname.split('/').length > 2) {
+      switch (location.pathname.split('/')[1]) {
+        case 'public-profile':
+          return <PublicProfile/>;
+        case 'draft':
+          return <Inbox toId={location.pathname.split('/')[2]}/>
+      }
     } else {
       switch (location.pathname) {
         case '/forum':
