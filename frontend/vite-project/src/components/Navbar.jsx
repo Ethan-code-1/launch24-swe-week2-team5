@@ -1,10 +1,7 @@
 import React, { useState, useContext, useEffect } from 'react';
 import { useLocation, Link, useNavigate } from 'react-router-dom';
 import { Sidenav, Nav, IconButton, Button, Modal } from 'rsuite';
-import DashboardIcon from '@rsuite/icons/legacy/Dashboard';
-import GroupIcon from '@rsuite/icons/legacy/Group';
-import MagicIcon from '@rsuite/icons/legacy/Magic';
-import GearCircleIcon from '@rsuite/icons/legacy/GearCircle';
+import { FaUser, FaMusic, FaHeart, FaCompass, FaInbox, FaForumbee, FaStar } from 'react-icons/fa';
 import AngleRightIcon from '@rsuite/icons/legacy/AngleRight';
 import { AuthContext } from "../components/AuthContext";
 import Discover from '../roots/Discover.jsx';
@@ -75,6 +72,10 @@ const contentStyles = {
 const navItemStyles = {
   backgroundColor: '#212121',
   color: '#FFFFFF'
+};
+
+const iconStyles = {
+  marginRight: '10px'
 };
 
 const MyNavbar = () => {
@@ -193,25 +194,25 @@ const MyNavbar = () => {
           <Sidenav defaultOpenKeys={['3', '4']} style={sidenavStyles}>
             <Sidenav.Body>
               <Nav>
-                <Nav.Item eventKey="2" icon={<GroupIcon style={{ color: '#FFFFFF' }} />} style={navItemStyles} as={Link} to="/profile">
+                <Nav.Item eventKey="2" icon={<FaUser style={{ ...iconStyles, color: '#FFFFFF' }} />} style={navItemStyles} as={Link} to="/profile">
                   <strong>Profile</strong>
                 </Nav.Item>
-                <Nav.Item eventKey="3" icon={<MagicIcon style={{ color: '#FFFFFF' }} />} style={navItemStyles} as={Link} to="/top-artists">
+                <Nav.Item eventKey="3" icon={<FaStar style={{ ...iconStyles, color: '#FFFFFF' }} />} style={navItemStyles} as={Link} to="/top-artists">
                   <strong>Top Artists</strong>
                 </Nav.Item>
-                <Nav.Item eventKey="4" icon={<GearCircleIcon style={{ color: '#FFFFFF' }} />} style={navItemStyles} as={Link} to="/top-songs">
+                <Nav.Item eventKey="4" icon={<FaMusic style={{ ...iconStyles, color: '#FFFFFF' }} />} style={navItemStyles} as={Link} to="/top-songs">
                   <strong>Top Songs</strong>
                 </Nav.Item>
-                <Nav.Item eventKey="5" icon={<GearCircleIcon style={{ color: '#FFFFFF' }} />} style={navItemStyles} as={Link} to="/forum">
+                <Nav.Item eventKey="5" icon={<FaForumbee style={{ ...iconStyles, color: '#FFFFFF' }} />} style={navItemStyles} as={Link} to="/forum">
                   <strong>Forums</strong>
                 </Nav.Item>
-                <Nav.Item eventKey="6" icon={<GearCircleIcon style={{ color: '#FFFFFF' }} />} style={navItemStyles} as={Link} to="/discover">
+                <Nav.Item eventKey="6" icon={<FaCompass style={{ ...iconStyles, color: '#FFFFFF' }} />} style={navItemStyles} as={Link} to="/discover">
                   <strong>Discover</strong>
                 </Nav.Item>
-                <Nav.Item eventKey="7" icon={<GearCircleIcon style={{ color: '#FFFFFF' }} />} style={navItemStyles} as={Link} to="/liked-songs">
+                <Nav.Item eventKey="7" icon={<FaHeart style={{ ...iconStyles, color: '#FFFFFF' }} />} style={navItemStyles} as={Link} to="/liked-songs">
                   <strong>Liked Songs</strong>
                 </Nav.Item>
-                <Nav.Item eventKey="8" icon={<GearCircleIcon style={{ color: '#FFFFFF' }} />} style={navItemStyles} as={Link} to="/inbox">
+                <Nav.Item eventKey="8" icon={<FaInbox style={{ ...iconStyles, color: '#FFFFFF' }} />} style={navItemStyles} as={Link} to="/inbox">
                   <strong>Inbox</strong>
                 </Nav.Item>
               </Nav>
