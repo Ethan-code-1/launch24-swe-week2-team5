@@ -81,6 +81,7 @@ const iconStyles = {
 const MyNavbar = () => {
   const { userData, login, logout } = useContext(AuthContext);
   const navigate = useNavigate();
+  const location = useLocation();
 
   useEffect(() => {
     if (userData === null) {
@@ -101,7 +102,6 @@ const MyNavbar = () => {
 
   const [isSidenavOpen, setIsSidenavOpen] = useState(true);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const location = useLocation();
 
   const toggleSidenav = () => {
     setIsSidenavOpen(!isSidenavOpen);
@@ -128,7 +128,7 @@ const MyNavbar = () => {
 
   const renderContent = () => {
     if (location.pathname.split('/')[1] == 'public-profile') {
-      return <PublicProfile/>;
+      return <PublicProfile />;
     } else {
       switch (location.pathname) {
         case '/forum':
@@ -142,9 +142,9 @@ const MyNavbar = () => {
         case '/top-songs':
           return <TopSongs />;
         case '/liked-songs':
-          return <LikedSongs></LikedSongs>
+          return <LikedSongs />;
         case '/inbox':
-          return <Inbox></Inbox>
+          return <Inbox />;
         default:
           return <Login />;
       }
@@ -194,25 +194,67 @@ const MyNavbar = () => {
           <Sidenav defaultOpenKeys={['3', '4']} style={sidenavStyles}>
             <Sidenav.Body>
               <Nav>
-                <Nav.Item eventKey="2" icon={<FaUser style={{ ...iconStyles, color: '#FFFFFF' }} />} style={navItemStyles} as={Link} to="/profile">
+                <Nav.Item
+                  eventKey="2"
+                  icon={<FaUser style={{ ...iconStyles, color: '#FFFFFF' }} />}
+                  style={location.pathname === '/profile' ? { ...navItemStyles, backgroundColor: '#333' } : navItemStyles}
+                  as={Link}
+                  to="/profile"
+                >
                   <strong>Profile</strong>
                 </Nav.Item>
-                <Nav.Item eventKey="3" icon={<FaStar style={{ ...iconStyles, color: '#FFFFFF' }} />} style={navItemStyles} as={Link} to="/top-artists">
+                <Nav.Item
+                  eventKey="3"
+                  icon={<FaStar style={{ ...iconStyles, color: '#FFFFFF' }} />}
+                  style={location.pathname === '/top-artists' ? { ...navItemStyles, backgroundColor: '#333' } : navItemStyles}
+                  as={Link}
+                  to="/top-artists"
+                >
                   <strong>Top Artists</strong>
                 </Nav.Item>
-                <Nav.Item eventKey="4" icon={<FaMusic style={{ ...iconStyles, color: '#FFFFFF' }} />} style={navItemStyles} as={Link} to="/top-songs">
+                <Nav.Item
+                  eventKey="4"
+                  icon={<FaMusic style={{ ...iconStyles, color: '#FFFFFF' }} />}
+                  style={location.pathname === '/top-songs' ? { ...navItemStyles, backgroundColor: '#333' } : navItemStyles}
+                  as={Link}
+                  to="/top-songs"
+                >
                   <strong>Top Songs</strong>
                 </Nav.Item>
-                <Nav.Item eventKey="5" icon={<FaComments style={{ ...iconStyles, color: '#FFFFFF' }} />} style={navItemStyles} as={Link} to="/forum">
+                <Nav.Item
+                  eventKey="5"
+                  icon={<FaComments style={{ ...iconStyles, color: '#FFFFFF' }} />}
+                  style={location.pathname === '/forum' ? { ...navItemStyles, backgroundColor: '#333' } : navItemStyles}
+                  as={Link}
+                  to="/forum"
+                >
                   <strong>Forums</strong>
                 </Nav.Item>
-                <Nav.Item eventKey="6" icon={<FaCompass style={{ ...iconStyles, color: '#FFFFFF' }} />} style={navItemStyles} as={Link} to="/discover">
+                <Nav.Item
+                  eventKey="6"
+                  icon={<FaCompass style={{ ...iconStyles, color: '#FFFFFF' }} />}
+                  style={location.pathname === '/discover' ? { ...navItemStyles, backgroundColor: '#333' } : navItemStyles}
+                  as={Link}
+                  to="/discover"
+                >
                   <strong>Discover</strong>
                 </Nav.Item>
-                <Nav.Item eventKey="7" icon={<FaHeart style={{ ...iconStyles, color: '#FFFFFF' }} />} style={navItemStyles} as={Link} to="/liked-songs">
+                <Nav.Item
+                  eventKey="7"
+                  icon={<FaHeart style={{ ...iconStyles, color: '#FFFFFF' }} />}
+                  style={location.pathname === '/liked-songs' ? { ...navItemStyles, backgroundColor: '#333' } : navItemStyles}
+                  as={Link}
+                  to="/liked-songs"
+                >
                   <strong>Liked Songs</strong>
                 </Nav.Item>
-                <Nav.Item eventKey="8" icon={<FaInbox style={{ ...iconStyles, color: '#FFFFFF' }} />} style={navItemStyles} as={Link} to="/inbox">
+                <Nav.Item
+                  eventKey="8"
+                  icon={<FaInbox style={{ ...iconStyles, color: '#FFFFFF' }} />}
+                  style={location.pathname === '/inbox' ? { ...navItemStyles, backgroundColor: '#333' } : navItemStyles}
+                  as={Link}
+                  to="/inbox"
+                >
                   <strong>Inbox</strong>
                 </Nav.Item>
               </Nav>
