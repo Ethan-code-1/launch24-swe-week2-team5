@@ -3,6 +3,7 @@ import { AuthContext } from "../components/AuthContext";
 import axios from "axios";
 import "../styles/Profile.css";
 import "../styles/Topartists.css";
+import "../styles/Discover.css";
 
 export const Profile = () => {
   const { userData } = useContext(AuthContext);
@@ -10,6 +11,7 @@ export const Profile = () => {
   const [topSongs, setTopSongs] = useState([]);
   const [likedSongs, setLikedSongs] = useState([]);
   const [user, setUser] = useState(null);
+  const [loading, setLoading] = useState(true);
   const accessToken = localStorage.getItem("access_token");
   const items = 5;
 
@@ -45,8 +47,10 @@ export const Profile = () => {
         });
         setUser(response.data);
         console.log("asdfasdf", response.data);
+        setLoading(false);
       } catch (e) {
         console.error("Error fetching top artists", e);
+        setLoading(false);
       }
     };
     if (accessToken) {
@@ -54,6 +58,8 @@ export const Profile = () => {
     }
   }, [accessToken]);
   return (
+    <>
+    {loading ? (<div className="loader"/>) : (
     <>
       <div className="content-container"></div>
 
@@ -148,6 +154,8 @@ export const Profile = () => {
           })}
       </div>
     </>
+  )}
+  </>
   );
 };
 
