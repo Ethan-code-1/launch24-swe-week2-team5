@@ -3,12 +3,15 @@ import axios from 'axios';
 import '../styles/Inbox.css';
 import PersonIcon from '@mui/icons-material/Person'; 
 import DeleteIcon from '@mui/icons-material/Delete'; // Import the Delete icon
+import TextField from "@mui/material/TextField";
+import { Autocomplete } from "@mui/material";
 
 export const Inbox = () => {
   const [mode, setMode] = useState('yourPosts'); 
   const [selectedMessage, setSelectedMessage] = useState(null);
   const [messages, setMessages] = useState([]); 
   const [newMsg, setNewMsg] = useState({});
+  const [users, setUsers] = useState([]);
 
   const id = localStorage.getItem("id");
 
@@ -19,6 +22,13 @@ export const Inbox = () => {
     if (res.length > 0) setSelectedMessage(res[0]); 
   }
 
+  async function fetchAllUsers() {
+    console.log("hellooo");
+    const res = (await axios.get(`http://localhost:5001/inbox/draft/${id}`)).data;
+    console.log(res);
+    setUsers(res);
+  }
+
   useEffect(() => {
     fetchAllPosts();
   }, []);
@@ -27,6 +37,8 @@ export const Inbox = () => {
     setMode(newMode);
     if (newMode === 'yourPosts' && messages.length > 0) {
       setSelectedMessage(messages[0]);
+    } else {
+      fetchAllUsers();
     }
   };
 
@@ -109,11 +121,60 @@ export const Inbox = () => {
             <h3>Draft Message</h3>
             <hr className="forumPageHr" />
             <form onSubmit={handleSubmit}>
+            <Autocomplete
+              disablePortal
+              id="combo-box-demo"
+              options={users}
+              sx={{
+                "& .MuiInputBase-root": {
+                  background: '#333',
+                  borderRadius: 1,
+                  padding: '10px',
+                  marginBottom: '20px',
+                  color: 'white',
+                  "&::placeholder": {
+                    color: 'rgba(255, 255, 255, 0.5)', 
+                  },
+                },
+                "& .MuiOutlinedInput-root": {
+                  "& fieldset": {
+                    borderColor: 'transparent',
+                  },
+                  "&:hover fieldset": {
+                    borderColor: 'rgba(255, 255, 255, 0.5)',
+                  },
+                  "&.Mui-focused fieldset": {
+                    borderColor: 'rgba(255, 255, 255, 0.5)',
+                    boxShadow: '0 0 0 3px rgba(138, 43, 226, 0.5), 0 0 0 4px #8A2BE2, 0 0 0 5px rgba(255, 0, 255, 0.5)',
+                  },
+                },
+                "& .MuiAutocomplete-inputRoot": {
+                  padding: 0, 
+                },
+                "& .MuiAutocomplete-endAdornment": {
+                  color: 'white', 
+                },
+              }}
+              renderInput={(params) => (
+                <TextField
+                  {...params}
+                  placeholder="Username" 
+                  InputProps={{
+                    ...params.InputProps,
+                    style: { padding: '10px' }, 
+                  }}
+                />
+              )}
+              onChange={(e, value) => { setNewMsg({ ...newMsg, "to": value }) }}
+            />
+
+            {/*
               <input id="recipField" 
                 type="text" 
                 placeholder="To" 
                 className="inputField" 
-                onChange={(e) => {setNewMsg({...newMsg, "to": e.target.value})}}/>
+                onChange={(e) => {setNewMsg({...newMsg, "to": e.target.value})}}/> 
+        */} 
               <input id="titleField" 
                 type="text" 
                 placeholder="Title" 
