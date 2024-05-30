@@ -1,8 +1,7 @@
 import React, { useState, useContext, useEffect } from 'react';
 import { useLocation, Link, useNavigate } from 'react-router-dom';
 import { Sidenav, Nav, IconButton, Button, Modal } from 'rsuite';
-import { FaUser, FaMusic, FaHeart, FaCompass, FaInbox, FaComments, FaStar } from 'react-icons/fa';
-import AngleRightIcon from '@rsuite/icons/legacy/AngleRight';
+import { FaUser, FaMusic, FaHeart, FaCompass, FaInbox, FaComments, FaStar, FaBars } from 'react-icons/fa';
 import { AuthContext } from "../components/AuthContext";
 import Discover from '../roots/Discover.jsx';
 import Home from '../roots/Home.jsx';
@@ -12,7 +11,7 @@ import TopArtists from '../roots/TopArtists';
 import TopSongs from '../roots/TopSongs';
 import LikedSongs from '../roots/LikedSongs';
 import Inbox from '../roots/Inbox';
-import axios from 'axios'
+import axios from 'axios';
 import PublicProfile from "./../roots/publicProfile.jsx";
 
 import '../styles/Navbar.css';
@@ -156,7 +155,7 @@ const MyNavbar = () => {
       <div style={headerStyles}>
         <div style={{ display: 'flex', alignItems: 'center' }}>
           <IconButton
-            icon={<AngleRightIcon style={{ fontWeight: 'bold', color: '#FFFFFF' }} />}
+            icon={<FaBars style={{ fontWeight: 'bold', color: '#FFFFFF' }} />}
             onClick={toggleSidenav}
             style={{
               zIndex: 3,
