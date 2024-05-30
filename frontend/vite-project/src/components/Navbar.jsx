@@ -199,6 +199,15 @@ const MyNavbar = () => {
             <Sidenav.Body>
               <Nav>
                 <Nav.Item
+                  eventKey="6"
+                  icon={<FaCompass style={{ ...iconStyles, color: '#FFFFFF' }} />}
+                  style={location.pathname === '/discover' ? { ...navItemStyles, backgroundColor: '#333' } : navItemStyles}
+                  as={Link}
+                  to="/discover"
+                >
+                  <strong>Discover</strong>
+                </Nav.Item>
+                <Nav.Item
                   eventKey="2"
                   icon={<FaUser style={{ ...iconStyles, color: '#FFFFFF' }} />}
                   style={location.pathname === '/profile' ? { ...navItemStyles, backgroundColor: '#333' } : navItemStyles}
@@ -226,24 +235,6 @@ const MyNavbar = () => {
                   <strong>Top Songs</strong>
                 </Nav.Item>
                 <Nav.Item
-                  eventKey="5"
-                  icon={<FaComments style={{ ...iconStyles, color: '#FFFFFF' }} />}
-                  style={location.pathname === '/forum' ? { ...navItemStyles, backgroundColor: '#333' } : navItemStyles}
-                  as={Link}
-                  to="/forum"
-                >
-                  <strong>Forums</strong>
-                </Nav.Item>
-                <Nav.Item
-                  eventKey="6"
-                  icon={<FaCompass style={{ ...iconStyles, color: '#FFFFFF' }} />}
-                  style={location.pathname === '/discover' ? { ...navItemStyles, backgroundColor: '#333' } : navItemStyles}
-                  as={Link}
-                  to="/discover"
-                >
-                  <strong>Discover</strong>
-                </Nav.Item>
-                <Nav.Item
                   eventKey="7"
                   icon={<FaHeart style={{ ...iconStyles, color: '#FFFFFF' }} />}
                   style={location.pathname === '/liked-songs' ? { ...navItemStyles, backgroundColor: '#333' } : navItemStyles}
@@ -252,6 +243,17 @@ const MyNavbar = () => {
                 >
                   <strong>Liked Songs</strong>
                 </Nav.Item>
+                <Nav.Item
+                  eventKey="5"
+                  icon={<FaComments style={{ ...iconStyles, color: '#FFFFFF' }} />}
+                  style={location.pathname === '/forum' ? { ...navItemStyles, backgroundColor: '#333' } : navItemStyles}
+                  as={Link}
+                  to="/forum"
+                >
+                  <strong>Forums</strong>
+                </Nav.Item>
+
+
                 <Nav.Item
                   eventKey="8"
                   icon={<FaInbox style={{ ...iconStyles, color: '#FFFFFF' }} />}
