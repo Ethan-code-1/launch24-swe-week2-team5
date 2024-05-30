@@ -16,6 +16,7 @@ export const TopSongs = () => {
   const [topTracks, setTopTracks] = useState([]);
   const [searchQuery, setSearchQuery] = useState('');
   const [timeRange, setTimeRange] = useState('medium_term'); // Default to monthly
+  const [loading, setLoading] = useState(true); // Add loading state
   const accessToken = localStorage.getItem('access_token');
 
   useEffect(() => {
@@ -27,6 +28,8 @@ export const TopSongs = () => {
         setTopTracks(response.data.items);
       } catch (e) {
         console.error('Error fetching top tracks', e);
+      } finally {
+        setLoading(false); // Set loading to false once data is fetched
       }
     };
     if (accessToken) {
@@ -79,34 +82,40 @@ export const TopSongs = () => {
             cleanable={false}
           />
         </div>
-        <div className="table-header">
-          <div className="column-number">#</div>
-          <div className="column-cover">Cover</div>
-          <div className="column-title">Title</div>
-          <div className="column-album">Album</div>
-          <div className="column-artist">Artist</div>
-        </div>
-        {filteredTracks?.map((track, index) => (
-          <div
-            key={track.id}
-            className="song-row"
-            onClick={() => handleRowClick(track.external_urls.spotify)}
-          >
-            <div className="column-number">{index + 1}</div>
-            <div className="column-cover">
-              <img
-                src={track.album.images[0].url}
-                alt={track.name}
-                className="song-cover"
-              />
+        {loading ? (
+          <div className="loader"></div> // Show loading indicator
+        ) : (
+          <>
+            <div className="table-header">
+              <div className="column-number">#</div>
+              <div className="column-cover">Cover</div>
+              <div className="column-title">Title</div>
+              <div className="column-album">Album</div>
+              <div className="column-artist">Artist</div>
             </div>
-            <div className="column-title">{track.name}</div>
-            <div className="column-album">{track.album.name}</div>
-            <div className="column-artist">
-              {track.artists.map(artist => artist.name).join(', ')}
-            </div>
-          </div>
-        ))}
+            {filteredTracks?.map((track, index) => (
+              <div
+                key={track.id}
+                className="song-row"
+                onClick={() => handleRowClick(track.external_urls.spotify)}
+              >
+                <div className="column-number">{index + 1}</div>
+                <div className="column-cover">
+                  <img
+                    src={track.album.images[0].url}
+                    alt={track.name}
+                    className="song-cover"
+                  />
+                </div>
+                <div className="column-title">{track.name}</div>
+                <div className="column-album">{track.album.name}</div>
+                <div className="column-artist">
+                  {track.artists.map(artist => artist.name).join(', ')}
+                </div>
+              </div>
+            ))}
+          </>
+        )}
       </div>
     </div>
   );
