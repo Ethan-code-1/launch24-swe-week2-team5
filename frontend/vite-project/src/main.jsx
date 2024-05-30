@@ -43,6 +43,10 @@ const router = createBrowserRouter([
     element: <MyNavbar></MyNavbar>,
   },
   {
+    path: "/public-profile/:id",
+    element: <MyNavbar></MyNavbar>,
+  },
+  {
     path: "/top-artists",
     element: <MyNavbar></MyNavbar>,
   },

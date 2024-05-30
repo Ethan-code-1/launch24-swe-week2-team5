@@ -60,7 +60,7 @@ export const Discover = () => {
       <div className="Discography">
         {filteredProfiles.map((profile) => (
           <div key={profile.id} className="IndividualProfile">
-            <a href={`/profile/${profile.id}`} className="profile-link">
+            <a href={`/public-profile/${profile.id}`} className="profile-link">
               <img className="profile-image" src={profile.image || mockphoto} alt='Profile' />
               <p >{profile.display_name}</p>
             </a>

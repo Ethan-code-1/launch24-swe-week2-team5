@@ -17,7 +17,7 @@ import TopSongs from '../roots/TopSongs';
 import LikedSongs from '../roots/LikedSongs';
 import Inbox from '../roots/Inbox';
 import axios from 'axios'
-
+import PublicProfile from "./../roots/publicProfile.jsx";
 import '../styles/Navbar.css';
 
 const panelStyles = {
@@ -126,25 +126,29 @@ const MyNavbar = () => {
   };
 
   const renderContent = () => {
-    switch (location.pathname) {
-      case '/*':
-        return <Home />;
-      case '/forum':
-        return <Forum />;
-      case '/discover':
-        return <Discover />;
-      case '/profile':
-        return <Profile />;
-      case '/top-artists':
-        return <TopArtists />;
-      case '/top-songs':
-        return <TopSongs />;
-      case '/liked-songs':
-        return <LikedSongs />;
-      case '/inbox':
-        return <Inbox />;
-      default:
-        return <Home />;
+    if (location.pathname.split('/')[1] == 'public-profile') {
+      return <PublicProfile/>;
+    } else {
+      switch (location.pathname) {
+        case '/':
+          return <Home />;
+        case '/forum':
+          return <Forum />;
+        case '/discover':
+          return <Discover />;
+        case '/profile':
+          return <Profile />;
+        case '/top-artists':
+          return <TopArtists />;
+        case '/top-songs':
+          return <TopSongs />;
+        case '/liked-songs':
+          return <LikedSongs></LikedSongs>
+        case '/inbox':
+          return <Inbox></Inbox>
+        default:
+          return <Home />;
+      }
     }
   };
 
