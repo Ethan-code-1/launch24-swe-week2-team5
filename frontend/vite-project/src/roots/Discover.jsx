@@ -34,18 +34,17 @@ export const Discover = () => {
           <Link className="discover-link" to="/discover">Discover</Link>
           <Link className="following-link" to="/discover/following">Following</Link>
         </div>
-        <div className="search-container">
+        <div className="search-box">
+          <button className="btn-search"><i className="fas fa-search"></i></button>
           <input
             type="text"
-            placeholder="Search profiles..."
+            className="input-search"
+            placeholder="Type to Search..."
             value={searchQuery}
             onChange={e => setSearchQuery(e.target.value)}
-            className="search-input"
           />
         </div>
       </header>
-
-      <h1>Discover Page</h1>
 
       <div className="Discography">
         {filteredProfiles.map((profile) => (
