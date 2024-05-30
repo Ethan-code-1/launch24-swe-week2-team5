@@ -168,7 +168,7 @@ const MyNavbar = () => {
             }}
           />
           <div className="fade-in" style={{ paddingLeft: '2vw', fontSize: '2rem' }}>
-            <strong>Spotimy</strong>
+            <strong>SpotiMy</strong>
             <img src="/spotifyIcon.png" alt="spotifyIcon" style={{ maxWidth: '50px', height: 'auto', marginLeft: '10px' }} />
           </div>
         </div>
