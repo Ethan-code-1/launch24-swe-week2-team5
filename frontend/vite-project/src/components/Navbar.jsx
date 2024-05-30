@@ -1,12 +1,13 @@
-import React, { useState } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import { Sidenav, Nav, IconButton } from 'rsuite';
-import { useLocation, Link } from 'react-router-dom';
+import { useLocation, Link, useNavigate } from 'react-router-dom';
 import DashboardIcon from '@rsuite/icons/legacy/Dashboard';
 import GroupIcon from '@rsuite/icons/legacy/Group';
 import MagicIcon from '@rsuite/icons/legacy/Magic';
 import GearCircleIcon from '@rsuite/icons/legacy/GearCircle';
 import AngleRightIcon from '@rsuite/icons/legacy/AngleRight';
-
+import { AuthContext } from "../components/AuthContext";
+import Auth from '../components/Auth'
 import Discover from '../roots/Discover.jsx';
 import Home from '../roots/Home.jsx';
 import Forum from '../roots/Forum.jsx';
@@ -15,7 +16,7 @@ import TopArtists from '../roots/TopArtists';
 import TopSongs from '../roots/TopSongs';
 import LikedSongs from '../roots/LikedSongs';
 import Inbox from '../roots/Inbox';
-
+import axios from 'axios'
 
 
 import '../styles/Navbar.css';
@@ -73,6 +74,30 @@ const navItemStyles = {
 };
 
 const MyNavbar = () => {
+  
+  /* Check if user is logged in */
+  const { userData, login, logout } = useContext(AuthContext);
+  const navigate = useNavigate();
+  const isLoggedIn = localStorage.getItem('isLoggedIn');
+  
+  useEffect(() => {
+    if (userData === null) {
+      const urlParams = new URLSearchParams(window.location.search);
+      const access_token = urlParams.get("access_token");
+      const refresh_token = urlParams.get("refresh_token");
+      const id = urlParams.get("id");
+      const error = urlParams.get("error");
+
+
+      if (error) {
+        alert("There was an error during the authentication");
+      } else if (access_token) {
+        login({ access_token, refresh_token, id });
+        console.log({ access_token, refresh_token, id });
+      }
+    }
+  }, []);
+  
   const [isSidenavOpen, setIsSidenavOpen] = useState(true);
   const location = useLocation();
 
@@ -87,7 +112,7 @@ const MyNavbar = () => {
 
   const renderContent = () => {
     switch (location.pathname) {
-      case '/':
+      case '/*':
         return <Home />;
       case '/forum':
         return <Forum />;
@@ -124,7 +149,7 @@ const MyNavbar = () => {
           }}
         />
         <div className="fade-in" style={{ paddingLeft: '2vw', fontSize: '2rem' }}>
-          <strong>Spotimy</strong>
+          <strong>SpotiMy</strong>
           <img src="/spotifyIcon.png" alt="spotifyIcon" style={{ maxWidth: '50px', height: 'auto', marginLeft: '10px' }} />
         </div>
       </div>
@@ -163,7 +188,12 @@ const MyNavbar = () => {
         )}
         <div className="centerContentContainer" style={dynamicContentStyles}>
           <div style={{ paddingLeft: '10px', paddingTop: '10px', paddingRight: '10px', paddingBottom: '10px' }}>
-            {renderContent()}
+            {userData === null ? (
+              <>
+              <h1>Please Login</h1>
+              <button onClick={() => navigate('/login')}>Go to Login</button>
+              </>
+            ) : renderContent()}
           </div>
         </div>
       </div>
