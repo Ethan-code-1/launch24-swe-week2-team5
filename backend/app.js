@@ -4,6 +4,7 @@ const spotifyRouter = require('./spotify');
 const forumsRouter = require('./forums');
 const inboxRouter = require('./inbox');
 const userRouter = require('./users');
+const publicProfileRouter = require('./publicProfile');
 const app = express();
 const port = 5001;
 app.use(express.json());
@@ -36,7 +37,7 @@ app.use("/spotify", spotifyRouter);
 
 app.use("/forum", forumsRouter);
 app.use("/inbox", inboxRouter);
-
+app.use("/public-profile", publicProfileRouter);
 app.use("/users", userRouter);
 
 app.listen(port, () => {
