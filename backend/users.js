@@ -14,7 +14,7 @@ router.get("/", async (req, res) => {
             let imagesArray = userData['spotify-data'].images;
 
             if (imagesArray && imagesArray.length > 0) {
-                imageUrl = imagesArray[0].url; // Access the 'url' property correctly
+                imageUrl = imagesArray[1].url; // Access the 'url' property correctly
             }
 
             eachProfile.push({
