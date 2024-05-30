@@ -62,6 +62,10 @@ const router = createBrowserRouter([
     path: "/Inbox",
     element: <MyNavbar></MyNavbar>,
   },
+  {
+    path: "/draft/:id",
+    element: <MyNavbar></MyNavbar>,
+  },
 ]);
 
 const container = document.getElementById("root");

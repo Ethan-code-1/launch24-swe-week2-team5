@@ -346,19 +346,19 @@ router.get('/artist', (req, res) => {
     });
 });
 
-router.delete("/logout/:id", async (req, res) => {
-  try {
-    console.log(req.params);
-    const id = req.params.id;
-    const userDoc = (await getDoc(doc(db, "users", id))).data();
-    delete userDoc["liked-tracks"];
-    delete userDoc["spotify-data"];
-    delete userDoc["top-artists"];
-    delete userDoc["top-tracks"];
-    await setDoc(doc(db, "users", id), userDoc);
-    res.status(200).json({message: `Successfully logged out`})
-} catch (e) {
-    res.status(400).json({ error: e.message });
-}
-})
+// router.delete("/logout/:id", async (req, res) => {
+//   try {
+//     console.log(req.params);
+//     const id = req.params.id;
+//     const userDoc = (await getDoc(doc(db, "users", id))).data();
+//     delete userDoc["liked-tracks"];
+//     delete userDoc["spotify-data"];
+//     delete userDoc["top-artists"];
+//     delete userDoc["top-tracks"];
+//     await setDoc(doc(db, "users", id), userDoc);
+//     res.status(200).json({message: `Successfully logged out`})
+// } catch (e) {
+//     res.status(400).json({ error: e.message });
+// }
+// })
 module.exports = router;

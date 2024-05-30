@@ -34,7 +34,13 @@ router.get("/draft/:id", async (req, res) => {
             console.log(userData);
             usernames.push(userData["username"]);
         })
-        res.status(200).json(usernames);
+        const id = req.params.id;
+        let username = null;
+        if (id != 'x') {
+            const user = await getDoc(doc(db, "users", id));
+            username = user.data()["username"];
+        }
+        res.status(200).json({"usernames" : usernames, "username": username});
     } catch (e) {
         res.status(400).json({error: e.message});
     }
@@ -66,6 +72,7 @@ router.post("/:id", async (req, res) => {
             "From": senderId
         }
         await addDoc(collection(db, "users", toId, "Inbox"), msg);
+        // res.redirect("http://localhost:5173/inbox")
         res.status(200).json({message: `Successfully sent message to ${toId}`})
     } catch (e) {
         res.status(400).json({ error: e.message });
