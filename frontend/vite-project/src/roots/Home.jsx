@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router-dom';
 
 const Home = () => {
   const [messages, setMessages] = useState([]);
-    const [id, setId] = useState('');
+  const [id, setId] = useState('');
   /* After redirecting to Home set useContext variables */
   const { userData, login, logout } = useContext(AuthContext);
   const navigate = useNavigate();
