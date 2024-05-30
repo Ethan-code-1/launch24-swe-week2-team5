@@ -11,16 +11,17 @@ router.get("/", async (req, res) => {
         usersCollection.forEach((userDoc) => {
             const userData = userDoc.data();
             let imageUrl = null;
-            let imagesArray = userData['spotify-data'].images;
-
-            if (imagesArray && imagesArray.length > 0) {
-                imageUrl = imagesArray[1].url; // Access the 'url' property correctly
+            if (userData['spotify-data'] && userData['spotify-data'].images) {
+                let imagesArray = userData['spotify-data'].images;
+                if (imagesArray.length > 0) {
+                    imageUrl = imagesArray[1]?.url || imagesArray[0]?.url; // Access the 'url' property correctly
+                }
             }
 
             eachProfile.push({
                 id: userDoc.id,
-                display_name: userData['spotify-data'].display_name,
-                email: userData['spotify-data'].email,
+                display_name: userData['spotify-data']?.display_name || "No display name",
+                email: userData['spotify-data']?.email || "No email",
                 image: imageUrl, // Store the image URL instead of the array
             });
         });
