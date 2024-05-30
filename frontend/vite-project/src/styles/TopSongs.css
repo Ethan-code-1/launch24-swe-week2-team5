@@ -1,0 +1,128 @@
+.top-songs-container {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  background-color: #121212;
+  color: white;
+}
+
+.banner {
+  background: linear-gradient(90deg, #8A2BE2, #FF00FF);
+  padding: 50px 20px;
+  display: flex;
+  align-items: center;
+}
+
+.banner-content {
+  display: flex;
+  align-items: center;
+}
+
+.banner-text h1 {
+  margin: 0;
+  font-size: 3em;
+  color: white;
+}
+
+.songs-list {
+  flex: 1;
+  padding: 20px;
+  overflow-y: auto;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  background-color: #121212;
+  padding: 10px;
+  border-radius: 10px;
+}
+
+.search-input {
+  width: 100%;
+  max-width: 300px;
+  background-color: #333;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  padding: 10px;
+}
+
+.time-range-picker {
+  width: 150px;
+  background-color: #121212;
+  color: #121212;
+}
+
+.table-header {
+  display: flex;
+  justify-content: space-between;
+  background: linear-gradient(90deg, #8A2BE2, #FF00FF);
+  padding: 10px;
+  border-radius: 10px;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.table-header div {
+  flex: 1;
+  text-align: left;
+}
+
+.song-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px;
+  border-bottom: 1px solid #333;
+  transition: transform 0.1s, background-color 0.1s;
+  align-items: center;
+}
+
+.song-row:hover {
+  background-color: #333;
+  transform: scale(1.02);
+}
+
+.song-row div {
+  flex: 1;
+  text-align: left;
+}
+
+.song-cover {
+  width: 50px;
+  height: 50px;
+  object-fit: cover;
+  border-radius: 5px;
+}
+
+.artist-name {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.loader {
+  font-weight: bold;
+  font-family: monospace;
+  font-size: 30px;
+  display: inline-grid;
+  color: white;
+}
+.loader:before,
+.loader:after {
+  content: "Loading...";
+  grid-area: 1/1;
+  -webkit-mask: linear-gradient(90deg, #000 50%, #0000 0) 0 50% / 2ch 100%;
+  animation: l11 1s infinite cubic-bezier(0.5, 220, 0.5, -220);
+}
+.loader:after {
+  -webkit-mask-position: 1ch 50%;
+  --s: -1;
+}
+@keyframes l11 {
+  100% {
+    transform: translateY(calc(var(--s, 1) * 0.1%));
+  }
+}
