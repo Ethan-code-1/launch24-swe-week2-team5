@@ -15,6 +15,8 @@ import TopArtists from '../roots/TopArtists';
 import TopSongs from '../roots/TopSongs';
 import LikedSongs from '../roots/LikedSongs';
 import Inbox from '../roots/Inbox';
+import Login from '../roots/Login';
+
 
 
 
@@ -88,7 +90,7 @@ const MyNavbar = () => {
   const renderContent = () => {
     switch (location.pathname) {
       case '/':
-        return <Home />;
+        return <Profile />;
       case '/forum':
         return <Forum />;
       case '/discover':
@@ -104,7 +106,7 @@ const MyNavbar = () => {
       case '/inbox':
         return <Inbox></Inbox>
       default:
-        return <Home />;
+        return <Login />;
     }
   };
 
@@ -133,9 +135,6 @@ const MyNavbar = () => {
           <Sidenav defaultOpenKeys={['3', '4']} style={sidenavStyles}>
             <Sidenav.Body>
               <Nav>
-                <Nav.Item eventKey="1" icon={<DashboardIcon style={{ color: '#FFFFFF' }} />} style={navItemStyles} as={Link} to="/">
-                  <strong>Home</strong>
-                </Nav.Item>
                 <Nav.Item eventKey="2" icon={<GroupIcon style={{ color: '#FFFFFF' }} />} style={navItemStyles} as={Link} to="/profile">
                   <strong>Profile</strong>
                 </Nav.Item>
