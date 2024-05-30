@@ -125,15 +125,56 @@ export const Inbox = () => {
               disablePortal
               id="combo-box-demo"
               options={users}
-              color='grey'
-              renderInput={(params) => <TextField {...params} label="Username" />}
-              onChange={(e) => {setNewMsg({...newMsg, "to": e.target.value})}}
+              sx={{
+                "& .MuiInputBase-root": {
+                  background: '#333',
+                  borderRadius: 1,
+                  padding: '10px',
+                  marginBottom: '20px',
+                  color: 'white',
+                  "&::placeholder": {
+                    color: 'rgba(255, 255, 255, 0.5)', 
+                  },
+                },
+                "& .MuiOutlinedInput-root": {
+                  "& fieldset": {
+                    borderColor: 'transparent',
+                  },
+                  "&:hover fieldset": {
+                    borderColor: 'rgba(255, 255, 255, 0.5)',
+                  },
+                  "&.Mui-focused fieldset": {
+                    borderColor: 'rgba(255, 255, 255, 0.5)',
+                    boxShadow: '0 0 0 3px rgba(138, 43, 226, 0.5), 0 0 0 4px #8A2BE2, 0 0 0 5px rgba(255, 0, 255, 0.5)',
+                  },
+                },
+                "& .MuiAutocomplete-inputRoot": {
+                  padding: 0, 
+                },
+                "& .MuiAutocomplete-endAdornment": {
+                  color: 'white', 
+                },
+              }}
+              renderInput={(params) => (
+                <TextField
+                  {...params}
+                  placeholder="Username" 
+                  InputProps={{
+                    ...params.InputProps,
+                    style: { padding: '10px' }, 
+                  }}
+                />
+              )}
+              onChange={(e, value) => { setNewMsg({ ...newMsg, "to": value }) }}
             />
+
+            {/*
               <input id="recipField" 
                 type="text" 
                 placeholder="To" 
                 className="inputField" 
-                onChange={(e) => {setNewMsg({...newMsg, "to": e.target.value})}}/>
+                onChange={(e) => {setNewMsg({...newMsg, "to": e.target.value})}}/> 
+        */} 
               <input id="titleField" 
                 type="text" 
                 placeholder="Title" 
