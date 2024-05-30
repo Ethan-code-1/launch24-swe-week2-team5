@@ -95,8 +95,8 @@ router.get("/callback", function (req, res) {
 
         // update firebase user info
         const userDoc = (await getDoc(doc(db, "users", userInfo.id))).data();
-        if (userDoc["username"]) {
-          await setDoc(doc(db, "users", userInfo.id), {"spotify-data": userInfo});
+        if (userDoc && userDoc["username"]) {
+          await updateDoc(doc(db, "users", userInfo.id), {"spotify-data": userInfo});
         } else {
           await setDoc(doc(db, "users", userInfo.id), {"spotify-data": userInfo, "username": userInfo["display_name"]});
         }
