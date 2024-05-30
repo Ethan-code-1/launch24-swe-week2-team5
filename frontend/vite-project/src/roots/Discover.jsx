@@ -8,13 +8,16 @@ export const Discover = () => {
   const [profiles, setProfiles] = useState([]);
   const [menuOpen, setMenuOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
+  const [loading, setLoading] = useState(true);
 
   async function fetchPublicProfiles() {
     try {
       const res = await axios.get("http://localhost:5001/users");
       setProfiles(res.data);
+      setLoading(false); // Set loading to false after data is fetched
     } catch (error) {
       console.error("Error fetching profiles:", error);
+      setLoading(false); // Set loading to false even if there is an error
     }
   }
 
@@ -46,19 +49,24 @@ export const Discover = () => {
         </div>
       </header>
 
-      <div className="Discography">
-        {filteredProfiles.map((profile) => (
-          <div key={profile.id} className="IndividualProfile">
-            <Link to={`/profile/${profile.id}`} className="profile-link">
-              <img className="profile-image" src={profile.image || mockphoto} alt='Profile' />
-              <div className="profile-name">{profile.display_name}'s Profile</div>
-            </Link>
-            <Link to={`/chat/${profile.id}`} className="profile-chat-icon">
-              <div className="chat-bubble"></div>
-            </Link>
-          </div>
-        ))}
-      </div>
+
+      {loading ? (
+        <div className="loading">Loading...</div> // Show loading indicator
+      ) : (
+        <div className="Discography">
+          {filteredProfiles.map((profile) => (
+            <div key={profile.id} className="IndividualProfile">
+              <Link to={`/profile/${profile.id}`} className="profile-link">
+                <img className="profile-image" src={profile.image || mockphoto} alt='Profile' />
+                <div className="profile-name">{profile.display_name}'s Profile</div>
+              </Link>
+              <Link to={`/chat/${profile.id}`} className="profile-chat-icon">
+                <div className="chat-bubble"></div>
+              </Link>
+            </div>
+          ))}
+        </div>
+      )}
     </div>
   );
 };
