@@ -8,9 +8,13 @@ export const Inbox = () => {
   const [mode, setMode] = useState('yourPosts'); 
   const [selectedMessage, setSelectedMessage] = useState(null);
   const [messages, setMessages] = useState([]); 
+  const [newMsg, setNewMsg] = useState({});
+
+  const id = localStorage.getItem("id");
 
   async function fetchAllPosts() {
-    const res = (await axios.get("http://localhost:5001/inbox")).data;
+    const res = (await axios.get(`http://localhost:5001/inbox/${id}`)).data;
+    console.log(res);
     setMessages(res);
     if (res.length > 0) setSelectedMessage(res[0]); 
   }
@@ -26,9 +30,19 @@ export const Inbox = () => {
     }
   };
 
-  const handleDelete = () => {
-    console.log('delete message');
+  const handleDelete = async () => {
+    const msgId = selectedMessage["id"];
+    const res = (await axios.delete(`http://localhost:5001/inbox/${id}/${msgId}`)).data;
+    console.log(res);
+    fetchAllPosts();
   };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const res = await axios.post(`http://localhost:5001/inbox/${id}`, newMsg);
+    console.log(res);
+    location.reload();
+  }
 
   return (
     <div style={{ padding: '20px' }}>
@@ -94,10 +108,23 @@ export const Inbox = () => {
           <div className="postsOutsideContainer">
             <h3>Draft Message</h3>
             <hr className="forumPageHr" />
-            <form>
-              <input id="recipField" type="text" placeholder="To" className="inputField"/>
-              <input id="titleField" type="text" placeholder="Title" className="inputField"/>
-              <textarea id="contentField" placeholder="Content" className="inputField"/>
+            <form onSubmit={handleSubmit}>
+              <input id="recipField" 
+                type="text" 
+                placeholder="To" 
+                className="inputField" 
+                onChange={(e) => {setNewMsg({...newMsg, "to": e.target.value})}}/>
+              <input id="titleField" 
+                type="text" 
+                placeholder="Title" 
+                className="inputField" 
+                onChange={(e) => {setNewMsg({...newMsg, "title": e.target.value})}}/>
+              <textarea id="contentField" 
+                placeholder="Content" 
+                className="inputField"
+                onChange={(e) => {
+                  setNewMsg({...newMsg, "content": e.target.value})
+                }}/>
               <button id="submitForum" type="submit" className="submitButton">Send Message</button>
             </form>
           </div>
