@@ -1,7 +1,7 @@
 import React, { useState, useContext, useEffect } from 'react';
 import { useLocation, Link, useNavigate } from 'react-router-dom';
 import { Sidenav, Nav, IconButton, Button, Modal } from 'rsuite';
-import { FaUser, FaMusic, FaHeart, FaCompass, FaInbox, FaForumbee, FaStar } from 'react-icons/fa';
+import { FaUser, FaMusic, FaHeart, FaCompass, FaInbox, FaComments, FaStar } from 'react-icons/fa';
 import AngleRightIcon from '@rsuite/icons/legacy/AngleRight';
 import { AuthContext } from "../components/AuthContext";
 import Discover from '../roots/Discover.jsx';
@@ -203,7 +203,7 @@ const MyNavbar = () => {
                 <Nav.Item eventKey="4" icon={<FaMusic style={{ ...iconStyles, color: '#FFFFFF' }} />} style={navItemStyles} as={Link} to="/top-songs">
                   <strong>Top Songs</strong>
                 </Nav.Item>
-                <Nav.Item eventKey="5" icon={<FaForumbee style={{ ...iconStyles, color: '#FFFFFF' }} />} style={navItemStyles} as={Link} to="/forum">
+                <Nav.Item eventKey="5" icon={<FaComments style={{ ...iconStyles, color: '#FFFFFF' }} />} style={navItemStyles} as={Link} to="/forum">
                   <strong>Forums</strong>
                 </Nav.Item>
                 <Nav.Item eventKey="6" icon={<FaCompass style={{ ...iconStyles, color: '#FFFFFF' }} />} style={navItemStyles} as={Link} to="/discover">
