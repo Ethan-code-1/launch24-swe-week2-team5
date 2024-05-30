@@ -94,7 +94,8 @@ router.get("/callback", function (req, res) {
         const userInfo = userInfoResponse.body;
 
         // update firebase with user info
-        await setDoc(doc(db, "users", userInfo.id), {"spotify-data": userInfo})
+        console.log(userInfo);
+        await setDoc(doc(db, "users", userInfo.id), {"spotify-data": userInfo, "username": userInfo["display_name"]})
 
         await storeLikedTracks(access_token, userInfo.id);
         await storeTopTracks(access_token, userInfo.id);
