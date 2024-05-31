@@ -94,13 +94,26 @@ router.get("/callback", function (req, res) {
         const userInfo = userInfoResponse.body;
 
         // update firebase user info
-        const userDoc = (await getDoc(doc(db, "users", userInfo.id))).data();
-        if (userDoc && userDoc["username"]) {
-          await updateDoc(doc(db, "users", userInfo.id), {"spotify-data": userInfo});
+        const userDocRef = doc(db, "users", userInfo.id);
+        const userDocSnap = await getDoc(userDocRef);
+
+        if (userDocSnap.exists()) {
+          const userDocData = userDocSnap.data();
+          const updatedData = {
+            "isPublic": userDocData.isPublic !== undefined ? userDocData.isPublic : true,
+            "username": userDocData.username || userInfo.display_name,
+            "spotify-data": userInfo
+          };
+          await setDoc(userDocRef, updatedData, { merge: true });
         } else {
-          await setDoc(doc(db, "users", userInfo.id), {"spotify-data": userInfo, "username": userInfo["display_name"]});
+          const newData = {
+            "isPublic": true,
+            "username": userInfo.display_name,
+            "spotify-data": userInfo
+          };
+          await setDoc(userDocRef, newData);
         }
-        
+
         await storeLikedTracks(access_token, userInfo.id);
         await storeTopTracks(access_token, userInfo.id);
         await storeTopArtists(access_token, userInfo.id);

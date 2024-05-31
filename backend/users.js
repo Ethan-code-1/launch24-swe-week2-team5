@@ -23,6 +23,7 @@ router.get("/", async (req, res) => {
                 display_name: userData['spotify-data']?.display_name || "No display name",
                 email: userData['spotify-data']?.email || "No email",
                 image: imageUrl, // Store the image URL instead of the array
+                isPublic: userData.isPublic
             });
         });
 
