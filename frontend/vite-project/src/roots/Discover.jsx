@@ -32,7 +32,7 @@ export const Discover = () => {
   };
 
   const filteredProfiles = profiles.filter(profile =>
-    profile.display_name.toLowerCase().includes(searchQuery.toLowerCase())
+    profile.username.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
   return (
@@ -62,7 +62,7 @@ export const Discover = () => {
           <div key={profile.id} className="IndividualProfile">
             <a href={`/public-profile/${profile.id}`} className="profile-link">
               <img className="profile-image" src={profile.image || mockphoto} alt='Profile' />
-              <p >{profile.display_name}</p>
+              <p >{profile.username}</p>
             </a>
             <a href={`/draft/${profile.id}`} className="profile-chat-icon">
               <div className="chat-bubble"></div>
