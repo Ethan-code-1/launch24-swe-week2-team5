@@ -64,7 +64,7 @@ export const Discover = () => {
               <img className="profile-image" src={profile.image || mockphoto} alt='Profile' />
               <p >{profile.display_name}</p>
             </a>
-            <a href={`/chat/${profile.id}`} className="profile-chat-icon">
+            <a href={`/draft/${profile.id}`} className="profile-chat-icon">
               <div className="chat-bubble"></div>
             </a>
           </div>

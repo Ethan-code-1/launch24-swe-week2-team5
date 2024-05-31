@@ -1,13 +1,8 @@
 import React, { useState, useContext, useEffect } from 'react';
 import { useLocation, Link, useNavigate } from 'react-router-dom';
 import { Sidenav, Nav, IconButton, Button, Modal } from 'rsuite';
-import DashboardIcon from '@rsuite/icons/legacy/Dashboard';
-import GroupIcon from '@rsuite/icons/legacy/Group';
-import MagicIcon from '@rsuite/icons/legacy/Magic';
-import GearCircleIcon from '@rsuite/icons/legacy/GearCircle';
-import AngleRightIcon from '@rsuite/icons/legacy/AngleRight';
+import { FaUser, FaMusic, FaHeart, FaCompass, FaInbox, FaComments, FaStar, FaBars } from 'react-icons/fa';
 import { AuthContext } from "../components/AuthContext";
-import Auth from '../components/Auth'
 import Discover from '../roots/Discover.jsx';
 import Home from '../roots/Home.jsx';
 import Forum from '../roots/Forum.jsx';
@@ -16,8 +11,9 @@ import TopArtists from '../roots/TopArtists';
 import TopSongs from '../roots/TopSongs';
 import LikedSongs from '../roots/LikedSongs';
 import Inbox from '../roots/Inbox';
-import axios from 'axios'
+import axios from 'axios';
 import PublicProfile from "./../roots/publicProfile.jsx";
+
 import '../styles/Navbar.css';
 
 const panelStyles = {
@@ -77,13 +73,15 @@ const navItemStyles = {
   color: '#FFFFFF'
 };
 
+const iconStyles = {
+  marginRight: '10px'
+};
+
 const MyNavbar = () => {
-  
-  /* Check if user is logged in */
   const { userData, login, logout } = useContext(AuthContext);
   const navigate = useNavigate();
-  const isLoggedIn = localStorage.getItem('isLoggedIn');
-  
+  const location = useLocation();
+
   useEffect(() => {
     if (userData === null) {
       const urlParams = new URLSearchParams(window.location.search);
@@ -92,7 +90,6 @@ const MyNavbar = () => {
       const id = urlParams.get("id");
       const error = urlParams.get("error");
 
-
       if (error) {
         alert("There was an error during the authentication");
       } else if (access_token) {
@@ -100,11 +97,10 @@ const MyNavbar = () => {
         console.log({ access_token, refresh_token, id });
       }
     }
-  }, []);
-  
+  }, [userData, login]);
+
   const [isSidenavOpen, setIsSidenavOpen] = useState(true);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const location = useLocation();
 
   const toggleSidenav = () => {
     setIsSidenavOpen(!isSidenavOpen);
@@ -114,10 +110,14 @@ const MyNavbar = () => {
     setIsModalOpen(!isModalOpen);
   };
 
-  const handleLogout = () => {
-    // Add your logout logic here
-    console.log("Logged out");
-    setIsModalOpen(false);
+  const handleLogout = async () => {
+    try {
+      await logout({ id: userData.id });
+      setIsModalOpen(false);
+      navigate('/login');
+    } catch (error) {
+      console.error("Error during logout", error);
+    }
   };
 
   const dynamicContentStyles = {
@@ -126,12 +126,15 @@ const MyNavbar = () => {
   };
 
   const renderContent = () => {
-    if (location.pathname.split('/')[1] == 'public-profile') {
-      return <PublicProfile/>;
+    if (location.pathname.split('/').length > 2) {
+      switch (location.pathname.split('/')[1]) {
+        case 'public-profile':
+          return <PublicProfile/>;
+        case 'draft':
+          return <Inbox toId={location.pathname.split('/')[2]}/>
+      }
     } else {
       switch (location.pathname) {
-        case '/':
-          return <Home />;
         case '/forum':
           return <Forum />;
         case '/discover':
@@ -143,11 +146,11 @@ const MyNavbar = () => {
         case '/top-songs':
           return <TopSongs />;
         case '/liked-songs':
-          return <LikedSongs></LikedSongs>
+          return <LikedSongs />;
         case '/inbox':
-          return <Inbox></Inbox>
+          return <Inbox />;
         default:
-          return <Home />;
+          return <Login />;
       }
     }
   };
@@ -157,7 +160,7 @@ const MyNavbar = () => {
       <div style={headerStyles}>
         <div style={{ display: 'flex', alignItems: 'center' }}>
           <IconButton
-            icon={<AngleRightIcon style={{ fontWeight: 'bold', color: '#FFFFFF' }} />}
+            icon={<FaBars style={{ fontWeight: 'bold', color: '#FFFFFF' }} />}
             onClick={toggleSidenav}
             style={{
               zIndex: 3,
@@ -169,7 +172,7 @@ const MyNavbar = () => {
             }}
           />
           <div className="fade-in" style={{ paddingLeft: '2vw', fontSize: '2rem' }}>
-            <strong>Spotimy</strong>
+            <strong>SpotiMy</strong>
             <img src="/spotifyIcon.png" alt="spotifyIcon" style={{ maxWidth: '50px', height: 'auto', marginLeft: '10px' }} />
           </div>
         </div>
@@ -195,28 +198,69 @@ const MyNavbar = () => {
           <Sidenav defaultOpenKeys={['3', '4']} style={sidenavStyles}>
             <Sidenav.Body>
               <Nav>
-                <Nav.Item eventKey="1" icon={<DashboardIcon style={{ color: '#FFFFFF' }} />} style={navItemStyles} as={Link} to="/">
-                  <strong>Home</strong>
-                </Nav.Item>
-                <Nav.Item eventKey="2" icon={<GroupIcon style={{ color: '#FFFFFF' }} />} style={navItemStyles} as={Link} to="/profile">
-                  <strong>Profile</strong>
-                </Nav.Item>
-                <Nav.Item eventKey="3" icon={<MagicIcon style={{ color: '#FFFFFF' }} />} style={navItemStyles} as={Link} to="/top-artists">
-                  <strong>Top Artists</strong>
-                </Nav.Item>
-                <Nav.Item eventKey="4" icon={<GearCircleIcon style={{ color: '#FFFFFF' }} />} style={navItemStyles} as={Link} to="/top-songs">
-                  <strong>Top Songs</strong>
-                </Nav.Item>
-                <Nav.Item eventKey="5" icon={<GearCircleIcon style={{ color: '#FFFFFF' }} />} style={navItemStyles} as={Link} to="/forum">
-                  <strong>Forums</strong>
-                </Nav.Item>
-                <Nav.Item eventKey="6" icon={<GearCircleIcon style={{ color: '#FFFFFF' }} />} style={navItemStyles} as={Link} to="/discover">
+                <Nav.Item
+                  eventKey="6"
+                  icon={<FaCompass style={{ ...iconStyles, color: '#FFFFFF' }} />}
+                  style={location.pathname === '/discover' ? { ...navItemStyles, backgroundColor: '#333' } : navItemStyles}
+                  as={Link}
+                  to="/discover"
+                >
                   <strong>Discover</strong>
                 </Nav.Item>
-                <Nav.Item eventKey="7" icon={<GearCircleIcon style={{ color: '#FFFFFF' }} />} style={navItemStyles} as={Link} to="/liked-songs">
+                <Nav.Item
+                  eventKey="2"
+                  icon={<FaUser style={{ ...iconStyles, color: '#FFFFFF' }} />}
+                  style={location.pathname === '/profile' ? { ...navItemStyles, backgroundColor: '#333' } : navItemStyles}
+                  as={Link}
+                  to="/profile"
+                >
+                  <strong>Profile</strong>
+                </Nav.Item>
+                <Nav.Item
+                  eventKey="3"
+                  icon={<FaStar style={{ ...iconStyles, color: '#FFFFFF' }} />}
+                  style={location.pathname === '/top-artists' ? { ...navItemStyles, backgroundColor: '#333' } : navItemStyles}
+                  as={Link}
+                  to="/top-artists"
+                >
+                  <strong>Top Artists</strong>
+                </Nav.Item>
+                <Nav.Item
+                  eventKey="4"
+                  icon={<FaMusic style={{ ...iconStyles, color: '#FFFFFF' }} />}
+                  style={location.pathname === '/top-songs' ? { ...navItemStyles, backgroundColor: '#333' } : navItemStyles}
+                  as={Link}
+                  to="/top-songs"
+                >
+                  <strong>Top Songs</strong>
+                </Nav.Item>
+                <Nav.Item
+                  eventKey="7"
+                  icon={<FaHeart style={{ ...iconStyles, color: '#FFFFFF' }} />}
+                  style={location.pathname === '/liked-songs' ? { ...navItemStyles, backgroundColor: '#333' } : navItemStyles}
+                  as={Link}
+                  to="/liked-songs"
+                >
                   <strong>Liked Songs</strong>
                 </Nav.Item>
-                <Nav.Item eventKey="8" icon={<GearCircleIcon style={{ color: '#FFFFFF' }} />} style={navItemStyles} as={Link} to="/inbox">
+                <Nav.Item
+                  eventKey="5"
+                  icon={<FaComments style={{ ...iconStyles, color: '#FFFFFF' }} />}
+                  style={location.pathname === '/forum' ? { ...navItemStyles, backgroundColor: '#333' } : navItemStyles}
+                  as={Link}
+                  to="/forum"
+                >
+                  <strong>Forums</strong>
+                </Nav.Item>
+
+
+                <Nav.Item
+                  eventKey="8"
+                  icon={<FaInbox style={{ ...iconStyles, color: '#FFFFFF' }} />}
+                  style={location.pathname === '/inbox' ? { ...navItemStyles, backgroundColor: '#333' } : navItemStyles}
+                  as={Link}
+                  to="/inbox"
+                >
                   <strong>Inbox</strong>
                 </Nav.Item>
               </Nav>
@@ -227,15 +271,14 @@ const MyNavbar = () => {
           <div style={{ paddingLeft: '10px', paddingTop: '10px', paddingRight: '10px', paddingBottom: '10px' }}>
             {userData === null ? (
               <>
-              <h1>Please Login</h1>
-              <button onClick={() => navigate('/login')}>Go to Login</button>
+                <h1>Please Login</h1>
+                <button onClick={() => navigate('/login')}>Go to Login</button>
               </>
             ) : renderContent()}
           </div>
         </div>
       </div>
 
-      {/* Pop up window added that acts as confirmation when uses try to log out*/}
       <Modal open={isModalOpen} onClose={toggleModal}>
         <Modal.Header>
           <Modal.Title>Confirmation</Modal.Title>

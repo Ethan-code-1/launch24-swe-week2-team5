@@ -24,7 +24,7 @@ import { AuthProvider } from "./components/AuthContext.jsx";
 const router = createBrowserRouter([
   {
     path: "/*",
-    element: <MyNavbar></MyNavbar>,
+    element: <Login></Login>,
   },
   {
     path: "/login",
@@ -60,6 +60,10 @@ const router = createBrowserRouter([
   },
   {
     path: "/Inbox",
+    element: <MyNavbar></MyNavbar>,
+  },
+  {
+    path: "/draft/:id",
     element: <MyNavbar></MyNavbar>,
   },
 ]);

@@ -6,6 +6,8 @@
     height: 100vh;
     width: 100vw;
     background-color: #000000;
+    opacity: 0;
+    animation: fadeIn 2s forwards;
 }
 
 .gradientBorder {
@@ -31,12 +33,16 @@
     justify-content: center;
     align-items: center;
     text-align: center;
+    opacity: 0;
+    animation: fadeIn 3s forwards 1s;
 }
 
 .subheading {
-    font-size: 1.2em;
+    font-size: 1.4em;
     margin: 20px 0;
-    color: #CCC; 
+    color: #dbdbdb;
+    opacity: 0;
+    animation: fadeIn 3s forwards 2s;
 }
 
 .loginpagehr {
@@ -44,10 +50,20 @@
     border: 0;
     height: 3px;
     background-image: linear-gradient(to right, rgba(255, 255, 255, .3), rgba(255, 255, 255, 1), rgba(255, 255, 255, .3));
-    margin: 40px auto; 
+    margin: 40px auto;
+    opacity: 0;
+    animation: fadeIn 3s forwards 2s;
 }
 
-.spotimyHeader{
+.spotimyHeader {
     font-size: 5rem;
     margin-bottom: 10vh;
+    opacity: 0;
+    animation: fadeIn 3s forwards 1s;
+}
+
+@keyframes fadeIn {
+    to {
+        opacity: 1;
+    }
 }

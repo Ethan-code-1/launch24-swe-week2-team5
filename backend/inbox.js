@@ -24,6 +24,28 @@ router.get("/:id", async (req, res) => {
     }
 })
 
+router.get("/draft/:id", async (req, res) => {
+    try {
+        console.log("hello");
+        const users = await getDocs(collection(db, "users"));
+        let usernames = [];
+        users.forEach((user) => {
+            userData = user.data();
+            console.log(userData);
+            usernames.push(userData["username"]);
+        })
+        const id = req.params.id;
+        let username = null;
+        if (id != 'x') {
+            const user = await getDoc(doc(db, "users", id));
+            username = user.data()["username"];
+        }
+        res.status(200).json({"usernames" : usernames, "username": username});
+    } catch (e) {
+        res.status(400).json({error: e.message});
+    }
+})
+
 router.delete("/:id/:msgId", async (req, res) => {
     try {
         console.log(req.params);
@@ -50,6 +72,7 @@ router.post("/:id", async (req, res) => {
             "From": senderId
         }
         await addDoc(collection(db, "users", toId, "Inbox"), msg);
+        // res.redirect("http://localhost:5173/inbox")
         res.status(200).json({message: `Successfully sent message to ${toId}`})
     } catch (e) {
         res.status(400).json({ error: e.message });
