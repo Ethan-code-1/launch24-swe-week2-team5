@@ -1,5 +1,5 @@
 import React, { useState, useContext, useEffect } from 'react';
-import { useLocation, Link, useNavigate } from 'react-router-dom';
+import { useLocation, Link, useNavigate, ScrollRestoration } from 'react-router-dom';
 import { Sidenav, Nav, IconButton, Button, Modal } from 'rsuite';
 import { FaUser, FaMusic, FaHeart, FaCompass, FaInbox, FaComments, FaStar, FaBars } from 'react-icons/fa';
 import { AuthContext } from "../components/AuthContext";
@@ -276,7 +276,10 @@ const MyNavbar = () => {
                 <h1>Please Login</h1>
                 <button onClick={() => navigate('/login')}>Go to Login</button>
               </>
-            ) : renderContent()}
+            ) : <>
+            {renderContent()}
+            <ScrollRestoration />
+            </>}
           </div>
         </div>
       </div>
