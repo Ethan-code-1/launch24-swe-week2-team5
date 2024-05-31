@@ -1,15 +1,8 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useEffect, useContext, useRef } from 'react';
 import axios from 'axios';
-import { Input, SelectPicker } from 'rsuite';
 import SearchIcon from '@rsuite/icons/Search';
 import { AuthContext } from '../components/AuthContext';
 import '../styles/TopSongs.css';
-
-const timeOptions = [
-  { label: 'Weekly', value: 'short_term' },
-  { label: 'Monthly', value: 'medium_term' },
-  { label: 'Yearly', value: 'long_term' }
-];
 
 export const TopSongs = () => {
   const { userData } = useContext(AuthContext);
@@ -17,6 +10,7 @@ export const TopSongs = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [timeRange, setTimeRange] = useState('medium_term'); // Default to monthly
   const [loading, setLoading] = useState(true); // Add loading state
+  const searchInputRef = useRef(null); // Add ref for search input
   const accessToken = localStorage.getItem('access_token');
 
   useEffect(() => {
@@ -37,12 +31,27 @@ export const TopSongs = () => {
     }
   }, [accessToken, timeRange]);
 
+  useEffect(() => {
+    // Add class to body when component mounts
+    document.body.classList.add('top-songs-body');
+    // Remove class from body when component unmounts
+    return () => {
+      document.body.classList.remove('top-songs-body');
+    };
+  }, []);
+
   const handleSearchChange = (value) => {
     setSearchQuery(value);
   };
 
-  const handleTimeRangeChange = (value) => {
-    setTimeRange(value);
+  const handleTimeRangeChange = (event) => {
+    setTimeRange(event.target.value);
+  };
+
+  const handleSearchButtonClick = () => {
+    if (searchInputRef.current) {
+      searchInputRef.current.focus();
+    }
   };
 
   const filteredTracks = topTracks?.filter(track =>
@@ -67,23 +76,30 @@ export const TopSongs = () => {
       </div>
       <div className="songs-list">
         <div className="header">
-          <Input
-            placeholder="Search"
-            value={searchQuery}
-            onChange={handleSearchChange}
-            prefix={<SearchIcon />}
-            className="search-input"
-          />
-          <SelectPicker
-            data={timeOptions}
+          <div className="search-box">
+            <button className="btn-search" onClick={handleSearchButtonClick}><SearchIcon /></button>
+            <input
+              type="text"
+              className="input-search"
+              placeholder="Type to Search..."
+              value={searchQuery}
+              onChange={e => setSearchQuery(e.target.value)}
+              ref={searchInputRef}
+            />
+          </div>
+          <select
             value={timeRange}
+            name="time"
+            className="custom-select"
             onChange={handleTimeRangeChange}
-            className="time-range-picker"
-            cleanable={false}
-          />
+          >
+            <option value="short_term">Weekly</option>
+            <option value="medium_term">Monthly</option>
+            <option value="long_term">Yearly</option>
+          </select>
         </div>
         {loading ? (
-          <div className="loader"></div> // Show loading indicator
+          <div className="loader"></div> 
         ) : (
           <>
             <div className="table-header">

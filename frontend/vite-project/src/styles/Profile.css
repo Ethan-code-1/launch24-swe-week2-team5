@@ -42,3 +42,100 @@ border-top: 3px solid #555555;
 #edit-button {
 background-color: none;
 }
+
+.edit-field {
+  background-color: black;
+  color: white; 
+  height: 1.5em;
+  font-size: 2em;
+  width: 75%;
+  border-radius: 10px;
+  padding: 10px;
+  margin-bottom: 1em; 
+  margin-top: 1em;
+}
+
+.edit-box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.button-group {
+  display: flex;
+  gap: 1em;
+
+}
+
+button {
+  padding: 10px 20px;
+  font-size: 1em;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+.confirm-button {
+  background-color: #4CAF50; 
+  color: white;
+  border-radius: 10px;
+}
+
+.cancel-button {
+  background-color: #f44336;
+  color: white;
+  border-radius: 10px;
+}
+
+.username-box {
+  display: flex;
+  align-items: center;
+}
+
+.edit-button {
+  margin-left: 1em;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+}
+
+.gg-pen {
+  box-sizing: border-box;
+  position: relative;
+  display: block;
+  transform: rotate(-45deg) scale(var(--ggs,1));
+  width: 14px;
+  height: 4px;
+  border-right: 2px solid transparent;
+  box-shadow:
+      0 0 0 2px,
+      inset -2px 0 0;
+  border-top-right-radius: 1px;
+  border-bottom-right-radius: 1px;
+  margin-right: -2px
+}
+.gg-pen::after,
+.gg-pen::before {
+  content: "";
+  display: block;
+  box-sizing: border-box;
+  position: absolute
+}
+.gg-pen::before {
+  background: currentColor;
+  border-left: 0;
+  right: -6px;
+  width: 3px;
+  height: 4px;
+  border-radius: 1px;
+  top: 0
+}
+.gg-pen::after {
+  width: 8px;
+  height: 7px;
+  border-top: 4px solid transparent;
+  border-bottom: 4px solid transparent;
+  border-right: 7px solid;
+  left: -11px;
+  top: -2px
+}

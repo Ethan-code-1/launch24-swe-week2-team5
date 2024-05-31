@@ -4,6 +4,7 @@ import axios from "axios";
 import "../styles/Profile.css";
 import "../styles/Topartists.css";
 import "../styles/Discover.css";
+import mockphoto from '../images/mockprofilephoto.png';
 
 export const Profile = () => {
   const { userData } = useContext(AuthContext);
@@ -13,6 +14,10 @@ export const Profile = () => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
   const accessToken = localStorage.getItem("access_token");
+  const userId = localStorage.getItem("id");
+  const [editing, setEditing] = useState(false);
+  const [username, setUsername] = useState();
+  const [editUsername, setEditUsername] = useState();
   const items = 5;
 
   useEffect(() => {
@@ -45,6 +50,13 @@ export const Profile = () => {
           params: { access_token: accessToken },
         });
         setUser(response.data);
+        console.log("userdata",response.data)
+
+        response = await axios.get(
+          `http://localhost:5001/public-profile/${userId}`
+        );
+        setUsername(response.data.username);
+        setEditUsername(response.data.username);
         setLoading(false);
       } catch (e) {
         console.error("Error fetching data", e);
@@ -55,7 +67,18 @@ export const Profile = () => {
       fetchData();
     }
   }, [accessToken]);
-
+  const handleConfirm = async () => {
+    try {
+      await axios.put(
+        `http://localhost:5001/public-profile/update-name/${userId}`,
+        { username: editUsername }
+      );
+      setUsername(editUsername);
+    } catch (e) {
+      console.log(e);
+    }
+    setEditing(false);
+  };
   return (
     <>
       {loading ? (
@@ -70,21 +93,61 @@ export const Profile = () => {
                 src={
                   user.images && user.images[1]
                     ? user.images[1].url
-                    : "../../public/spotify-default.jpg"
+                    : mockphoto
                 }
                 alt="user-image"
                 className="artist"
               />
               <div>
                 <p style={{ color: "white", fontSize: "1.5em" }}>Profile</p>
-                <a
-                  style={{ textDecoration: "none" }}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  href={user.external_urls.spotify}
-                >
-                  <h1>{user.display_name}</h1>
-                </a>
+
+                {editing ? (
+                  <div className="edit-box">
+                    <input
+                      type="text"
+                      className="edit-field"
+                      placeholder="Username"
+                      value={editUsername}
+                      onChange={(e) => setEditUsername(e.target.value)}
+                    />
+                    <div className="button-group">
+                      <button
+                        className="confirm-button"
+                        onClick={handleConfirm}
+                      >
+                        Confirm
+                      </button>
+                      <button
+                        className="cancel-button"
+                        onClick={() => {
+                          setEditUsername(username);
+                          setEditing(false);
+                        }}
+                      >
+                        Cancel
+                      </button>
+                    </div>
+                  </div>
+                ) : (
+                  <div className="username-box">
+                    <a
+                      style={{ textDecoration: "none" }}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      href={user.external_urls.spotify}
+                    >
+                      <h1>{username}</h1>
+                    </a>
+                    <button
+                      className="edit-button"
+                      onClick={() => {
+                        setEditing(true);
+                      }}
+                    >
+                      <i class="gg-pen"></i>
+                    </button>
+                  </div>
+                )}
               </div>
             </div>
           )}

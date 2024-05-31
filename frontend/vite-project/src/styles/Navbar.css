@@ -54,3 +54,23 @@ body {
   /* body{
     color: white; 
   } */
+
+  /* The entire scrollbar */
+::-webkit-scrollbar {
+  width: 12px; /* Width of the scrollbar */
+}
+
+/* The scrollbar track (background) */
+::-webkit-scrollbar-track {
+  background: #212121; /* Color of the track */
+}
+
+/* The scrollbar thumb (draggable part) */
+::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.389); /* Color of the thumb */
+}
+
+/* The scrollbar thumb on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #555; /* Color of the thumb when hovered */
+}

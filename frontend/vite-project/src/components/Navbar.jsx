@@ -1,5 +1,5 @@
 import React, { useState, useContext, useEffect } from 'react';
-import { useLocation, Link, useNavigate } from 'react-router-dom';
+import { useLocation, Link, useNavigate, ScrollRestoration } from 'react-router-dom';
 import { Sidenav, Nav, IconButton, Button, Modal } from 'rsuite';
 import { FaUser, FaMusic, FaHeart, FaCompass, FaInbox, FaComments, FaStar, FaBars } from 'react-icons/fa';
 import { AuthContext } from "../components/AuthContext";
@@ -129,9 +129,11 @@ const MyNavbar = () => {
     if (location.pathname.split('/').length > 2) {
       switch (location.pathname.split('/')[1]) {
         case 'public-profile':
-          return <PublicProfile/>;
+          return <PublicProfile />;
         case 'draft':
-          return <Inbox toId={location.pathname.split('/')[2]}/>
+          return <Inbox toId={location.pathname.split('/')[2]} />
+        default:
+          return null;
       }
     } else {
       switch (location.pathname) {
@@ -150,7 +152,7 @@ const MyNavbar = () => {
         case '/inbox':
           return <Inbox />;
         default:
-          return <Login />;
+          return <Home />;
       }
     }
   };
@@ -176,22 +178,24 @@ const MyNavbar = () => {
             <img src="/spotifyIcon.png" alt="spotifyIcon" style={{ maxWidth: '50px', height: 'auto', marginLeft: '10px' }} />
           </div>
         </div>
-        <div style={buttonContainerStyles}>
-          <Button
-            appearance="ghost"
-            onClick={toggleModal}
-            style={{
-              background: 'rgba(0, 0, 0, 0.2)',
-              color: '#FFFFFF',
-              fontWeight: 'bold',
-              border: '2px solid #FFFFFF',
-              fontSize: '1.1rem',
-              marginRight: '20px'
-            }}
-          >
-            <strong>Log Out</strong>
-          </Button>
-        </div>
+        {userData && (
+          <div style={buttonContainerStyles}>
+            <Button
+              appearance="ghost"
+              onClick={toggleModal}
+              style={{
+                background: 'rgba(0, 0, 0, 0.2)',
+                color: '#FFFFFF',
+                fontWeight: 'bold',
+                border: '2px solid #FFFFFF',
+                fontSize: '1.1rem',
+                marginRight: '20px'
+              }}
+            >
+              <strong>Log Out</strong>
+            </Button>
+          </div>
+        )}
       </div>
       <div style={sidenavContainerStyles}>
         {isSidenavOpen && (
@@ -252,8 +256,6 @@ const MyNavbar = () => {
                 >
                   <strong>Forums</strong>
                 </Nav.Item>
-
-
                 <Nav.Item
                   eventKey="8"
                   icon={<FaInbox style={{ ...iconStyles, color: '#FFFFFF' }} />}
@@ -274,7 +276,10 @@ const MyNavbar = () => {
                 <h1>Please Login</h1>
                 <button onClick={() => navigate('/login')}>Go to Login</button>
               </>
-            ) : renderContent()}
+            ) : <>
+            {renderContent()}
+            <ScrollRestoration />
+            </>}
           </div>
         </div>
       </div>

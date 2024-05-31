@@ -10,16 +10,15 @@ const Auth = () => {
             background: "linear-gradient(100deg, #8A2BE2, #FF00FF)", 
             color: "white", 
             width: "75%", 
-            border: "none",
             borderRadius: "4px",
             padding: "10px 20px",
             fontSize: "16px",
             cursor: "pointer",
             textDecoration: "none",
             marginTop: "2em",
-
+            border: '2px solid white',
         }}>
-            <a href='http://localhost:5001/spotify/login' style={{color: "white", textDecoration: "none"}}>Login</a>
+            <a href='http://localhost:5001/spotify/login' style={{color: "white", textDecoration: "none"}}><strong>Login</strong></a>
         </button>
 
     </>

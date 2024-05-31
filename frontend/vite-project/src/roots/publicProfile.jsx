@@ -7,13 +7,8 @@ import "../styles/Navbar.css";
 import { useParams } from "react-router-dom";
 
 export const PublicProfile = () => {
-  const { userData } = useContext(AuthContext);
-  const [topArtists, setTopArtists] = useState([]);
-  const [topSongs, setTopSongs] = useState([]);
-  const [likedSongs, setLikedSongs] = useState([]);
   const [userInfo, setUserInfo] = useState(null);
   //   const [user, setUser] = useState(null);
-  const accessToken = localStorage.getItem("access_token");
   const items = 5;
   const { id } = useParams();
 
@@ -34,13 +29,15 @@ export const PublicProfile = () => {
     <>
       <div className="content-container"></div>
 
-      {userInfo && (
+      {userInfo && (userInfo["isPublic"] ? 
+      <div>
+        {(
         <>
           <div className="profile">
             <img
               src={
-                userInfo["spotify-data"].images[0]
-                  ? userInfo["spotify-data"].images[0].url
+                userInfo["spotify-data"].images[1]
+                  ? userInfo["spotify-data"].images[1].url
                   : "../../public/spotify-default.jpg"
               }
               alt="user-image"
@@ -132,6 +129,10 @@ export const PublicProfile = () => {
           )}
         </>
       )}
+      </div> : 
+      <h1>This Profile is Private</h1>)}
+
+      
     </>
   );
 };
