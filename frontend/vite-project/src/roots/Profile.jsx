@@ -145,6 +145,7 @@ export const Profile = () => {
                         setEditing(true);
                       }}
                     >
+                      <i class="gg-pen"></i>
                     </button>
                   </div>
                 )}
