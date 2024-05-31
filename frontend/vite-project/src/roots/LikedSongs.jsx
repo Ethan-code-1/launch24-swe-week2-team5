@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useEffect, useContext, useRef } from 'react';
 import axios from 'axios';
 import { Input, Drawer, IconButton } from 'rsuite';
 import SearchIcon from '@rsuite/icons/Search';
@@ -14,6 +14,7 @@ export const LikedSongs = () => {
   const [isPanelOpen, setIsPanelOpen] = useState(false);
   const [artistInfo, setArtistInfo] = useState(null);
   const [loading, setLoading] = useState(true);
+  const searchInputRef = useRef(null);
   const accessToken = localStorage.getItem('access_token');
 
   useEffect(() => {
@@ -35,8 +36,23 @@ export const LikedSongs = () => {
     }
   }, [accessToken]);
 
+  useEffect(() => {
+    // Add class to body when component mounts
+    document.body.classList.add('liked-songs-body');
+    // Remove class from body when component unmounts
+    return () => {
+      document.body.classList.remove('liked-songs-body');
+    };
+  }, []);
+
   const handleSearchChange = (value) => {
     setSearchQuery(value);
+  };
+
+  const handleSearchButtonClick = () => {
+    if (searchInputRef.current) {
+      searchInputRef.current.focus();
+    }
   };
 
   const handleSongClick = async (song) => {
@@ -77,13 +93,17 @@ export const LikedSongs = () => {
       </div>
       <div className="songs-list">
         <div className="header">
-          <Input
-            placeholder="Search"
-            value={searchQuery}
-            onChange={handleSearchChange}
-            prefix={<SearchIcon />}
-            className="search-input"
-          />
+          <div className="search-box">
+            <button className="btn-search" onClick={handleSearchButtonClick}><SearchIcon /></button>
+            <input
+              type="text"
+              className="input-search"
+              placeholder="Type to Search..."
+              value={searchQuery}
+              onChange={e => setSearchQuery(e.target.value)}
+              ref={searchInputRef}
+            />
+          </div>
         </div>
         {loading ? (
           <div className="loader"></div>

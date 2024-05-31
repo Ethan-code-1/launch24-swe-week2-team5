@@ -36,8 +36,8 @@ export const PublicProfile = () => {
           <div className="profile">
             <img
               src={
-                userInfo["spotify-data"].images[0]
-                  ? userInfo["spotify-data"].images[0].url
+                userInfo["spotify-data"].images[1]
+                  ? userInfo["spotify-data"].images[1].url
                   : "../../public/spotify-default.jpg"
               }
               alt="user-image"
