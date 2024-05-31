@@ -66,6 +66,7 @@ export const Inbox = ({ toId = 'x' }) => {
     const res = await axios.post(`http://localhost:5001/inbox/${id}`, newMsg);
     console.log(res);
     handleToggle("yourPosts");
+    alert("Message Sent!");
     // location.reload();
   }
 
@@ -185,7 +186,10 @@ export const Inbox = ({ toId = 'x' }) => {
                     }}
                   />
                 )}
-                onChange={(e, value) => { setNewMsg({ ...newMsg, "to": value }) }}
+                onChange={(e, value) => { 
+                  setTo(value);
+                  setNewMsg({ ...newMsg, "to": value })
+                 }}
               />
               <input id="titleField" 
                 type="text" 
