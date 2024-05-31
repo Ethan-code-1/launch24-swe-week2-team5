@@ -20,8 +20,8 @@ export const Profile = () => {
   const [username, setUsername] = useState();
   const [editUsername, setEditUsername] = useState();
   const items = 5;
-  const [isPublicProfile, setIsPublicProfile] = useState(true);
-  const [usersData, setUsersData] = useState([]);
+  const [isPublicProfile, setIsPublicProfile] = useState(false);
+
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -59,19 +59,8 @@ export const Profile = () => {
         );
         setUsername(response.data.username);
         setEditUsername(response.data.username);
-
-        const res = await axios.get("http://localhost:5001/users")  
-        
-        
-        setUsersData(res.data);
-        
-        const userId = usersData.find(user => user.id === userId);
-        setIsPublicProfile(userId.isPublic);
-        console.log(isPublicProfile);
-
-         // setIsPrivateProfile(response.data)
-        // console.log()
-
+        setIsPublicProfile(response.data.isPublic);
+        console.log(response.data.isPublic);
         setLoading(false);
       } catch (e) {
         console.error("Error fetching data", e);
@@ -94,11 +83,23 @@ export const Profile = () => {
     }
     setEditing(false);
   };
-  
-  const handlePublicPrivateProfile = () => {
-    setIsPublicProfile(!isPrivateProfile);
+  useEffect(() => {
+    console.log(isPublicProfile);
+  }, [isPublicProfile]);
 
-  }
+  const handlePublicPrivateProfile = async () => {
+    setIsPublicProfile((prev) => !prev);
+
+    try {
+      await axios.put(
+        `http://localhost:5001/public-profile/update-ispublic/${userId}`,
+        { ispublic: isPublicProfile }
+      );
+    } catch (e) {
+      console.log(e);
+    }
+  };
+  
   return (
     <>
       {loading ? (
@@ -171,9 +172,9 @@ export const Profile = () => {
             </div>
           )}
         <div class="profile-switch">
-          <h3 className="isPublicText">Private Profile?</h3>
+          <h3 className="isPublicText">Public Profile?</h3>
           <label class="switch">
-            <input className="slidercontainer" type="checkbox" onChange={handlePublicPrivateProfile}/>
+            <input className="slidercontainer" type="checkbox" checked={isPublicProfile} onChange={handlePublicPrivateProfile}/>
             <span class="slider round"></span>
           </label>
         </div>

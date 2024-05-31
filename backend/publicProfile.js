@@ -24,4 +24,15 @@ router.put("/update-name/:id", async (req, res) => {
     }
 })
 
+router.put("/update-ispublic/:id", async (req, res) => {
+    try {
+        const id = req.params.id;
+        const isPublic = req.body.ispublic;
+        await updateDoc(doc(db, "users", id), { isPublic: isPublic });
+        res.status(200).json({message: `Successfully updated username`})
+    } catch (e) {
+        res.status(400).json({ error: e.message });
+    }
+})
+
 module.exports = router;
