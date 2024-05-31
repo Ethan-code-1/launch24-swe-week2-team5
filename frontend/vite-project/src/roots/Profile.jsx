@@ -22,54 +22,11 @@ export const Profile = () => {
   const [isPublicProfile, setIsPublicProfile] = useState(false);
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        let response;
-
-        response = await axios.get(
-          "http://localhost:5001/spotify/top-artists",
-          {
-            params: { access_token: accessToken, time_range: "medium_term" },
-          }
-        );
-        setTopArtists(response.data.items.slice(0, items));
-
-        response = await axios.get("http://localhost:5001/spotify/top-tracks", {
-          params: { access_token: accessToken, time_range: "medium_term" },
-        });
-        setTopSongs(response.data.items.slice(0, items));
-
-        response = await axios.get(
-          "http://localhost:5001/spotify/liked-tracks",
-          {
-            params: { access_token: accessToken },
-          }
-        );
-        setLikedSongs(response.data.items.slice(0, items));
-
-        response = await axios.get("http://localhost:5001/spotify/user-info", {
-          params: { access_token: accessToken },
-        });
-        setUser(response.data);
-        console.log("userdata",response.data)
-
-        response = await axios.get(
-          `http://localhost:5001/public-profile/${userId}`
-        );
-        setUsername(response.data.username);
-        setEditUsername(response.data.username);
-        setIsPublicProfile(response.data.isPublic);
-        console.log(response.data.isPublic);
-        setLoading(false);
-      } catch (e) {
-        console.error("Error fetching data", e);
-        setLoading(false);
-      }
-    };
     if (accessToken) {
       fetchData();
     }
   }, [accessToken]);
+  
   const handleConfirm = async () => {
     try {
       await axios.put(
@@ -82,23 +39,68 @@ export const Profile = () => {
     }
     setEditing(false);
   };
-  useEffect(() => {
-    console.log(isPublicProfile);
-  }, [isPublicProfile]);
+  const handlePublicPrivateProfile = () => {
+    setIsPublicProfile(!isPublicProfile);
+    setPublicPrivateProfile(!isPublicProfile);
+  }
 
-  const handlePublicPrivateProfile = async () => {
-    setIsPublicProfile((prev) => !prev);
-
+  const setPublicPrivateProfile = async (isPublicProfile) => {
     try {
       await axios.put(
         `http://localhost:5001/public-profile/update-ispublic/${userId}`,
         { ispublic: isPublicProfile }
       );
+
     } catch (e) {
       console.log(e);
     }
   };
-  
+
+
+  const fetchData = async () => {
+    try {
+      let response;
+
+      response = await axios.get(
+        "http://localhost:5001/spotify/top-artists",
+        {
+          params: { access_token: accessToken, time_range: "medium_term" },
+        }
+      );
+      setTopArtists(response.data.items.slice(0, items));
+
+      response = await axios.get("http://localhost:5001/spotify/top-tracks", {
+        params: { access_token: accessToken, time_range: "medium_term" },
+      });
+      setTopSongs(response.data.items.slice(0, items));
+
+      response = await axios.get(
+        "http://localhost:5001/spotify/liked-tracks",
+        {
+          params: { access_token: accessToken },
+        }
+      );
+      setLikedSongs(response.data.items.slice(0, items));
+
+      response = await axios.get("http://localhost:5001/spotify/user-info", {
+        params: { access_token: accessToken },
+      });
+      setUser(response.data);
+      console.log("userdata",response.data)
+
+      response = await axios.get(
+        `http://localhost:5001/public-profile/${userId}`
+      );
+      setUsername(response.data.username);
+      setEditUsername(response.data.username);
+      setIsPublicProfile(response.data.isPublic);
+      console.log(response.data.isPublic);
+      setLoading(false);
+    } catch (e) {
+      console.error("Error fetching data", e);
+      setLoading(false);
+    }
+  };
   return (
     <>
       {loading ? (
