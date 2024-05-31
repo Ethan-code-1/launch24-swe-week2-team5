@@ -54,3 +54,33 @@ body {
   /* body{
     color: white; 
   } */
+
+
+
+  
+
+
+  .hidden {
+    display: none;
+  }
+  
+  @media (max-width: 768px) {
+    .rs-sidenav {
+      position: fixed;
+      width: 100%;
+      height: auto;
+      top: 83px;
+      left: 0;
+      z-index: 1;
+      background: purple;
+      color: white;
+    }
+    .rs-sidenav-body {
+      height: calc(100vh - 83px);
+    }
+    .dynamicContentStyles {
+      margin-left: 0;
+      transition: margin-left 0.3s ease;
+    }
+  }
+  

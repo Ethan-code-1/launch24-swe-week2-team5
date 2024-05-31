@@ -101,6 +101,13 @@ const MyNavbar = () => {
 
   const [isSidenavOpen, setIsSidenavOpen] = useState(true);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
+
+  useEffect(() => {
+    const handleResize = () => setIsMobile(window.innerWidth <= 768);
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
 
   const toggleSidenav = () => {
     setIsSidenavOpen(!isSidenavOpen);
@@ -122,7 +129,7 @@ const MyNavbar = () => {
 
   const dynamicContentStyles = {
     ...contentStyles,
-    marginLeft: isSidenavOpen ? 240 : 0
+    marginLeft: isSidenavOpen && !isMobile ? 240 : 0
   };
 
   const renderContent = () => {
@@ -267,7 +274,7 @@ const MyNavbar = () => {
             </Sidenav.Body>
           </Sidenav>
         )}
-        <div className="centerContentContainer" style={dynamicContentStyles}>
+        <div className={`centerContentContainer ${isSidenavOpen && isMobile ? 'hidden' : ''}`} style={dynamicContentStyles}>
           <div style={{ paddingLeft: '10px', paddingTop: '10px', paddingRight: '10px', paddingBottom: '10px' }}>
             {userData === null ? (
               <>
