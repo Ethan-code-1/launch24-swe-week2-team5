@@ -25,11 +25,14 @@ export const Forum = () => {
   };
   async function fetchAllPosts() {
     const res = (await axios.get("http://localhost:5001/forum")).data;
+    console.log(res);
     setPosts(res);
   }
 
   async function fetchMyPosts() {
     const res = (await axios.get(`http://localhost:5001/forum/${id}`)).data;
+    for (const post of res) {
+      }
     setMyPosts(res);
   }
 
@@ -51,9 +54,10 @@ export const Forum = () => {
 
   const handleVote = async (post, voteType, userId) => {
     try {
-        const response = await axios.post(`http://localhost:5001/forum/${userId}/vote/${post.id}`, {
+        const response = await axios.post(`http://localhost:5001/forum/vote/${id}`, {
             voteType,
-            userPostId: post.userId
+            userId: userId,
+            postId: post.id
         });
 
         if (response.status === 200) {
@@ -102,12 +106,14 @@ export const Forum = () => {
                     </div>
                     <div className="postBody">{post.Content}</div>
                     <div className="postDate">Posted on {post.Date}</div>
-                    <div className="postUpvotes">Upvotes: {post.Votes}</div>
+                    <div className="postUpvotes">Upvotes: {post["upVoteUsers"].length - post["downVoteUsers"].length}</div>
                   </div>
-                  <div className="voteButtons">
-                    <button id="vote1" className="voteButton" onClick={() => handleVote(post, 'upvote')}>⬆</button>
-                    <button id="vote2" className="voteButton" onClick={() => handleVote(post, 'downvote')}>⬇</button>
-                  </div>
+                  {id && (
+                    <div className="voteButtons">
+                      <button id={post["upVoteUsers"].includes(id) ? "voted1" : "vote1"} className="voteButton" onClick={() => handleVote(post, 'upvote', id)}>⬆</button>
+                      <button id={post["downVoteUsers"].includes(id) ? "voted2" : "vote2"} className="voteButton" onClick={() => handleVote(post, 'downvote', id)}>⬇</button>
+                    </div>
+                  )}
                 </div>
               ))}
             </div>
@@ -125,12 +131,14 @@ export const Forum = () => {
                     </div>
                     <div className="postBody">{post.Content}</div>
                     <div className="postDate">Posted on {post.Date}</div>
-                    <div className="postUpvotes">Upvotes: {post.Votes}</div>
+                    <div className="postUpvotes">Upvotes: {post["upVoteUsers"].length - post["downVoteUsers"].length}</div>
                   </div>
-                  <div className="voteButtons">
-                    <button id="vote1" className="voteButton" onClick={() => handleVote(post, 'upvote')}>⬆</button>
-                    <button id="vote2" className="voteButton" onClick={() => handleVote(post, 'downvote')}>⬇</button>
-                  </div>
+                  {id && (
+                    <div className="voteButtons">
+                      <button id={post["upVoteUsers"].includes(id) ? "voted1" : "vote1"} className="voteButton" onClick={() => handleVote(post, 'upvote', post["userId"])}>⬆</button>
+                      <button id={post["downVoteUsers"].includes(id) ? "voted2" : "vote2"} className="voteButton" onClick={() => handleVote(post, 'downvote', post["userId"])}>⬇</button>
+                    </div>
+                  )}
                 </div>
               ))}
             </div>
