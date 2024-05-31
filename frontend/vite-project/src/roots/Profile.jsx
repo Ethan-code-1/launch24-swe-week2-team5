@@ -1,11 +1,10 @@
 import React, { useContext, useState, useEffect } from "react";
 import { AuthContext } from "../components/AuthContext";
-import EditIcon from "@mui/icons-material/Edit";
-import {  IconButton } from "@mui/material";
 import axios from "axios";
 import "../styles/Profile.css";
 import "../styles/Topartists.css";
 import "../styles/Discover.css";
+import mockphoto from '../images/mockprofilephoto.png';
 
 export const Profile = () => {
   const { userData } = useContext(AuthContext);
@@ -94,7 +93,7 @@ export const Profile = () => {
                 src={
                   user.images && user.images[1]
                     ? user.images[1].url
-                    : "../../public/spotify-default.jpg"
+                    : mockphoto
                 }
                 alt="user-image"
                 className="artist"
