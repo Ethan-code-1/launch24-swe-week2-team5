@@ -117,6 +117,13 @@
     color: red;
   }
   
+  #voted1 {
+    color: green;
+  }
+
+  #voted2 {
+    color: red;
+  }
 
   .inputField {
     display: block;
