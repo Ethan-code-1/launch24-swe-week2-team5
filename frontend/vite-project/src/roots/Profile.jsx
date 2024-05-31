@@ -26,7 +26,7 @@ export const Profile = () => {
       fetchData();
     }
   }, [accessToken]);
-  
+
   const handleConfirm = async () => {
     try {
       await axios.put(
@@ -39,10 +39,11 @@ export const Profile = () => {
     }
     setEditing(false);
   };
+
   const handlePublicPrivateProfile = () => {
     setIsPublicProfile(!isPublicProfile);
     setPublicPrivateProfile(!isPublicProfile);
-  }
+  };
 
   const setPublicPrivateProfile = async (isPublicProfile) => {
     try {
@@ -50,12 +51,10 @@ export const Profile = () => {
         `http://localhost:5001/public-profile/update-ispublic/${userId}`,
         { ispublic: isPublicProfile }
       );
-
     } catch (e) {
       console.log(e);
     }
   };
-
 
   const fetchData = async () => {
     try {
@@ -86,7 +85,7 @@ export const Profile = () => {
         params: { access_token: accessToken },
       });
       setUser(response.data);
-      console.log("userdata",response.data)
+      console.log("userdata", response.data);
 
       response = await axios.get(
         `http://localhost:5001/public-profile/${userId}`
@@ -101,6 +100,7 @@ export const Profile = () => {
       setLoading(false);
     }
   };
+
   return (
     <>
       {loading ? (
@@ -166,20 +166,25 @@ export const Profile = () => {
                         setEditing(true);
                       }}
                     >
-                      <i class="gg-pen"></i>
+                      <i className="gg-pen"></i>
                     </button>
                   </div>
                 )}
               </div>
             </div>
           )}
-        <div class="profile-switch">
-          <h3 className="isPublicText">Public Profile?</h3>
-          <label class="switch">
-            <input className="slidercontainer" type="checkbox" checked={isPublicProfile} onChange={handlePublicPrivateProfile}/>
-            <span class="slider round"></span>
-          </label>
-        </div>
+          <div className="profile-switch">
+            <h3 className="isPublicText">Public Profile?</h3>
+            <label className="switch">
+              <input
+                className="slidercontainer"
+                type="checkbox"
+                checked={isPublicProfile}
+                onChange={handlePublicPrivateProfile}
+              />
+              <span className="slider round"></span>
+            </label>
+          </div>
           <hr className="solid" />
           <div className="content-container">
             <h1 style={{ color: "white" }}>Top Songs</h1>
@@ -208,7 +213,7 @@ export const Profile = () => {
                 </div>
               ))
             ) : (
-              <h3>No top songs avaliable</h3>
+              <h3>No top songs available</h3>
             )}
           </div>
 
@@ -245,7 +250,7 @@ export const Profile = () => {
                 );
               })
             ) : (
-              <h3>No top artists avaliable</h3>
+              <h3>No top artists available</h3>
             )}
           </div>
         </>
