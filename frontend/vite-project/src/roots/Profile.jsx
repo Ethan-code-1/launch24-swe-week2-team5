@@ -14,7 +14,8 @@ export const Profile = () => {
   const [loading, setLoading] = useState(true);
   const accessToken = localStorage.getItem("access_token");
   const items = 5;
-
+  const [isPublicProfile, setIsPublicProfile] = useState(true);
+  const [usersData, setUsersData] = useState([]);
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -45,6 +46,19 @@ export const Profile = () => {
           params: { access_token: accessToken },
         });
         setUser(response.data);
+
+        const res = await axios.get("http://localhost:5001/users")  
+        
+        
+        setUsersData(res.data);
+        
+        const userId = usersData.find(user => user.id === userId);
+        setIsPublicProfile(userId.isPublic);
+        console.log(isPublicProfile);
+
+         // setIsPrivateProfile(response.data)
+        // console.log()
+
         setLoading(false);
       } catch (e) {
         console.error("Error fetching data", e);
@@ -55,7 +69,11 @@ export const Profile = () => {
       fetchData();
     }
   }, [accessToken]);
+  
+  const handlePublicPrivateProfile = () => {
+    setIsPublicProfile(!isPrivateProfile);
 
+  }
   return (
     <>
       {loading ? (
@@ -88,6 +106,13 @@ export const Profile = () => {
               </div>
             </div>
           )}
+        <div class="profile-switch">
+          <h3 className="isPublicText">Private Profile?</h3>
+          <label class="switch">
+            <input className="slidercontainer" type="checkbox" onChange={handlePublicPrivateProfile}/>
+            <span class="slider round"></span>
+          </label>
+        </div>
           <hr className="solid" />
           <div className="content-container">
             <h1 style={{ color: "white" }}>Top Songs</h1>
