@@ -131,8 +131,6 @@ export const PublicProfile = () => {
       )}
       </div> : 
       <h1>This Profile is Private</h1>)}
-
-      
     </>
   );
 };

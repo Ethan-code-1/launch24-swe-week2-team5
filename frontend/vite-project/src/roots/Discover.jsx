@@ -12,7 +12,7 @@ export const Discover = () => {
 
   async function fetchPublicProfiles() {
     try {
-      const res = await axios.get("http://localhost:5001/users");
+      const res = await axios.get("http://localhost:5001/users/public");
       setProfiles(res.data);
       setLoading(false); // Set loading to false after data is fetched
     } catch (error) {
