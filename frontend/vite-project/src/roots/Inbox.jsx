@@ -67,6 +67,7 @@ export const Inbox = ({ toId = 'x' }) => {
     console.log(res);
     handleToggle("yourPosts");
     alert("Message Sent!");
+    fetchAllPosts();
     // location.reload();
   }
 
