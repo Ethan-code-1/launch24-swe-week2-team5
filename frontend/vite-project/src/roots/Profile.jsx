@@ -1,5 +1,7 @@
 import React, { useContext, useState, useEffect } from "react";
 import { AuthContext } from "../components/AuthContext";
+import EditIcon from "@mui/icons-material/Edit";
+import {  IconButton } from "@mui/material";
 import axios from "axios";
 import "../styles/Profile.css";
 import "../styles/Topartists.css";
@@ -13,6 +15,10 @@ export const Profile = () => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
   const accessToken = localStorage.getItem("access_token");
+  const userId = localStorage.getItem("id");
+  const [editing, setEditing] = useState(false);
+  const [username, setUsername] = useState();
+  const [editUsername, setEditUsername] = useState();
   const items = 5;
   const [isPublicProfile, setIsPublicProfile] = useState(true);
   const [usersData, setUsersData] = useState([]);
@@ -46,6 +52,13 @@ export const Profile = () => {
           params: { access_token: accessToken },
         });
         setUser(response.data);
+        console.log("userdata",response.data)
+
+        response = await axios.get(
+          `http://localhost:5001/public-profile/${userId}`
+        );
+        setUsername(response.data.username);
+        setEditUsername(response.data.username);
 
         const res = await axios.get("http://localhost:5001/users")  
         
@@ -69,6 +82,18 @@ export const Profile = () => {
       fetchData();
     }
   }, [accessToken]);
+  const handleConfirm = async () => {
+    try {
+      await axios.put(
+        `http://localhost:5001/public-profile/update-name/${userId}`,
+        { username: editUsername }
+      );
+      setUsername(editUsername);
+    } catch (e) {
+      console.log(e);
+    }
+    setEditing(false);
+  };
   
   const handlePublicPrivateProfile = () => {
     setIsPublicProfile(!isPrivateProfile);
@@ -95,14 +120,53 @@ export const Profile = () => {
               />
               <div>
                 <p style={{ color: "white", fontSize: "1.5em" }}>Profile</p>
-                <a
-                  style={{ textDecoration: "none" }}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  href={user.external_urls.spotify}
-                >
-                  <h1>{user.display_name}</h1>
-                </a>
+
+                {editing ? (
+                  <div className="edit-box">
+                    <input
+                      type="text"
+                      className="edit-field"
+                      placeholder="Username"
+                      value={editUsername}
+                      onChange={(e) => setEditUsername(e.target.value)}
+                    />
+                    <div className="button-group">
+                      <button
+                        className="confirm-button"
+                        onClick={handleConfirm}
+                      >
+                        Confirm
+                      </button>
+                      <button
+                        className="cancel-button"
+                        onClick={() => {
+                          setEditUsername(username);
+                          setEditing(false);
+                        }}
+                      >
+                        Cancel
+                      </button>
+                    </div>
+                  </div>
+                ) : (
+                  <div className="username-box">
+                    <a
+                      style={{ textDecoration: "none" }}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      href={user.external_urls.spotify}
+                    >
+                      <h1>{username}</h1>
+                    </a>
+                    <button
+                      className="edit-button"
+                      onClick={() => {
+                        setEditing(true);
+                      }}
+                    >
+                    </button>
+                  </div>
+                )}
               </div>
             </div>
           )}
